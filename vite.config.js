@@ -1,8 +1,8 @@
-const { defineConfig } = require("vite");
-const react = require("@vitejs/plugin-react");
-const svgr = require("vite-plugin-svgr");
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import svgr from "vite-plugin-svgr";
 
-module.exports = defineConfig({
+export default defineConfig({
   plugins: [react(), svgr()],
   build: {
     rollupOptions: {
