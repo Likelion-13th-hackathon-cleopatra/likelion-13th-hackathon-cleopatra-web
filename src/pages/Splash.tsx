@@ -26,9 +26,9 @@ export default function Splash() {
     t2.current = window.setTimeout(() => {
       setShow(false);
       t3.current = window.setTimeout(() => {
-        nav("/home", { replace: true });
+        nav("/", { replace: true });
       }, 280);
-    }, 3800);
+    }, 3400);
 
     return () => {
       if (t1.current) clearTimeout(t1.current);
@@ -68,7 +68,7 @@ export default function Splash() {
                 : {
                     opacity: 0,
                     transition: {
-                      delay: 2.0,
+                      delay: 1.6,
                       duration: 0.3,
                       ease: "easeOut" as const,
                     },
@@ -89,7 +89,7 @@ export default function Splash() {
                 : {
                     opacity: 1,
                     transition: {
-                      delay: 2.0,
+                      delay: 1.6,
                       duration: 0.3,
                       ease: "easeOut" as const,
                     },
@@ -105,7 +105,7 @@ export default function Splash() {
             animate={{
               y: -40,
               transition: {
-                delay: 2.0,
+                delay: 1.6,
                 duration: 0.3,
                 ease: "easeInOut",
               },
@@ -124,8 +124,8 @@ export default function Splash() {
                       scale: [30.0, 1.0, 1.0],
                       opacity: [0.95, 1, 1],
                       transition: {
-                        duration: 2.0,
-                        times: [0, 0.6, 1],
+                        duration: 1.6,
+                        times: [0, 0.5, 1],
                         ease: "easeOut" as const,
                       },
                     }
@@ -136,7 +136,7 @@ export default function Splash() {
                 initial={{ color: "#51BC71" }}
                 animate={{ color: "#FFFFFF" }}
                 transition={
-                  reduce ? { duration: 0.2 } : { delay: 2.0, duration: 0.01 }
+                  reduce ? { duration: 0.2 } : { delay: 1.6, duration: 0.01 }
                 }
               >
                 <Logo
@@ -156,7 +156,7 @@ export default function Splash() {
                 opacity: 1,
                 transition: reduce
                   ? { duration: 0.18 }
-                  : { delay: 2.0, duration: 0.3, ease: "easeOut" as const },
+                  : { delay: 1.6, duration: 0.3, ease: "easeOut" as const },
               }}
             >
               <LogoText
@@ -166,28 +166,17 @@ export default function Splash() {
             </motion.div>
 
             <motion.p
-              className="text-2xl font-bold text-white tracking-tight mb-[15px]"
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: 1,
-                transition: reduce
-                  ? { duration: 0.18 }
-                  : { delay: 2.0, duration: 0.3, ease: "easeOut" as const },
-              }}
-            >
-              정성 정량 데이터를 한눈에!
-            </motion.p>
-
-            <motion.p
               className="text-sm text-white/90"
               initial={{ opacity: 0 }}
               animate={{
                 opacity: 1,
                 transition: reduce
                   ? { duration: 0.18 }
-                  : { delay: 2.0, duration: 0.3, ease: "easeOut" as const },
+                  : { delay: 1.6, duration: 0.3, ease: "easeOut" as const },
               }}
             >
+              정성 정량 데이터를 한눈에!
+              <br />
               예비 창업자를 위한 똑똑한 지역 상권 서비스
             </motion.p>
           </motion.div>

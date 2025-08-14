@@ -1,3 +1,5 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,19 +9,19 @@
   html {
     font-size: 16px;
   }
-  
+
   body {
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+      "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+      "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: #f5f5f5;
     overflow-x: hidden;
   }
-  
+
   /* 모바일 터치 최적화 */
   * {
     -webkit-tap-highlight-color: transparent;
@@ -30,15 +32,23 @@
     -ms-user-select: none;
     user-select: none;
   }
-  
+
   /* 텍스트 선택 허용 */
-  p, h1, h2, h3, h4, h5, h6, span, div {
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  span,
+  div {
     -webkit-user-select: text;
     -moz-user-select: text;
     -ms-user-select: text;
     user-select: text;
   }
-  
+
   /* 스크롤바 숨기기 */
   ::-webkit-scrollbar {
     display: none;
@@ -50,19 +60,61 @@
   .mobile-container {
     @apply max-w-mobile mx-auto bg-white min-h-screen;
   }
-  
+
   /* 모바일 버튼 */
   .mobile-button {
     @apply w-full py-4 px-6 rounded-lg font-semibold text-base transition-all duration-200 active:scale-95;
   }
-  
+
   /* 모바일 카드 */
   .mobile-card {
     @apply bg-white rounded-xl shadow-sm border border-gray-100 p-4;
   }
-  
+
   /* 모바일 입력 필드 */
   .mobile-input {
     @apply w-full px-4 py-3 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+  }
+}
+
+@layer utilities {
+  /* Body_Bold_12: 12 / 18 / -3% / Bold */
+  .Body_Bold_12 {
+    @apply font-pretendard text-[12px] leading-[18px] tracking-[-0.03em] font-bold;
+  }
+
+  /* Sub_Bold_10: 10 / 15 / -3% / Bold */
+  .Sub_Bold_10 {
+    @apply font-pretendard text-[10px] leading-[15px] tracking-[-0.03em] font-bold;
+  }
+
+  /* Body_SemiBold_24: 24 / 36 / -3% / SemiBold */
+  .Body_SemiBold_24 {
+    @apply font-pretendard text-[24px] leading-[36px] tracking-[-0.03em] font-semibold;
+  }
+
+  /* Head_Bold_18: 18 / 27 / -3% / Bold */
+  .Head_Bold_18 {
+    @apply font-pretendard text-[18px] leading-[27px] tracking-[-0.03em] font-bold;
+  }
+
+  /* Sub_Bold_14: 14 / 21 / -3% / Bold */
+  .Sub_Bold_14 {
+    @apply font-pretendard text-[14px] leading-[21px] tracking-[-0.03em] font-bold;
+  }
+
+  /* Body_SemiBold_18: 18 / 27 / -3% / SemiBold */
+  .Body_SemiBold_18 {
+    @apply font-pretendard text-[18px] leading-[27px] tracking-[-0.03em] font-semibold;
+  }
+
+  /* Sub_Bold_12: 12 / 18 / -3% / Bold */
+  .Sub_Bold_12 {
+    @apply font-pretendard text-[12px] leading-[18px] tracking-[-0.03em] font-bold;
+  }
+
+  /* Body_SemiBold_14: 14 / 21 / -3% / SemiBold */
+  .Body_SemiBold_14 {
+    @apply font-pretendard text-[14px] leading-[21px] tracking-[-0.03em] font-semibold;
   }
 }
