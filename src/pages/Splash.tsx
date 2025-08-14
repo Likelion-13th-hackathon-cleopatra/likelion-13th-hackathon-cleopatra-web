@@ -16,9 +16,9 @@ export default function Splash() {
 
   // --- 애니메이션 타임라인 ---
   // 1. 0.5초 빈 화면으로 시작 (setShow(true) 딜레이)
-  // 2. 컴포넌트 마운트 후, 메인 애니메이션 시작 (총 2.3초 소요)
+  // 2. 컴포넌트 마운트 후, 메인 애니메이션 시작 (총 1.6초 소요)
   // 3. 모든 애니메이션 완료 후 1.5초 대기
-  // 4. 총 3.8초 후, 화면이 사라지는 exit 애니메이션(0.28초) 시작
+  // 4. 총 3.1초 후, 화면이 사라지는 exit 애니메이션(0.28초) 시작
   // 5. exit 애니메이션 종료 후 /home으로 이동
   useEffect(() => {
     t1.current = window.setTimeout(() => setShow(true), 500);
@@ -28,7 +28,7 @@ export default function Splash() {
       t3.current = window.setTimeout(() => {
         nav("/", { replace: true });
       }, 280);
-    }, 3400);
+    }, 3100);
 
     return () => {
       if (t1.current) clearTimeout(t1.current);
@@ -57,7 +57,7 @@ export default function Splash() {
           exit={{ opacity: 0, transition: exitTransition }}
         >
           {/* --- 배경 애니메이션 --- */}
-          {/* 흰색 배경 → 그라데이션 배경으로 2.0초 뒤에 교차 */}
+          {/* 흰색 배경 → 그라데이션 배경으로 1.3초 뒤에 교차 */}
           <motion.div
             aria-hidden
             className="absolute inset-0 bg-white"
@@ -68,7 +68,7 @@ export default function Splash() {
                 : {
                     opacity: 0,
                     transition: {
-                      delay: 1.6,
+                      delay: 1.3,
                       duration: 0.3,
                       ease: "easeOut" as const,
                     },
@@ -89,7 +89,7 @@ export default function Splash() {
                 : {
                     opacity: 1,
                     transition: {
-                      delay: 1.6,
+                      delay: 1.3,
                       duration: 0.3,
                       ease: "easeOut" as const,
                     },
@@ -98,23 +98,23 @@ export default function Splash() {
           />
 
           {/* --- 콘텐츠 애니메이션 --- */}
-          {/* 로고, 텍스트 그룹 전체를 2.0초 뒤에 위로 40px 이동 */}
+          {/* 로고, 텍스트 그룹 전체를 1.3초 뒤에 위로 40px 이동 */}
           <motion.div
             className="relative z-10 flex flex-col items-center"
             initial={{ y: 0 }}
             animate={{
               y: -40,
               transition: {
-                delay: 1.6,
+                delay: 1.3,
                 duration: 0.3,
                 ease: "easeInOut",
               },
             }}
           >
             {/* --- 아이콘 로고 애니메이션 --- */}
-            {/* 1. 크기/투명도: 30배율 → 1배율 줌아웃(1.2초) 후 0.8초 대기 */}
+            {/* 1. 크기/투명도: 30배율 → 1배율 줌아웃(0.5초) 후 0.8초 대기 */}
             <motion.div
-              className="mb-4"
+              className="mb-[25px]"
               style={{ transformOrigin: "50% 50%" }}
               initial={reduce ? { opacity: 0 } : { scale: 30.0, opacity: 0.95 }}
               animate={
@@ -124,19 +124,19 @@ export default function Splash() {
                       scale: [30.0, 1.0, 1.0],
                       opacity: [0.95, 1, 1],
                       transition: {
-                        duration: 1.6,
-                        times: [0, 0.5, 1],
+                        duration: 1.3,
+                        times: [0, 0.385, 1],
                         ease: "easeOut" as const,
                       },
                     }
               }
             >
-              {/* 2. 색상: 2.0초 뒤에 #51BC71 → #FFFFFF으로 순간 변경 */}
+              {/* 2. 색상: 1.3초 뒤에 #51BC71 → #FFFFFF으로 순간 변경 */}
               <motion.div
                 initial={{ color: "#51BC71" }}
                 animate={{ color: "#FFFFFF" }}
                 transition={
-                  reduce ? { duration: 0.2 } : { delay: 1.6, duration: 0.01 }
+                  reduce ? { duration: 0.2 } : { delay: 1.3, duration: 0.01 }
                 }
               >
                 <Logo
@@ -148,15 +148,15 @@ export default function Splash() {
             </motion.div>
 
             {/* --- 텍스트 로고 + 문구 애니메이션 --- */}
-            {/* 아이콘 로고, 배경 전환과 같은 시점(2.0초 뒤)에 나타남 */}
+            {/* 아이콘 로고, 배경 전환과 같은 시점(1.3초 뒤)에 나타남 */}
             <motion.div
-              className="mb-[25px]"
+              className="mb-4"
               initial={{ opacity: 0 }}
               animate={{
                 opacity: 1,
                 transition: reduce
                   ? { duration: 0.18 }
-                  : { delay: 1.6, duration: 0.3, ease: "easeOut" as const },
+                  : { delay: 1.3, duration: 0.3, ease: "easeOut" as const },
               }}
             >
               <LogoText
@@ -166,13 +166,13 @@ export default function Splash() {
             </motion.div>
 
             <motion.p
-              className="text-sm text-white/90"
+              className="text-center Body_Bold_12 text-white/90"
               initial={{ opacity: 0 }}
               animate={{
                 opacity: 1,
                 transition: reduce
                   ? { duration: 0.18 }
-                  : { delay: 1.6, duration: 0.3, ease: "easeOut" as const },
+                  : { delay: 1.3, duration: 0.3, ease: "easeOut" as const },
               }}
             >
               정성 정량 데이터를 한눈에!
