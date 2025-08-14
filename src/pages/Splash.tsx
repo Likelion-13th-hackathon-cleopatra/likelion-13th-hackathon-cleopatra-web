@@ -26,7 +26,7 @@ export default function Splash() {
     t2.current = window.setTimeout(() => {
       setShow(false);
       t3.current = window.setTimeout(() => {
-        nav("/", { replace: true });
+        nav("/home", { replace: true });
       }, 280);
     }, 3100);
 
