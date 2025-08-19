@@ -128,6 +128,9 @@
   .Head_Bold_18 {
     @apply font-pretendard text-[18px] leading-[27px] tracking-[-0.03em] font-bold;
   }
+  .Head_Bold_16 {
+    @apply font-pretendard text-[16px] leading-[24px] tracking-[-0.03em] font-bold;
+  }
 
   /* Sub_Bold_14: 14 / 21 / -3% / Bold */
   .Sub_Bold_14 {

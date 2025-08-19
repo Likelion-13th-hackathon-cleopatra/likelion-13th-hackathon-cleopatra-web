@@ -14,7 +14,7 @@ export default function Analysis() {
                 </div>
             </div>
             <div className="fixed left-1/2 -translate-x-1/2 w-full max-w-mobile px-[24px] bottom-[112px]">
-                <FilledButton text="분석하기" onClick={() => navigate("/analysis/select")}/>
+                <FilledButton text="지역 상권 분석하기" onClick={() => navigate("/analysis/select")}/>
             </div>
         </main>
     );
