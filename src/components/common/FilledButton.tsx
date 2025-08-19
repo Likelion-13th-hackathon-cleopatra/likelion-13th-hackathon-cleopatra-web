@@ -18,9 +18,9 @@ export default function FilledButton({
       onClick={onClick}
       disabled={disabled}
       className={`
-        w-full py-[14px] rounded-[16px] font-bold text-white
+        w-full py-[14px] rounded-[16px] font-bold text-grayscale-white text-[14px] leading-[150%] tracking-[-0.03em]
         transition-colors duration-200
-        ${disabled ? "bg-gray-400 cursor-not-allowed" : "bg-green-500 hover:bg-green-600"}
+        ${disabled ? "bg-grayscale-25 cursor-not-allowed" : "bg-primary-green"}
         ${className}
       `}
     >
