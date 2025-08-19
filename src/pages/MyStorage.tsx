@@ -54,28 +54,30 @@ export default function MyStorage() {
   }
 
   return (
-    <div className="pb-20 bg-grayscale-5">
-      <MyTopSection
-        user={{ anonId: user.anonId }}
-        onOpenMenu={() => console.log("open menu")}
-        onManageAccount={() => console.log("go device manage")}
-      />
-      <div className="mt-4">
-        <PlanSummaryCard onClick={() => console.log("go plan detail")} />
+    <div className="pb-20">
+      <div className="bg-grayscale-5 pb-6">
+        <MyTopSection
+          user={{ anonId: user.anonId }}
+          onOpenMenu={() => console.log("open menu")}
+          onManageAccount={() => console.log("go device manage")}
+        />
+        <div className="mt-4">
+          <PlanSummaryCard onClick={() => console.log("go plan detail")} />
+        </div>
+        <CommunitySection
+          items={[
+            {
+              label: "내가 작성한 글",
+              onClick: () => console.log("go my posts"),
+            },
+            { label: "저장한 글", onClick: () => console.log("go saved posts") },
+            {
+              label: "관심 키워드 설정",
+              onClick: () => console.log("go keyword settings"),
+            },
+          ]}
+        />
       </div>
-      <CommunitySection
-        items={[
-          {
-            label: "내가 작성한 글",
-            onClick: () => console.log("go my posts"),
-          },
-          { label: "저장한 글", onClick: () => console.log("go saved posts") },
-          {
-            label: "관심 키워드 설정",
-            onClick: () => console.log("go keyword settings"),
-          },
-        ]}
-      />
       <ReportPanel
         reports={reports}
         sort={sort}
