@@ -207,4 +207,32 @@
     background-clip: text;
     color: transparent;
   }
+
+  /* 바텀시트 슬라이드 업 애니메이션 */
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  /* 바텀시트 슬라이드 다운 애니메이션 */
+  .animate-slide-down {
+    animation: slideDown 0.3s ease-in;
+  }
+  
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%) translateX(-50%);
+    }
+    to {
+      transform: translateY(0) translateX(-50%);
+    }
+  }
+  
+  @keyframes slideDown {
+    from {
+      transform: translateY(0) translateX(-50%);
+    }
+    to {
+      transform: translateY(100%) translateX(-50%);
+    }
+  }
 }
