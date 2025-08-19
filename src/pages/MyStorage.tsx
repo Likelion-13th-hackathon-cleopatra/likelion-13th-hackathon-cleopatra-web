@@ -54,9 +54,9 @@ export default function MyStorage() {
   }
 
   return (
-    <div className="pb-20">
+    <div className="pb-20 bg-grayscale-5">
       <MyTopSection
-        user={{ anonId: user.anonId, name: user.name }}
+        user={{ anonId: user.anonId }}
         onOpenMenu={() => console.log("open menu")}
         onManageAccount={() => console.log("go device manage")}
       />
