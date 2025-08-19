@@ -1,11 +1,18 @@
+import FilledButton from "../components/common/FilledButton";
+
 export default function Analysis() {
     return (
-      <main className="min-h-[100svh] p-6">
-        <h2 className="text-xl font-semibold">홈</h2>
-        <p className="mt-2 text-gray-600">
-          스플래시 후 진입하는 기본 화면입니다.
-        </p>
-      </main>
+        <main className="relative min-h-[100svh] bg-grayscale-5">
+            <div className="">
+                <div className="absolute w-full top-[57vh] left-1/2 -translate-x-1/2">
+                    <p className="text-center text-primary-green-80 text-[18px] leading-[27px] tracking-[-0.03em]">
+                        사장님의 성공적인 시작을 돕기 위해<br/>상권에 딱 맞는 리포트를 준비해드릴게요.
+                    </p>
+                </div>
+            </div>
+            <div className="fixed left-1/2 -translate-x-1/2 w-full max-w-mobile px-[24px] bottom-[112px]">
+                <FilledButton text="분석하기" />
+            </div>
+        </main>
     );
-  }
-  
+}

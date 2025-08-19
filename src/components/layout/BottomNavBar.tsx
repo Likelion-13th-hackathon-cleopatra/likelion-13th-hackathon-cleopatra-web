@@ -22,7 +22,7 @@ export default function BottomNavBar() {
   const currentPath = location.pathname;
 
   // Determine active state for each button
-  const isRegionAnalysisActive = currentPath === '/home';
+  const isRegionAnalysisActive = currentPath === '/analysis';
   // For now, community and my-storage are always inactive
   const isCommunityActive = currentPath === '/community';
   const isMyStorageActive = currentPath === '/my-storage';

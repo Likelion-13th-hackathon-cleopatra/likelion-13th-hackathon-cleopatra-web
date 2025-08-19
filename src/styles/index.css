@@ -120,6 +120,9 @@
   .Body_SemiBold_24 {
     @apply font-pretendard text-[24px] leading-[36px] tracking-[-0.03em] font-semibold;
   }
+  .Primary_Green_18 {
+    @apply font-pretendard text-[18px] leading-[27px] tracking-[-0.03em] font-semibold ;
+  }
 
   /* Head_Bold_18: 18 / 27 / -3% / Bold */
   .Head_Bold_18 {
@@ -144,5 +147,61 @@
   /* Body_SemiBold_14: 14 / 21 / -3% / SemiBold */
   .Body_SemiBold_14 {
     @apply font-pretendard text-[14px] leading-[21px] tracking-[-0.03em] font-semibold;
+  }
+  @layer utilities {
+    /* Primary Green with overlays */
+    .bg-primary-green-15 {
+      background: linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15)), #0DB659;
+    }
+    .bg-primary-green-40 {
+      background: linear-gradient(0deg, rgba(0,0,0,0.40), rgba(0,0,0,0.40)), #0DB659;
+    }
+    .bg-primary-green-60 {
+      background: linear-gradient(0deg, rgba(0,0,0,0.20), rgba(0,0,0,0.20)),
+                  linear-gradient(0deg, rgba(0,0,0,0.60), rgba(0,0,0,0.60)),
+                  #0DB659;
+    }
+    .bg-primary-green-80 {
+      background: linear-gradient(0deg, rgba(0,0,0,0.80), rgba(0,0,0,0.80)), #0DB659;
+    }
+  
+    /* Sub Yellow with overlays */
+    .bg-sub-yellow-40 {
+      background: linear-gradient(0deg, rgba(0,0,0,0.40), rgba(0,0,0,0.40)), #FFC251;
+    }
+    .bg-sub-yellow-60 {
+      background: linear-gradient(0deg, rgba(0,0,0,0.60), rgba(0,0,0,0.60)), #FFC251;
+    }
+  
+    /* Grayscale with overlays */
+    .bg-grayscale-5 {
+      background: linear-gradient(0deg, rgba(0,0,0,0.00), rgba(0,0,0,0.00)), #F3F3F1;
+    }
+    .bg-grayscale-15 {
+      background: linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15)), #F3F3F1;
+    }
+    .bg-grayscale-25 {
+      background: linear-gradient(0deg, rgba(0,0,0,0.25), rgba(0,0,0,0.25)), #F3F3F1;
+    }
+    .bg-grayscale-45 {
+      background: linear-gradient(0deg, rgba(0,0,0,0.45), rgba(0,0,0,0.45)), #F3F3F1;
+    }
+    .bg-grayscale-65 {
+      background: linear-gradient(0deg, rgba(0,0,0,0.65), rgba(0,0,0,0.65)), #F3F3F1;
+    }
+    .bg-grayscale-85 {
+      background: linear-gradient(0deg, rgba(0,0,0,0.85), rgba(0,0,0,0.85)), #F3F3F1;
+    }
+  }
+  .text-primary-green-80 {
+    background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.8) 100%
+    ), #0DB659;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
   }
 }
