@@ -4,7 +4,6 @@ import { useState } from "react";
 // MyStorage.tsx에서 사용하는 user 객체에 대한 타입 정의
 export interface User {
   anonId: string;
-  name: string;
 }
 
 /**
@@ -14,7 +13,6 @@ export interface User {
 export function useUser() {
   const [data] = useState<User>({
     anonId: "dev-user-id-12345",
-    name: "클레오파트라",
   });
   const [isLoading] = useState(false);
   const [error] = useState<Error | null>(null);

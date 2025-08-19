@@ -1,10 +1,11 @@
 // src/components/my/MyTopSection.tsx
 import React from "react";
+import profilePlaceholder from "../../assets/icons/profile-placeholder.svg";
 
 type Props = {
-  user: { name?: string; anonId: string };
+  user: { anonId: string };
   onOpenMenu?: () => void;
-  onManageAccount?: () => void; // "기기 관리" 진입 등
+  onManageAccount?: () => void; // "계정 관리" 진입 등
 };
 
 export default function MyTopSection({
@@ -13,41 +14,55 @@ export default function MyTopSection({
   onManageAccount,
 }: Props) {
   return (
-    <section className="sticky top-0 z-10 bg-white/90 backdrop-blur border-b">
+    <section>
       {/* Header */}
-      <div className="flex items-center justify-between px-4 h-12">
-        <div className="w-6" />
-        <h1 className="text-base font-semibold">MY</h1>
+      <div className="relative flex items-center justify-center h-12 px-4">
+        <h1 className="font-bold text-sm leading-[150%] tracking-[-0.03em] text-[#0DB659]">
+          MY
+        </h1>
         <button
           aria-label="메뉴 열기"
           onClick={onOpenMenu}
-          className="w-6 h-6 grid place-items-center rounded hover:bg-gray-100"
+          className="absolute right-4 grid h-6 w-6 place-items-center rounded hover:bg-gray-100"
         >
           <span className="i">≡</span>
         </button>
       </div>
 
       {/* Profile card */}
-      <div className="px-4 pb-3">
-        <div
-          role="button"
-          tabIndex={0}
-          onClick={onManageAccount}
-          className="flex items-center justify-between rounded-2xl border bg-white px-4 py-3 shadow-sm"
-        >
-          <div className="flex items-center gap-3">
-            <div className="size-10 rounded-full bg-gray-200 grid place-items-center text-sm">
-              👤
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm font-medium">{user.name ?? "손님"}</span>
-              <span className="text-xs text-gray-500">기기 관리</span>
-            </div>
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={onManageAccount}
+        className="flex items-center justify-between px-6 pb-3"
+      >
+        <div className="flex items-center gap-3">
+          <img src={profilePlaceholder} alt="프로필" className="h-16 w-16" />
+          <div className="flex flex-col gap-1">
+            <span className="text-sm font-bold leading-[150%] tracking-[-0.03em]">
+              홍길동 사장님
+            </span>
+            <span className="text-xs font-bold leading-[150%] tracking-[-0.03em] text-[#B6B6B5]">
+              계정 관리
+            </span>
           </div>
-          <span aria-hidden className="text-gray-400">
-            ›
-          </span>
         </div>
+        <svg
+          className="-rotate-90 transform text-[#0DB659]"
+          width="12"
+          height="8"
+          viewBox="0 0 12 8"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M1.5 1.75L6 6.25L10.5 1.75"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
       </div>
     </section>
   );
