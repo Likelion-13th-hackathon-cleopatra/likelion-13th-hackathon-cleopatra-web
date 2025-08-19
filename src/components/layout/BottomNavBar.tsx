@@ -22,7 +22,7 @@ export default function BottomNavBar() {
   const currentPath = location.pathname;
 
   // Determine active state for each button
-  const isRegionAnalysisActive = currentPath === '/analysis';
+  const isRegionAnalysisActive = currentPath === '/analysis' || currentPath.startsWith('/analysis/');
   // For now, community and my-storage are always inactive
   const isCommunityActive = currentPath === '/community';
   const isMyStorageActive = currentPath === '/my-storage';
@@ -53,7 +53,7 @@ export default function BottomNavBar() {
           icon={isRegionAnalysisActive ? RegionAnalysisActive : RegionAnalysisInactive}
           label="지역분석"
           isActive={isRegionAnalysisActive}
-          onClick={() => navigate('/home')}
+          onClick={() => navigate('/analysis')}
         />
 
         {/* 커뮤니티 - 화면 중앙 배치 */}

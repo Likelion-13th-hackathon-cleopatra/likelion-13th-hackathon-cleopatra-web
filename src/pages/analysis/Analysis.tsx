@@ -1,6 +1,9 @@
-import FilledButton from "../components/common/FilledButton";
+import { useNavigate } from "react-router-dom";
+import FilledButton from "../../components/common/FilledButton";
 
 export default function Analysis() {
+    const navigate = useNavigate();
+
     return (
         <main className="relative min-h-[100svh] bg-grayscale-5">
             <div className="">
@@ -11,7 +14,7 @@ export default function Analysis() {
                 </div>
             </div>
             <div className="fixed left-1/2 -translate-x-1/2 w-full max-w-mobile px-[24px] bottom-[112px]">
-                <FilledButton text="분석하기" />
+                <FilledButton text="분석하기" onClick={() => navigate("/analysis/select")}/>
             </div>
         </main>
     );
