@@ -60,13 +60,8 @@ export default function MyStorage() {
         onOpenMenu={() => console.log("open menu")}
         onManageAccount={() => console.log("go device manage")}
       />
-      <div className="mt-3">
-        <PlanSummaryCard
-          planName={plan.name}
-          remainingReports={plan.remainingReports}
-          createdReports={plan.createdReports}
-          onClick={() => console.log("go plan detail")}
-        />
+      <div className="mt-4">
+        <PlanSummaryCard onClick={() => console.log("go plan detail")} />
       </div>
       <CommunitySection
         items={[

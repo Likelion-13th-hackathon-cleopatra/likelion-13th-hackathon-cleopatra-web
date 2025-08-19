@@ -14,7 +14,7 @@ export default function MyTopSection({
   onManageAccount,
 }: Props) {
   return (
-    <section className="border-b">
+    <section>
       {/* Header */}
       <div className="relative flex items-center justify-center h-12 px-4">
         <h1 className="font-bold text-sm leading-[150%] tracking-[-0.03em] text-[#0DB659]">
