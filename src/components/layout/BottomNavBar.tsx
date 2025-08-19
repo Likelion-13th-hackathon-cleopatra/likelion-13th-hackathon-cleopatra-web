@@ -9,6 +9,13 @@ import CommunityInactive from '../../assets/icons/gnb/community.svg?react';
 import MyStorageActive from '../../assets/icons/gnb/my-storage-active.svg?react'; // Assuming active for my-storage is needed later
 import MyStorageInactive from '../../assets/icons/gnb/my-storage.svg?react';
 
+interface NavItemProps {
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  isActive: boolean;
+  onClick: () => void;
+}
+
 export default function BottomNavBar() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,9 +28,9 @@ export default function BottomNavBar() {
   const isMyStorageActive = currentPath === '/my-storage';
 
   // Function to render a navigation item
-  const NavItem = ({ icon: Icon, label, isActive, onClick }) => (
+  const NavItem = ({ icon: Icon, label, isActive, onClick }: NavItemProps) => (
     <button
-      className="flex flex-col items-center justify-center w-[70px] h-[60px] text-gray-600 hover:text-blue-500"
+      className="flex flex-col items-center justify-center w-[70px] h-[60px] text-gray-600 hover:text-blue-500 transition-colors"
       onClick={onClick}
     >
       <Icon className="w-full h-full" /> {/* Icon will fill the button size */}
@@ -33,9 +40,14 @@ export default function BottomNavBar() {
   );
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg z-50"
-         style={{ height: '88px', width: '100vw', padding: '8px 54px 20px 54px' }}>
-      <div className="flex justify-between items-center h-full"> {/* Use justify-between for spacing */}
+    <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 bg-white shadow-lg z-50 border-t border-gray-200"
+         style={{ 
+           height: '88px', 
+           width: '430px', 
+           maxWidth: '100vw',
+           padding: '8px 54px 20px 54px' 
+         }}>
+      <div className="flex justify-between items-center h-full">
         {/* 지역분석 */}
         <NavItem
           icon={isRegionAnalysisActive ? RegionAnalysisActive : RegionAnalysisInactive}
