@@ -80,14 +80,8 @@ export default function MyStorage() {
       </div>
       <ReportPanel
         reports={reports}
-        sort={sort}
-        filter={filter}
-        query={query}
         loading={isReportsLoading}
         error={reportsError}
-        onChangeSort={setSort}
-        onChangeFilter={setFilter}
-        onChangeQuery={setQuery}
         onOpenReport={(id) => nav(`/reports/${id}`)}
         onToggleStar={toggleStar}
       />
