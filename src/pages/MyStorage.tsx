@@ -84,6 +84,8 @@ export default function MyStorage() {
         error={reportsError}
         onOpenReport={(id) => nav(`/reports/${id}`)}
         onToggleStar={toggleStar}
+        filter={filter}
+        onChangeFilter={setFilter}
       />
     </div>
   );

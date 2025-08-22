@@ -10,7 +10,7 @@ export type Plan = {
 
 export type ReportSummary = {
   id: string;
-  category: "restaurant" | "gym" | "cafe" | "etc";
+  category: string;
   dong: string; // 예: "공릉1동"
   label: string; // 예: "패스트푸드"
   createdAt: string; // ISO
