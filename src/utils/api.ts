@@ -29,8 +29,8 @@ export async function authenticatedFetch(
 // authenticatedFetch(`${API_BASE_URL}/data`, { method: 'GET' });
 
 export const userApi = {
-  registerUser: async () => {
-    const response = await authenticatedFetch(`${API_BASE_URL}/api/member`, {
+  registerUser: async (primaryKey: string) => {
+    const response = await fetch(`${API_BASE_URL}/api/member/${primaryKey}`, {
       method: "POST",
     });
     return response.json();

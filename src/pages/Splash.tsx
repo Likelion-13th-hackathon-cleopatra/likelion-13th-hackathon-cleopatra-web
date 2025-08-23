@@ -25,8 +25,7 @@ export default function Splash() {
   useEffect(() => {
     const handleNavigation = async () => {
       const anonymousId = getAnonymousId();
-      localStorage.setItem('anonymousId', anonymousId);
-      await userApi.registerUser();
+      await userApi.registerUser(anonymousId);
 
       t3.current = window.setTimeout(() => {
         nav("/home", { replace: true });
