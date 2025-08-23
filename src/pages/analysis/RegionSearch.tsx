@@ -68,11 +68,15 @@ export default function RegionSearch() {
     
     return (
       <>
-        {text.substring(0, startIndex)}
-        <span className="text-primary-green-40 font-semibold">
+        <span className="text-gray-25">
+          {text.substring(0, startIndex)}
+        </span>
+        <span className="text-primary-green Sub_Bold_14">
           {text.substring(startIndex, endIndex)}
         </span>
-        {text.substring(endIndex)}
+        <span className="text-gray-25">
+          {text.substring(endIndex)}
+        </span>
       </>
     );
   };
@@ -119,12 +123,12 @@ export default function RegionSearch() {
 
         {/* 가운데 정렬된 제목 */}
         <div className="flex items-center justify-center h-full">
-          <span className="Head_Bold_16 text-gray-900">지역 직접 검색</span>
+          <span className="Sub_Bold_14 text-primary-green">지역 직접 검색</span>
         </div>
       </header>
 
       {/* AnalysisSelect와 똑같은 검색창 */}
-      <div className="px-[24px] py-[20px]">
+      <div className="px-[24px] py-[16px]">
         <SearchInput 
           placeholder="지역 직접 검색"
           value={searchQuery}
@@ -134,7 +138,7 @@ export default function RegionSearch() {
       </div>
 
       {/* 검색 결과 영역 */}
-      <div className="px-[24px] py-[20px]">
+      <div className="px-[24px]">
         {searchQuery.length > 0 ? (
           <div>
             {/* 실제 검색 결과 리스트 */}
@@ -146,14 +150,13 @@ export default function RegionSearch() {
                     onClick={() => handleResultClick(result)}
                     className="cursor-pointer"
                   >
-                    <p className="Sub_Bold_14 text-gray-800">
+                    <p className="Sub_Bold_14">
                       {highlightSearchTerm(result.fullAddress, searchQuery)}
                     </p>
                   </div>
                 ))
               ) : (
                 <p className="Sub_Bold_14 text-gray-500 text-center py-[40px]">
-                  검색 결과가 없습니다
                 </p>
               )}
             </div>
