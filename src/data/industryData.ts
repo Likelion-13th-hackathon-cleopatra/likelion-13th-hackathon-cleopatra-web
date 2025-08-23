@@ -40,12 +40,12 @@ export const industryData: Record<string, Industry> = {
       { id: 'law', name: '법률', icon: '/src/assets/icons/category/law.svg' }
     ]
   },
-  medical: {
+  business: {
     id: 'business',
     name: '도매업',
-    icon: '/src/assets/icons/category/business.svg',
+    icon: '/src/assets/icons/category/bussiness.svg',
     subCategories: [
-      { id: 'clothing', name: '의류', icon: '/src/assets/icons/category/business.svg' },
+      { id: 'clothing', name: '의류', icon: '/src/assets/icons/category/bussiness.svg' },
       { id: 'sports', name: '스포츠', icon: '/src/assets/icons/category/sports.svg' },
       { id: 'book', name: '서적', icon: '/src/assets/icons/category/book.svg' },
       { id: 'plant', name: '식물', icon: '/src/assets/icons/category/plant.svg' },

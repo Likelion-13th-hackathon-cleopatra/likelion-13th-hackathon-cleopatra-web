@@ -4,29 +4,35 @@ import FilledButton from "../../components/common/FilledButton";
 import SelectButton from "../../components/common/SelectButton";
 import BottomSheet from "../../components/common/BottomSheet";
 import IndustrySelector from "../../components/common/IndustrySelector";
+import SubCategorySelector from "../../components/common/SubCategorySelector";
+import { getIndustryById, getSubCategoryById } from "../../data/industryData";
 
 export default function AnalysisSelect() {
   const navigate = useNavigate();
   const [isIndustrySheetOpen, setIsIndustrySheetOpen] = useState(false);
   const [selectedIndustry, setSelectedIndustry] = useState<string>('');
+  const [isSubCategorySheetOpen, setIsSubCategorySheetOpen] = useState(false);
+  const [selectedSubCategory, setSelectedSubCategory] = useState<string>('');
 
   const handleIndustrySelect = (industryId: string) => {
     setSelectedIndustry(industryId);
+    setSelectedSubCategory(''); // 업종 변경 시 하위 카테고리 초기화
     setIsIndustrySheetOpen(false);
   };
 
-  const getIndustryName = (id: string) => {
-    const industries = {
-      food: '요식업',
-      service: '서비스업',
-      medical: '의료업',
-      sports: '스포츠',
-      beauty: '뷰티',
-      culture: '문화',
-      legal: '법률',
-      retail: '도소매업',
-    };
-    return industries[id as keyof typeof industries] || '창업 업종';
+  const handleSubCategorySelect = (subCategoryId: string) => {
+    setSelectedSubCategory(subCategoryId);
+    setIsSubCategorySheetOpen(false);
+  };
+
+  const getDisplayName = (type: 'industry' | 'subCategory', id: string, industryId?: string) => {
+    if (type === 'industry') {
+      const industry = getIndustryById(id);
+      return industry?.name || '창업 업종';
+    } else {
+      const subCategory = getSubCategoryById(industryId!, id);
+      return subCategory?.name || '업종 하위 구분';
+    }
   };
 
   return (
@@ -39,12 +45,13 @@ export default function AnalysisSelect() {
 
         <div className="flex flex-row gap-[10px]">
           <SelectButton
-            label={selectedIndustry ? getIndustryName(selectedIndustry) : "창업 업종"}
+            label={selectedIndustry ? getDisplayName('industry', selectedIndustry) : "창업 업종"}
             onClick={() => setIsIndustrySheetOpen(true)}
           />
           <SelectButton
-            label="업종 하위 구분"
-            onClick={() => console.log("하위 업종 선택")}
+            label={selectedSubCategory ? getDisplayName('subCategory', selectedSubCategory, selectedIndustry) : "업종 하위 구분"}
+            onClick={() => selectedIndustry ? setIsSubCategorySheetOpen(true) : undefined}
+            className={selectedIndustry ? '' : 'opacity-50 cursor-not-allowed'}
           />
         </div>
       </section>
@@ -84,12 +91,26 @@ export default function AnalysisSelect() {
         name="industry-selector"
         isOpen={isIndustrySheetOpen}
         onClose={() => setIsIndustrySheetOpen(false)}
-        title="창업 업종 선택"
       >
         <IndustrySelector
           selectedIndustry={selectedIndustry}
           onSelect={handleIndustrySelect}
         />
+      </BottomSheet>
+
+      {/* 업종 하위 구분 선택 바텀시트 */}
+      <BottomSheet
+        name="sub-category-selector"
+        isOpen={isSubCategorySheetOpen}
+        onClose={() => setIsSubCategorySheetOpen(false)}
+      >
+        {selectedIndustry && (
+          <SubCategorySelector
+            industryId={selectedIndustry}
+            selectedSubCategory={selectedSubCategory}
+            onSelect={handleSubCategorySelect}
+          />
+        )}
       </BottomSheet>
     </main>
   );
