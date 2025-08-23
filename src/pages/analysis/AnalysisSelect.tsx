@@ -9,11 +9,13 @@ import CitySelector from "../../components/common/CitySelector";
 import DistrictSelector from "../../components/common/DistrictSelector";
 import DongSelector from "../../components/common/DongSelector";
 import SearchInput from "../../components/common/SearchInput";
+import KakaoMapNew from "../../components/common/KakaoMapNew";
 import { getIndustryById, getSubCategoryById } from "../../data/industryData";
 import { getCityById, getDistrictById, getDongById } from "../../data/regionData";
 
 export default function AnalysisSelect() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isIndustrySheetOpen, setIsIndustrySheetOpen] = useState(false);
   const [selectedIndustry, setSelectedIndustry] = useState<string>('');
   const [isSubCategorySheetOpen, setIsSubCategorySheetOpen] = useState(false);
@@ -26,6 +28,54 @@ export default function AnalysisSelect() {
   const [selectedDistrict, setSelectedDistrict] = useState<string>('');
   const [isDongSheetOpen, setIsDongSheetOpen] = useState(false);
   const [selectedDong, setSelectedDong] = useState<string>('');
+
+  // URL 파라미터에서 지역 정보 읽어와서 상태 업데이트
+  useEffect(() => {
+    const cityParam = searchParams.get('city');
+    const districtParam = searchParams.get('district');
+    const dongParam = searchParams.get('dong');
+
+    if (cityParam || districtParam || dongParam) {
+      // cityParam에서 city ID 찾기 (예: "서울시" -> "seoul")
+      if (cityParam === '서울시') {
+        setSelectedCity('seoul');
+      }
+      
+      // districtParam에서 district ID 찾기
+      if (districtParam && cityParam === '서울시') {
+        // regionData에서 district ID 찾기
+        const city = getCityById('seoul');
+        if (city) {
+          const districtEntry = Object.entries(city.districts).find(
+            ([_, district]) => district.name === districtParam
+          );
+          if (districtEntry) {
+            setSelectedDistrict(districtEntry[0]);
+          }
+        }
+      }
+      
+      // dongParam에서 dong ID 찾기
+      if (dongParam && districtParam && cityParam === '서울시') {
+        const city = getCityById('seoul');
+        if (city) {
+          const districtEntry = Object.entries(city.districts).find(
+            ([_, district]) => district.name === districtParam
+          );
+          if (districtEntry) {
+            const district = districtEntry[1];
+            const dongEntry = district.dongs.find(dong => dong.name === dongParam);
+            if (dongEntry) {
+              setSelectedDong(dongEntry.id);
+            }
+          }
+        }
+      }
+      
+      // URL 파라미터 제거 (한 번만 적용)
+      setSearchParams({});
+    }
+  }, [searchParams, setSearchParams]);
 
   const handleIndustrySelect = (industryId: string) => {
     setSelectedIndustry(industryId);
@@ -137,12 +187,22 @@ export default function AnalysisSelect() {
           placeholder="지역 직접 검색"
           navigateToSearch={true}
         />
+        
+        {/* 카카오맵 */}
+        <div className="mt-[16px]">
+          <KakaoMapNew
+            selectedCity={selectedCity ? getCityById(selectedCity)?.name : undefined}
+            selectedDistrict={selectedDistrict ? getDistrictById(selectedCity, selectedDistrict)?.name : undefined}
+            selectedDong={selectedDong ? getDongById(selectedCity, selectedDistrict, selectedDong)?.name : undefined}
+            height="200px"
+          />
+        </div>
       </section>
 
       {/* 하단 고정 CTA (BottomNavBar 88px + 24px) */}
       <div className="fixed left-1/2 -translate-x-1/2 w-full max-w-mobile px-[24px] bottom-[112px]">
         <FilledButton text="분석하기" onClick={() => navigate("/analysis/result")} />
-      </div>
+  </div>
 
       {/* 창업 업종 선택 바텀시트 */}
       <BottomSheet
