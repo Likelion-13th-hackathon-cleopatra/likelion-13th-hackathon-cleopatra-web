@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  ChevronRight,
-  ChevronDown,
-  MoreHorizontal,
-} from "lucide-react";
+import { ChevronRight, ChevronDown } from "lucide-react";
 import SearchIcon from "../assets/community/search.svg?react";
 import NotificationIcon from "../assets/community/notification.svg?react";
 import Picture1 from "../assets/community/picture1.svg?react";
@@ -13,12 +9,6 @@ import Picture4 from "../assets/community/picture4.svg?react";
 import Picture5 from "../assets/community/picture5.svg?react";
 import Picture6 from "../assets/community/picture6.svg?react";
 import PostCard from "../components/community/PostCard";
-
-
-// 해커톤용: 정적 UI 전용 컴포넌트
-// - 모든 데이터는 하드코딩된 placeholder
-// - 정렬/필터 칩은 UI 하이라이트만 토글됨 (데이터 변화 없음)
-// - Tailwind 만으로 스타일링 (다크모드 미포함)
 
 const keywords = [
   "임대료",
@@ -74,7 +64,12 @@ export default function CommunityPage() {
   const sortLabel = sort === "latest" ? "최신순" : "인기순";
 
   // 필터 칩 선택 - UI만 토글
-  const chipOptions = ["창업 준비 중", "오픈 초기", "매출 고민", "마케팅"];
+  const chipOptions = [
+    "🚀  창업 준비 중",
+    "🏗️  오픈 초기",
+    "💸  매출 고민",
+    "📢  마케팅",
+  ];
   const [selectedChips, setSelectedChips] = React.useState(["창업 준비 중"]);
   const toggleChip = (label) => {
     setSelectedChips((prev) =>
@@ -117,15 +112,14 @@ export default function CommunityPage() {
 
         {/* 커뮤니티 그룹 */}
         <section>
-          <h2 className="head-bold16 text-primary-green80 mb-4">커뮤니티 그룹</h2>
+          <h2 className="head-bold16 text-primary-green80 mb-4">
+            커뮤니티 그룹
+          </h2>
           <div className="flex gap-4 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {groups.map((g) => (
               <div key={g.name} className="shrink-0 w-[50px]">
                 <div className="h-[50px] w-[50px] rounded-[15px] overflow-hidden">
-                  <g.Img
-                    alt={g.name}
-                    className="h-full w-full object-cover"
-                  />
+                  <g.Img alt={g.name} className="h-full w-full object-cover" />
                 </div>
                 <p className="mt-[10px] text-center Sub_Bold_10 text-primary-green80 whitespace-nowrap overflow-hidden text-ellipsis">
                   {g.name}
@@ -138,7 +132,9 @@ export default function CommunityPage() {
         {/* 지금 인기 있는 글 */}
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="head-bold16 text-primary-green80">지금 인기 있는 글</h2>
+            <h2 className="head-bold16 text-primary-green80">
+              지금 인기 있는 글
+            </h2>
             <button className="flex items-center gap-1 Body_Regular_10">
               <span className="text-grayscale-25">더보기</span>
               <ChevronRight className="w-4 h-4 text-[#0DB659]" />
@@ -154,7 +150,9 @@ export default function CommunityPage() {
         {/* 추천 피드 */}
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="head-bold16 text-primary-green80">홍길동 님 추천 피드</h2>
+            <h2 className="head-bold16 text-primary-green80">
+              홍길동 님 추천 피드
+            </h2>
             {/* 정렬 드롭다운 */}
             <div
               className="relative"
@@ -207,14 +205,14 @@ export default function CommunityPage() {
 
           {/* 필터 칩스 (선택 토글) */}
           <div className="overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden mb-3">
-            <div className="inline-flex gap-2">
+            <div className="inline-flex gap-[6px]">
               {chipOptions.map((label) => {
                 const active = selectedChips.includes(label);
                 return (
                   <button
                     key={label}
                     className={
-                      "shrink-0 inline-flex items-center rounded-full border px-3 py-1 text-xs transition " +
+                      "shrink-0 inline-flex items-center rounded-full border px-2 py-1 Sub_Bold_12 transition " +
                       (active
                         ? "border-[#0DB659] bg-[#0DB659]/10 text-[#0DB659]"
                         : "border-[#0DB659]/20 bg-white text-[#242424]")
@@ -235,7 +233,7 @@ export default function CommunityPage() {
           </div>
         </section>
 
-        <div className="h-6" />
+        <div className="h-[112px]" />
       </main>
     </div>
   );
