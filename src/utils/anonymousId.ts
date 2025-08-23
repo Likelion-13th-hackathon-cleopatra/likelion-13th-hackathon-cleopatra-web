@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-const ANONYMOUS_ID_KEY = "userid"; // Key for localStorage
+const ANONYMOUS_ID_KEY = "primary_key"; // Key for localStorage
 
 export function getAnonymousId(): string {
   let anonymousId = localStorage.getItem(ANONYMOUS_ID_KEY);

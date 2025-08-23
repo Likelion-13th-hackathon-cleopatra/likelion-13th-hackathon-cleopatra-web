@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../components/icons/Logo";
 import LogoText from "../components/icons/LogoText";
+import { userApi } from "../utils/api";
+import { getAnonymousId } from "../utils/anonymousId";
 
 export default function Splash() {
   const nav = useNavigate();
@@ -21,13 +23,20 @@ export default function Splash() {
   // 4. 총 3.1초 후, 화면이 사라지는 exit 애니메이션(0.28초) 시작
   // 5. exit 애니메이션 종료 후 /home으로 이동
   useEffect(() => {
+    const handleNavigation = async () => {
+      const anonymousId = getAnonymousId();
+      await userApi.registerUser(anonymousId);
+
+      t3.current = window.setTimeout(() => {
+        nav("/home", { replace: true });
+      }, 280);
+    };
+
     t1.current = window.setTimeout(() => setShow(true), 500);
 
     t2.current = window.setTimeout(() => {
       setShow(false);
-      t3.current = window.setTimeout(() => {
-        nav("/home", { replace: true });
-      }, 280);
+      handleNavigation();
     }, 3100);
 
     return () => {
