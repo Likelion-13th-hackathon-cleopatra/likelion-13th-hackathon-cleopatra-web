@@ -157,7 +157,7 @@
       background: linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15)), #0DB659;
     }
     .bg-primary-green-20 {
-      background: linear-gradient(0deg, rgba(0,0,0,0.20), rgba(0,0,0,0.20)), #0DB659;
+      background:  #0DB659;
     }
     .bg-primary-green-40 {
       background: linear-gradient(0deg, rgba(0,0,0,0.40), rgba(0,0,0,0.40)), #0DB659;

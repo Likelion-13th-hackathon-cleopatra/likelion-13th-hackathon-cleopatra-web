@@ -5,7 +5,11 @@ import SelectButton from "../../components/common/SelectButton";
 import BottomSheet from "../../components/common/BottomSheet";
 import IndustrySelector from "../../components/common/IndustrySelector";
 import SubCategorySelector from "../../components/common/SubCategorySelector";
+import CitySelector from "../../components/common/CitySelector";
+import DistrictSelector from "../../components/common/DistrictSelector";
+import DongSelector from "../../components/common/DongSelector";
 import { getIndustryById, getSubCategoryById } from "../../data/industryData";
+import { getCityById, getDistrictById, getDongById } from "../../data/regionData";
 
 export default function AnalysisSelect() {
   const navigate = useNavigate();
@@ -13,6 +17,14 @@ export default function AnalysisSelect() {
   const [selectedIndustry, setSelectedIndustry] = useState<string>('');
   const [isSubCategorySheetOpen, setIsSubCategorySheetOpen] = useState(false);
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>('');
+  
+  // 지역 선택 상태
+  const [isCitySheetOpen, setIsCitySheetOpen] = useState(false);
+  const [selectedCity, setSelectedCity] = useState<string>('');
+  const [isDistrictSheetOpen, setIsDistrictSheetOpen] = useState(false);
+  const [selectedDistrict, setSelectedDistrict] = useState<string>('');
+  const [isDongSheetOpen, setIsDongSheetOpen] = useState(false);
+  const [selectedDong, setSelectedDong] = useState<string>('');
 
   const handleIndustrySelect = (industryId: string) => {
     setSelectedIndustry(industryId);
@@ -25,6 +37,25 @@ export default function AnalysisSelect() {
     setIsSubCategorySheetOpen(false);
   };
 
+  // 지역 선택 핸들러
+  const handleCitySelect = (cityId: string) => {
+    setSelectedCity(cityId);
+    setSelectedDistrict(''); // 시도 변경 시 구 초기화
+    setSelectedDong(''); // 시도 변경 시 동 초기화
+    setIsCitySheetOpen(false);
+  };
+
+  const handleDistrictSelect = (districtId: string) => {
+    setSelectedDistrict(districtId);
+    setSelectedDong(''); // 구 변경 시 동 초기화
+    setIsDistrictSheetOpen(false);
+  };
+
+  const handleDongSelect = (dongId: string) => {
+    setSelectedDong(dongId);
+    setIsDongSheetOpen(false);
+  };
+
   const getDisplayName = (type: 'industry' | 'subCategory', id: string, industryId?: string) => {
     if (type === 'industry') {
       const industry = getIndustryById(id);
@@ -32,6 +63,19 @@ export default function AnalysisSelect() {
     } else {
       const subCategory = getSubCategoryById(industryId!, id);
       return subCategory?.name || '업종 하위 구분';
+    }
+  };
+
+  const getRegionDisplayName = (type: 'city' | 'district' | 'dong', id: string, cityId?: string, districtId?: string) => {
+    if (type === 'city') {
+      const city = getCityById(id);
+      return city?.name || '시/도';
+    } else if (type === 'district') {
+      const district = getDistrictById(cityId!, id);
+      return district?.name || '시/군/구';
+    } else {
+      const dong = getDongById(cityId!, districtId!, id);
+      return dong?.name || '읍/면/동';
     }
   };
 
@@ -67,16 +111,18 @@ export default function AnalysisSelect() {
 
         <div className="flex flex-row gap-[10px]">
           <SelectButton
-            label="시/도"
-            onClick={() => console.log("시/도 선택")}
+            label={selectedCity ? getRegionDisplayName('city', selectedCity) : "시/도"}
+            onClick={() => setIsCitySheetOpen(true)}
           />
           <SelectButton
-            label="시/군/구"
-            onClick={() => console.log("시/군/구 선택")}
+            label={selectedDistrict ? getRegionDisplayName('district', selectedDistrict, selectedCity) : "시/군/구"}
+            onClick={() => selectedCity ? setIsDistrictSheetOpen(true) : undefined}
+            className={selectedCity ? '' : 'opacity-50 cursor-not-allowed'}
           />
           <SelectButton
-            label="읍/면/동"
-            onClick={() => console.log("읍/면/동 선택")}
+            label={selectedDong ? getRegionDisplayName('dong', selectedDong, selectedCity, selectedDistrict) : "읍/면/동"}
+            onClick={() => selectedDistrict ? setIsDongSheetOpen(true) : undefined}
+            className={selectedDistrict ? '' : 'opacity-50 cursor-not-allowed'}
           />
         </div>
       </section>
@@ -109,6 +155,49 @@ export default function AnalysisSelect() {
             industryId={selectedIndustry}
             selectedSubCategory={selectedSubCategory}
             onSelect={handleSubCategorySelect}
+          />
+        )}
+      </BottomSheet>
+
+      {/* 시도 선택 바텀시트 */}
+      <BottomSheet
+        name="city-selector"
+        isOpen={isCitySheetOpen}
+        onClose={() => setIsCitySheetOpen(false)}
+      >
+        <CitySelector
+          selectedCity={selectedCity}
+          onSelect={handleCitySelect}
+        />
+      </BottomSheet>
+
+      {/* 구 선택 바텀시트 */}
+      <BottomSheet
+        name="district-selector"
+        isOpen={isDistrictSheetOpen}
+        onClose={() => setIsDistrictSheetOpen(false)}
+      >
+        {selectedCity && (
+          <DistrictSelector
+            cityId={selectedCity}
+            selectedDistrict={selectedDistrict}
+            onSelect={handleDistrictSelect}
+          />
+        )}
+      </BottomSheet>
+
+      {/* 동 선택 바텀시트 */}
+      <BottomSheet
+        name="dong-selector"
+        isOpen={isDongSheetOpen}
+        onClose={() => setIsDongSheetOpen(false)}
+      >
+        {selectedCity && selectedDistrict && (
+          <DongSelector
+            cityId={selectedCity}
+            districtId={selectedDistrict}
+            selectedDong={selectedDong}
+            onSelect={handleDongSelect}
           />
         )}
       </BottomSheet>
