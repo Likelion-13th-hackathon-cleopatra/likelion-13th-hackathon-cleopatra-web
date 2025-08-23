@@ -8,6 +8,7 @@ import SubCategorySelector from "../../components/common/SubCategorySelector";
 import CitySelector from "../../components/common/CitySelector";
 import DistrictSelector from "../../components/common/DistrictSelector";
 import DongSelector from "../../components/common/DongSelector";
+import SearchInput from "../../components/common/SearchInput";
 import { getIndustryById, getSubCategoryById } from "../../data/industryData";
 import { getCityById, getDistrictById, getDongById } from "../../data/regionData";
 
@@ -125,6 +126,18 @@ export default function AnalysisSelect() {
             className={selectedDistrict ? '' : 'opacity-50 cursor-not-allowed'}
           />
         </div>
+      </section>
+
+      {/* 섹션 간 간격 */}
+      <div className="h-[12px]" />
+
+      {/* 섹션 3: 지역 직접 검색 */}
+      <section className="max-w-mobile mx-auto">
+        <SearchInput 
+          placeholder="지역 직접 검색"
+          onChange={(value) => console.log('검색어:', value)}
+          onSearch={(value) => console.log('검색 실행:', value)}
+        />
       </section>
 
       {/* 하단 고정 CTA (BottomNavBar 88px + 24px) */}

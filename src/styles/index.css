@@ -210,6 +210,17 @@
     background-clip: text;
     color: transparent;
   }
+    .text-gray-25 {
+      background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.25) 0%,
+      rgba(0, 0, 0, 0.25) 100%
+    ), #F3F3F1;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
 
   .text-primary-green-80 {
     background: linear-gradient(
