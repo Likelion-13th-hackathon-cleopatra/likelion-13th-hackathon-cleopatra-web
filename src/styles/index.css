@@ -97,7 +97,9 @@
   .Head_Bold_18 {
     @apply font-pretendard text-[18px] leading-[27px] tracking-[-0.03em] font-bold;
   }
-
+  .Head_Bold_16 {
+    @apply font-pretendard text-[16px] leading-[24px] tracking-[-0.03em] font-extrabold;
+  }
   /* Sub_Bold_14: 14 / 21 / -3% / Bold */
   .Sub_Bold_14 {
     @apply font-pretendard text-[14px] leading-[21px] tracking-[-0.03em] font-bold;
@@ -116,5 +118,11 @@
   /* Body_SemiBold_14: 14 / 21 / -3% / SemiBold */
   .Body_SemiBold_14 {
     @apply font-pretendard text-[14px] leading-[21px] tracking-[-0.03em] font-semibold;
+  }
+  .Body_Regular_10 {
+    @apply font-pretendard text-[10px] leading-[15px] tracking-[-0.03em] font-normal;
+  }
+  .Sub_Regular_12 {
+    @apply font-pretendard text-[12px] leading-[18px] tracking-[-0.03em] font-normal;
   }
 }

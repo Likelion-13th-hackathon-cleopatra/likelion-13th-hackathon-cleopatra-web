@@ -1,5 +1,5 @@
 // src/pages/MyStorage.tsx
-import React, { useState } from "react";
+import { useState } from "react";
 import MyTopSection from "../components/my/MyTopSection";
 import { PlanSummaryCard } from "../components/my/_parts/PlanSummaryCard";
 import { CommunitySection } from "../components/my/_parts/CommunitySection";
@@ -15,9 +15,9 @@ export default function MyStorage() {
   const { data: user, isLoading: isUserLoading, error: userError } = useUser();
   const { data: plan, isLoading: isPlanLoading, error: planError } = usePlan();
 
-  const [sort, setSort] = useState<SortKey>("date_desc");
+  const sort: SortKey = "date_desc";
   const [filter, setFilter] = useState<Filter>({});
-  const [query, setQuery] = useState("");
+  const query = "";
 
   const {
     data: reports,
