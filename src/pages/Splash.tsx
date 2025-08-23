@@ -126,7 +126,7 @@ export default function Splash() {
                       transition: {
                         duration: 1.3,
                         times: [0, 0.385, 1],
-                        ease: "easeOut" as const,
+                        ease: [0.05, 0.7, 0.1, 1],
                       },
                     }
               }
@@ -151,12 +151,19 @@ export default function Splash() {
             {/* 아이콘 로고, 배경 전환과 같은 시점(1.3초 뒤)에 나타남 */}
             <motion.div
               className="mb-4"
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{
                 opacity: 1,
+                y: 0,
                 transition: reduce
                   ? { duration: 0.18 }
-                  : { delay: 1.3, duration: 0.3, ease: "easeOut" as const },
+                  : {
+                      delay: 1.3,
+                      type: "spring",
+                      stiffness: 120,
+                      damping: 15,
+                      mass: 1,
+                    },
               }}
             >
               <LogoText
@@ -167,12 +174,19 @@ export default function Splash() {
 
             <motion.p
               className="text-center Body_Bold_12 text-white/90"
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{
                 opacity: 1,
+                y: 0,
                 transition: reduce
                   ? { duration: 0.18 }
-                  : { delay: 1.3, duration: 0.3, ease: "easeOut" as const },
+                  : {
+                      delay: 1.4, // Slightly increased delay
+                      type: "spring",
+                      stiffness: 120,
+                      damping: 15,
+                      mass: 1,
+                    },
               }}
             >
               정성 정량 데이터를 한눈에!
