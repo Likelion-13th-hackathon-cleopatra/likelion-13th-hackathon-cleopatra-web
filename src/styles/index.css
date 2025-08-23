@@ -262,3 +262,8 @@
     }
   }
 }
+
+/* SVG stroke용 primary-green-40 색상 */
+.stroke-primary-green-40 {
+  stroke: #086D36; /* #0DB659에 40% 검은색 오버레이 적용된 색상 */
+}

@@ -92,12 +92,13 @@ export default function RegionSearch() {
   };
 
   return (
-    <main className="relative min-h-[100svh] bg-grayscale-white">
+    <main className="relative min-h-[100svh] bg-grayscale-5">
       {/* 헤더 */}
-      <header className="flex items-center px-[24px] py-[16px] bg-white border-b border-gray-100">
+      <header className="relative px-[24px] py-[19.5px] bg-grayscale-5 border-b border-gray-100">
+        {/* 뒤로가기 버튼 */}
         <button
           onClick={handleBack}
-          className="mr-[12px] p-2 rounded-full hover:bg-gray-100 transition-colors"
+          className="absolute left-[24px] top-1/2 -translate-y-1/2 p-2 rounded-full transition-colors z-10"
         >
           <svg 
             width="24" 
@@ -105,10 +106,10 @@ export default function RegionSearch() {
             viewBox="0 0 24 24" 
             fill="none" 
             xmlns="http://www.w3.org/2000/svg"
+            className="stroke-primary-green-40"
           >
             <path 
               d="M15 18L9 12L15 6" 
-              stroke="#333" 
               strokeWidth="2" 
               strokeLinecap="round" 
               strokeLinejoin="round"
@@ -116,47 +117,9 @@ export default function RegionSearch() {
           </svg>
         </button>
 
-        {/* 검색 입력창 */}
-        <div className="flex-1 relative">
-          <div className="absolute left-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
-            <svg 
-              width="15" 
-              height="15" 
-              viewBox="0 0 15 15" 
-              fill="none" 
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path 
-                d="M10.4172 9.55977H9.75885L9.52552 9.33477C10.5255 8.1681 11.0422 6.57643 10.7589 4.88477C10.3672 2.5681 8.43385 0.718099 6.10052 0.434766C2.57552 0.00143281 -0.391145 2.9681 0.042188 6.4931C0.325521 8.82643 2.17552 10.7598 4.49219 11.1514C6.18385 11.4348 7.77552 10.9181 8.94219 9.9181L9.16719 10.1514V10.8098L12.7089 14.3514C13.0505 14.6931 13.6089 14.6931 13.9505 14.3514C14.2922 14.0098 14.2922 13.4514 13.9505 13.1098L10.4172 9.55977ZM5.41719 9.55977C3.34219 9.55977 1.66719 7.88477 1.66719 5.80977C1.66719 3.73477 3.34219 2.05977 5.41719 2.05977C7.49219 2.05977 9.16719 3.73477 9.16719 5.80977C9.16719 7.88477 7.49219 9.55977 5.41719 9.55977Z" 
-                fill="#0DB659"
-              />
-            </svg>
-          </div>
-          <input
-            type="text"
-            placeholder="지역명 검색"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="
-              w-full 
-              h-[48px] 
-              pl-[48px] 
-              pr-4 
-              bg-gray-100 
-              border 
-              border-gray-200 
-              rounded-[24px] 
-              text-gray-700 
-              placeholder-gray-500 
-              focus:outline-none 
-              focus:ring-2 
-              focus:ring-primary-green-40 
-              focus:border-transparent
-              text-[14px]
-              leading-[21px]
-              tracking-[-0.03em]
-            "
-          />
+        {/* 가운데 정렬된 제목 */}
+        <div className="flex items-center justify-center h-full">
+          <span className="Head_Bold_16 text-gray-900">지역 직접 검색</span>
         </div>
       </header>
 
@@ -174,56 +137,29 @@ export default function RegionSearch() {
       <div className="px-[24px] py-[20px]">
         {searchQuery.length > 0 ? (
           <div>
-            <h3 className="Head_Bold_16 text-gray-800 mb-4">
-              '{searchQuery}' 검색 결과
-            </h3>
-            
             {/* 실제 검색 결과 리스트 */}
-            <div className="space-y-3">
+            <div className="space-y-4">
               {searchResults.length > 0 ? (
                 searchResults.map((result, index) => (
                   <div 
                     key={index}
                     onClick={() => handleResultClick(result)}
-                    className="p-4 bg-white border border-gray-200 rounded-[12px] hover:bg-gray-50 cursor-pointer transition-colors"
+                    className="cursor-pointer"
                   >
                     <p className="Sub_Bold_14 text-gray-800">
                       {highlightSearchTerm(result.fullAddress, searchQuery)}
                     </p>
-                    <p className="text-[12px] text-gray-500 mt-1">
-                      {result.city}
-                      {result.district && ` > ${result.district}`}
-                      {result.dong && ` > ${result.dong}`}
-                    </p>
                   </div>
                 ))
               ) : (
-                <div className="text-center py-[40px]">
-                  <p className="Sub_Bold_14 text-gray-500 mb-2">검색 결과가 없습니다</p>
-                  <p className="text-[12px] text-gray-400">다른 키워드로 검색해보세요</p>
-                </div>
+                <p className="Sub_Bold_14 text-gray-500 text-center py-[40px]">
+                  검색 결과가 없습니다
+                </p>
               )}
             </div>
           </div>
         ) : (
           <div className="text-center py-[60px]">
-            <div className="mb-4">
-              <svg 
-                width="48" 
-                height="48" 
-                viewBox="0 0 15 15" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg"
-                className="mx-auto opacity-30"
-              >
-                <path 
-                  d="M10.4172 9.55977H9.75885L9.52552 9.33477C10.5255 8.1681 11.0422 6.57643 10.7589 4.88477C10.3672 2.5681 8.43385 0.718099 6.10052 0.434766C2.57552 0.00143281 -0.391145 2.9681 0.042188 6.4931C0.325521 8.82643 2.17552 10.7598 4.49219 11.1514C6.18385 11.4348 7.77552 10.9181 8.94219 9.9181L9.16719 10.1514V10.8098L12.7089 14.3514C13.0505 14.6931 13.6089 14.6931 13.9505 14.3514C14.2922 14.0098 14.2922 13.4514 13.9505 13.1098L10.4172 9.55977ZM5.41719 9.55977C3.34219 9.55977 1.66719 7.88477 1.66719 5.80977C1.66719 3.73477 3.34219 2.05977 5.41719 2.05977C7.49219 2.05977 9.16719 3.73477 9.16719 5.80977C9.16719 7.88477 7.49219 9.55977 5.41719 9.55977Z" 
-                  fill="#9CA3AF"
-                />
-              </svg>
-            </div>
-            <p className="Sub_Bold_14 text-gray-500 mb-2">지역명을 검색해보세요</p>
-            <p className="text-[12px] text-gray-400">예: 강남구, 역삼동, 홍대입구 등</p>
           </div>
         )}
       </div>
