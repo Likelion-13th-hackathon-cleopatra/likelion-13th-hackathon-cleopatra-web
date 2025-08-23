@@ -25,6 +25,7 @@ export default function KakaoMapNew({
 }: KakaoMapNewProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const currentPolygon = useRef<any>(null); // 현재 표시된 다각형
+  const currentOverlay = useRef<any>(null); // 현재 표시된 텍스트 오버레이
 
   useEffect(() => {
     const KAKAO_APP_KEY = import.meta.env.VITE_KAKAO_MAP_APP_KEY;
@@ -87,9 +88,23 @@ export default function KakaoMapNew({
 
           const map = new window.kakao.maps.Map(mapContainer.current, options);
           
+          // 커스텀 마커 이미지 설정
+          const markerImageSrc = '/src/assets/marker.svg';
+          const markerImageSize = new window.kakao.maps.Size(30, 35); // 마커 크기
+          const markerImageOptions = {
+            offset: new window.kakao.maps.Point(15, 35) // 마커 기준점 (중앙 하단)
+          };
+
+          const markerImage = new window.kakao.maps.MarkerImage(
+            markerImageSrc, 
+            markerImageSize, 
+            markerImageOptions
+          );
+
           // 마커 생성 (초기에는 지도에 표시하지 않음)
           const marker = new window.kakao.maps.Marker({
-            position: position
+            position: position,
+            image: markerImage
           });
           // marker.setMap(map); // 초기에는 마커를 표시하지 않음
           
@@ -114,6 +129,9 @@ export default function KakaoMapNew({
                 
                 console.log(`지도 이동: ${regionData.district} ${regionData.name}`);
                 
+                // 마커 밑에 텍스트 오버레이 추가
+                createTextOverlay(map, newPosition, `서울시 ${regionData.district} ${regionData.name}`);
+                
                 // 지역 경계 다각형 표시
                 displayRegionBoundary(map, selectedCity, selectedDistrict, selectedDong);
               } else {
@@ -133,6 +151,51 @@ export default function KakaoMapNew({
           console.error('카카오맵 초기화 실패:', error);
         }
       });
+    };
+
+    // 텍스트 오버레이 생성 함수
+    const createTextOverlay = (map: any, position: any, text: string) => {
+      // 기존 오버레이 제거
+      if (currentOverlay.current) {
+        currentOverlay.current.setMap(null);
+        currentOverlay.current = null;
+      }
+
+      // 텍스트 오버레이 HTML 내용 (박스 없이 글씨만)
+      const overlayContent = `
+        <div style="
+          color: #032412;
+          -webkit-text-stroke-width: 0.4px;
+          -webkit-text-stroke-color: #FFF;
+          font-family: Pretendard;
+          font-size: 11px;
+          font-style: normal;
+          font-weight: 800;
+          line-height: 150%;
+          letter-spacing: -0.3px;
+          white-space: nowrap;
+          text-align: center;
+        ">
+          ${text}
+        </div>
+      `;
+
+      // 마커 아래쪽에 오버레이 위치 계산 (더 가깝게)
+      const overlayPosition = new window.kakao.maps.LatLng(
+        position.getLat() - 0.0005, // 마커에 더 가깝게
+        position.getLng()
+      );
+
+      // 커스텀 오버레이 생성
+      currentOverlay.current = new window.kakao.maps.CustomOverlay({
+        content: overlayContent,
+        position: overlayPosition,
+        xAnchor: 0.5, // 수평 중앙 정렬
+        yAnchor: 0, // 세로 상단 정렬
+        zIndex: 1
+      });
+
+      currentOverlay.current.setMap(map);
     };
 
     // 지역 경계 다각형 표시 함수
@@ -168,9 +231,9 @@ export default function KakaoMapNew({
             path: polygonPath,
             strokeWeight: 2,
             strokeColor: '#0DB659', // primary-green 색상
-            strokeOpacity: 0.8,
+            strokeOpacity: 1,
             fillColor: '#0DB659',
-            fillOpacity: 0.15
+            fillOpacity: 0.2
           };
 
           // 다각형 생성 및 지도에 표시
