@@ -5,6 +5,7 @@ import Community from "../../pages/Community";
 import MyStorage from "../../pages/MyStorage";
 import Analysis from "../../pages/analysis/Analysis";
 import AnalysisSelect from "../../pages/analysis/AnalysisSelect";
+import RegionSearch from "../../pages/analysis/RegionSearch";
 
 export default function AppRoutes() {
   return (
@@ -16,6 +17,7 @@ export default function AppRoutes() {
       <Route path="*" element={<Navigate to="/" replace />} />
       <Route path="/analysis" element={<Analysis />} />
       <Route path="/analysis/select" element={<AnalysisSelect />} />
+      <Route path="/analysis/region-search" element={<RegionSearch />} />
     </Routes>
   );
 }

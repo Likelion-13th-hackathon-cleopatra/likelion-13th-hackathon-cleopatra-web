@@ -1,5 +1,5 @@
-import { useState} from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import FilledButton from "../../components/common/FilledButton";
 import SelectButton from "../../components/common/SelectButton";
 import BottomSheet from "../../components/common/BottomSheet";
@@ -14,6 +14,7 @@ import { getCityById, getDistrictById, getDongById } from "../../data/regionData
 
 export default function AnalysisSelect() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isIndustrySheetOpen, setIsIndustrySheetOpen] = useState(false);
   const [selectedIndustry, setSelectedIndustry] = useState<string>('');
   const [isSubCategorySheetOpen, setIsSubCategorySheetOpen] = useState(false);
@@ -26,6 +27,54 @@ export default function AnalysisSelect() {
   const [selectedDistrict, setSelectedDistrict] = useState<string>('');
   const [isDongSheetOpen, setIsDongSheetOpen] = useState(false);
   const [selectedDong, setSelectedDong] = useState<string>('');
+
+  // URL 파라미터에서 지역 정보 읽어와서 상태 업데이트
+  useEffect(() => {
+    const cityParam = searchParams.get('city');
+    const districtParam = searchParams.get('district');
+    const dongParam = searchParams.get('dong');
+
+    if (cityParam || districtParam || dongParam) {
+      // cityParam에서 city ID 찾기 (예: "서울시" -> "seoul")
+      if (cityParam === '서울시') {
+        setSelectedCity('seoul');
+      }
+      
+      // districtParam에서 district ID 찾기
+      if (districtParam && cityParam === '서울시') {
+        // regionData에서 district ID 찾기
+        const city = getCityById('seoul');
+        if (city) {
+          const districtEntry = Object.entries(city.districts).find(
+            ([_, district]) => district.name === districtParam
+          );
+          if (districtEntry) {
+            setSelectedDistrict(districtEntry[0]);
+          }
+        }
+      }
+      
+      // dongParam에서 dong ID 찾기
+      if (dongParam && districtParam && cityParam === '서울시') {
+        const city = getCityById('seoul');
+        if (city) {
+          const districtEntry = Object.entries(city.districts).find(
+            ([_, district]) => district.name === districtParam
+          );
+          if (districtEntry) {
+            const district = districtEntry[1];
+            const dongEntry = district.dongs.find(dong => dong.name === dongParam);
+            if (dongEntry) {
+              setSelectedDong(dongEntry.id);
+            }
+          }
+        }
+      }
+      
+      // URL 파라미터 제거 (한 번만 적용)
+      setSearchParams({});
+    }
+  }, [searchParams, setSearchParams]);
 
   const handleIndustrySelect = (industryId: string) => {
     setSelectedIndustry(industryId);
@@ -135,8 +184,7 @@ export default function AnalysisSelect() {
       <section className="max-w-mobile mx-auto">
         <SearchInput 
           placeholder="지역 직접 검색"
-          onChange={(value) => console.log('검색어:', value)}
-          onSearch={(value) => console.log('검색 실행:', value)}
+          navigateToSearch={true}
         />
       </section>
 

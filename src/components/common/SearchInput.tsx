@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface SearchInputProps {
   placeholder?: string;
   value?: string;
   onChange?: (value: string) => void;
   onSearch?: (value: string) => void;
+  onClick?: () => void;
+  navigateToSearch?: boolean;
   className?: string;
 }
 
@@ -13,8 +16,11 @@ export default function SearchInput({
   value,
   onChange,
   onSearch,
+  onClick,
+  navigateToSearch = false,
   className = ""
 }: SearchInputProps) {
+  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState(value || '');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,6 +32,14 @@ export default function SearchInput({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSearch?.(inputValue);
+  };
+
+  const handleClick = () => {
+    if (navigateToSearch) {
+      navigate('/analysis/region-search');
+    } else {
+      onClick?.();
+    }
   };
 
   return (
@@ -47,15 +61,18 @@ export default function SearchInput({
           </svg>
         </div>
 
-        {/* 입력 필드 */}
+                {/* 입력 필드 */}
         <input
           type="text"
           value={inputValue}
           onChange={handleInputChange}
+          onClick={handleClick}
           placeholder={placeholder}
+          readOnly={navigateToSearch}
           className="
-          flex items-center w-full py-[6px] pl-[32.21px] pr-[6px] rounded-full border border-gray-200 bg-white
-          font-semibold text-[14px] leading-[21px] tracking-[-0.03em]"
+           flex items-center w-full py-[6px] pl-[32.21px] pr-[6px] rounded-full border border-gray-200 bg-white
+           font-semibold text-[14px] leading-[21px] tracking-[-0.03em] cursor-pointer
+           focus:outline-none focus:border-gray-200"
         />
       </div>
     </form>

@@ -592,7 +592,7 @@ const seoulDistricts: Record<string, District> = {
 export const cityData: Record<string, City> = {
   seoul: {
     id: 'seoul',
-    name: '서울특별시',
+    name: '서울시',
     districts: seoulDistricts
   }
   // TODO: 추후 다른 시도 추가 가능
@@ -630,4 +630,89 @@ export const getDistrictsByCity = (cityId: string): District[] => {
 export const getDongsByDistrict = (cityId: string, districtId: string): Dong[] => {
   const district = getDistrictById(cityId, districtId);
   return district?.dongs || [];
+};
+
+// 검색 결과 인터페이스
+export interface SearchResult {
+  type: 'city' | 'district' | 'dong';
+  city: string;
+  district?: string;
+  dong?: string;
+  fullAddress: string;
+}
+
+// 지역 검색 함수
+export const searchRegions = (query: string): SearchResult[] => {
+  if (!query.trim()) return [];
+  
+  const results: SearchResult[] = [];
+  const normalizedQuery = query.toLowerCase().replace(/\s+/g, '');
+  
+  // 모든 도시 검색
+  const cities = getAllCities();
+  
+  cities.forEach(city => {
+    // 시 검색
+    if (city.name.toLowerCase().includes(normalizedQuery)) {
+      results.push({
+        type: 'city',
+        city: city.name,
+        fullAddress: city.name
+      });
+    }
+    
+    // 구 검색
+    const districts = getDistrictsByCity(city.id);
+    districts.forEach(district => {
+      const districtMatch = district.name.toLowerCase().includes(normalizedQuery);
+      const cityDistrictMatch = (city.name + district.name).toLowerCase().replace(/\s+/g, '').includes(normalizedQuery);
+      
+      if (districtMatch || cityDistrictMatch) {
+        results.push({
+          type: 'district',
+          city: city.name,
+          district: district.name,
+          fullAddress: `${city.name} ${district.name}`
+        });
+      }
+      
+      // 동 검색
+      const dongs = getDongsByDistrict(city.id, district.id);
+      dongs.forEach(dong => {
+        const dongMatch = dong.name.toLowerCase().includes(normalizedQuery);
+        const fullMatch = (city.name + district.name + dong.name).toLowerCase().replace(/\s+/g, '').includes(normalizedQuery);
+        const cityDongMatch = (city.name + dong.name).toLowerCase().replace(/\s+/g, '').includes(normalizedQuery);
+        
+        if (dongMatch || fullMatch || cityDongMatch) {
+          results.push({
+            type: 'dong',
+            city: city.name,
+            district: district.name,
+            dong: dong.name,
+            fullAddress: `${city.name} ${district.name} ${dong.name}`
+          });
+        }
+      });
+    });
+  });
+  
+  // 중복 제거 및 정렬
+  const uniqueResults = results.filter((result, index, self) => 
+    index === self.findIndex(r => r.fullAddress === result.fullAddress)
+  );
+  
+  // 정확도 순으로 정렬 (완전 일치 > 시작 일치 > 포함)
+  return uniqueResults.sort((a, b) => {
+    const aExact = a.fullAddress.toLowerCase().replace(/\s+/g, '') === normalizedQuery;
+    const bExact = b.fullAddress.toLowerCase().replace(/\s+/g, '') === normalizedQuery;
+    if (aExact && !bExact) return -1;
+    if (!aExact && bExact) return 1;
+    
+    const aStarts = a.fullAddress.toLowerCase().replace(/\s+/g, '').startsWith(normalizedQuery);
+    const bStarts = b.fullAddress.toLowerCase().replace(/\s+/g, '').startsWith(normalizedQuery);
+    if (aStarts && !bStarts) return -1;
+    if (!aStarts && bStarts) return 1;
+    
+    return a.fullAddress.localeCompare(b.fullAddress);
+  }).slice(0, 20); // 최대 20개 결과만 반환
 };
