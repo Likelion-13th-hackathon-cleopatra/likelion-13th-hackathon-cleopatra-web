@@ -1,6 +1,6 @@
 import { getAnonymousId } from "./anonymousId";
 
-const API_BASE_URL = "YOUR_API_BASE_URL"; // Replace with actual API base URL
+const API_BASE_URL = "https://api.guseokguseok.site"; // Replace with actual API base URL
 
 export async function authenticatedFetch(
   input: RequestInfo,
@@ -9,7 +9,7 @@ export async function authenticatedFetch(
   const anonymousId = getAnonymousId();
   const headers = new Headers(init?.headers);
 
-  headers.set("X-Anonymous-Id", anonymousId);
+  headers.set("primary_key", anonymousId);
 
   const response = await fetch(input, {
     ...init,
@@ -27,3 +27,12 @@ export async function authenticatedFetch(
 
 // Example usage:
 // authenticatedFetch(`${API_BASE_URL}/data`, { method: 'GET' });
+
+export const userApi = {
+  registerUser: async () => {
+    const response = await authenticatedFetch(`${API_BASE_URL}/api/member`, {
+      method: "POST",
+    });
+    return response.json();
+  },
+};
