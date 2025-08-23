@@ -17,19 +17,19 @@ export default function IndustrySelector({ selectedIndustry, onSelect }: Industr
             key={industry.id}
             onClick={() => onSelect(industry.id)}
             className={`
-              flex flex-col items-center justify-center p-4 rounded-xl border transition-all h-20
+              flex flex-row items-center justify-center p-4 rounded-[16px] transition-all h-[45px]
               ${selectedIndustry === industry.id
-                ? 'bg-green-50 border-green-500 text-green-700'
-                : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
+                ? 'bg-primary-green/20'
+                : 'bg-white border border-gray-200'
               }
             `}
           >
             <img 
               src={industry.icon} 
               alt={industry.name}
-              className="w-8 h-8 mb-2"
+              className="w-[20px] h-[20px] mr-[10px]"
             />
-            <span className="text-sm font-medium">{industry.name}</span>
+            <span className="Sub_Bold_14 text-primary-green-40">{industry.name}</span>
           </button>
         ))}
       </div>

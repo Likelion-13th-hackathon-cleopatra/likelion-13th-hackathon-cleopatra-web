@@ -156,6 +156,9 @@
     .bg-primary-green-15 {
       background: linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15)), #0DB659;
     }
+    .bg-primary-green-20 {
+      background: linear-gradient(0deg, rgba(0,0,0,0.20), rgba(0,0,0,0.20)), #0DB659;
+    }
     .bg-primary-green-40 {
       background: linear-gradient(0deg, rgba(0,0,0,0.40), rgba(0,0,0,0.40)), #0DB659;
     }
@@ -196,6 +199,18 @@
       background: linear-gradient(0deg, rgba(0,0,0,0.85), rgba(0,0,0,0.85)), #F3F3F1;
     }
   }
+  .text-primary-green-40 {
+    background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.4) 100%
+    ), #0DB659;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+
   .text-primary-green-80 {
     background: linear-gradient(
       0deg,

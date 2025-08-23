@@ -35,8 +35,8 @@ export default function SubCategorySelector({
             className={`
               flex flex-col items-center justify-center p-4 rounded-xl border transition-all h-20
               ${selectedSubCategory === subCategory.id
-                ? 'bg-green-50 border-green-500 text-green-700'
-                : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
+                ? 'bg-primary-green-20 border-primary-green-20'
+                : 'bg-white border-gray-200 hover:bg-gray-50'
               }
             `}
           >
