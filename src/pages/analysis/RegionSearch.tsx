@@ -130,7 +130,7 @@ export default function RegionSearch() {
       {/* AnalysisSelect와 똑같은 검색창 */}
       <div className="px-[24px] py-[16px]">
         <SearchInput 
-          placeholder="지역 직접 검색"
+          placeholder="예) 서울시 노원구 공릉1동"
           value={searchQuery}
           onChange={setSearchQuery}
           onSearch={handleSearch}
