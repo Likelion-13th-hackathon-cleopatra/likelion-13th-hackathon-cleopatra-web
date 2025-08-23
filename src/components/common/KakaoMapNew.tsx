@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import type { RegionBoundary } from '../../types/boundary';
 
 interface KakaoMapNewProps {
   selectedCity?: string;
@@ -23,6 +24,7 @@ export default function KakaoMapNew({
   height = "200px"
 }: KakaoMapNewProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
+  const currentPolygon = useRef<any>(null); // 현재 표시된 다각형
 
   useEffect(() => {
     const KAKAO_APP_KEY = import.meta.env.VITE_KAKAO_MAP_APP_KEY;
@@ -80,48 +82,51 @@ export default function KakaoMapNew({
           
           const options = {
             center: position,
-            level: 8
+            level: 12  // 더욱 축소된 뷰 (서울시 전체가 보이도록)
           };
 
           const map = new window.kakao.maps.Map(mapContainer.current, options);
           
-          // 마커 생성
+          // 마커 생성 (초기에는 지도에 표시하지 않음)
           const marker = new window.kakao.maps.Marker({
             position: position
           });
-          
-          marker.setMap(map);
+          // marker.setMap(map); // 초기에는 마커를 표시하지 않음
           
           console.log('카카오맵 초기화 완료');
           
           // 선택된 지역이 있으면 해당 위치로 이동
-          if (selectedCity || selectedDistrict || selectedDong) {
-            // moveToSelectedRegion을 여기서 직접 실행
-            let address = selectedCity || '';
-            if (selectedDistrict) address += ` ${selectedDistrict}`;
-            if (selectedDong) address += ` ${selectedDong}`;
-
-            if (address) {
-              // 간단한 좌표 매핑
-              const coordinates: Record<string, {lat: number, lng: number}> = {
-                '서울시': { lat: 37.5665, lng: 126.9780 },
-                '서울시 강남구': { lat: 37.5173, lng: 127.0473 },
-                '서울시 노원구': { lat: 37.6542, lng: 127.0568 },
-                '서울시 종로구': { lat: 37.5735, lng: 126.9788 },
-              };
-
-              const coord = coordinates[address] || coordinates['서울시'];
-              const newPosition = new window.kakao.maps.LatLng(coord.lat, coord.lng);
-              
-              map.setCenter(newPosition);
-              marker.setPosition(newPosition);
-              
-              // 확대 레벨 조정
-              const level = selectedDong ? 4 : selectedDistrict ? 6 : 8;
-              map.setLevel(level);
-              
-              console.log(`지도 이동: ${address}`);
-            }
+          if (selectedDong) {
+            // 동적 import로 데이터 로드
+            import('../../data/seoulBoundaryData').then(({ seoulBoundaryData }) => {
+              const regionData = seoulBoundaryData[selectedDong];
+              if (regionData) {
+                // 실제 지역 데이터의 중심점 사용
+                const newPosition = new window.kakao.maps.LatLng(
+                  regionData.center.lat, 
+                  regionData.center.lng
+                );
+                
+                map.setCenter(newPosition);
+                marker.setPosition(newPosition);
+                marker.setMap(map); // 지역 선택 시에만 마커 표시
+                map.setLevel(6); // 동 레벨
+                
+                console.log(`지도 이동: ${regionData.district} ${regionData.name}`);
+                
+                // 지역 경계 다각형 표시
+                displayRegionBoundary(map, selectedCity, selectedDistrict, selectedDong);
+              } else {
+                console.log('해당 동의 데이터를 찾을 수 없습니다:', selectedDong);
+              }
+            }).catch(error => {
+              console.error('지역 데이터 로드 실패:', error);
+            });
+          } else {
+            // 기본 서울 중심으로 설정 (마커 없이)
+            const defaultPosition = new window.kakao.maps.LatLng(37.5665, 126.9780);
+            map.setCenter(defaultPosition);
+            map.setLevel(10);  // 더욱 축소된 뷰
           }
 
         } catch (error) {
@@ -130,7 +135,57 @@ export default function KakaoMapNew({
       });
     };
 
+    // 지역 경계 다각형 표시 함수
+    const displayRegionBoundary = (map: any, city?: string, district?: string, dong?: string) => {
+      // 기존 다각형 제거
+      if (currentPolygon.current) {
+        currentPolygon.current.setMap(null);
+        currentPolygon.current = null;
+      }
 
+      // 동이 선택되지 않았으면 리턴
+      if (!dong) {
+        console.log('동이 선택되지 않았습니다.');
+        return;
+      }
+
+      // 동적 import로 경계 데이터 가져오기
+      import('../../data/seoulBoundaryData').then(({ seoulBoundaryData }) => {
+        const boundaryData = seoulBoundaryData[dong];
+        if (!boundaryData) {
+          console.log('해당 지역의 경계 데이터가 없습니다:', { city, district, dong });
+          return;
+        }
+
+        try {
+          // 좌표 배열을 카카오맵 LatLng 객체로 변환
+          const polygonPath = boundaryData.coordinates.map(coord => 
+            new window.kakao.maps.LatLng(coord[1], coord[0]) // lat, lng 순서 주의
+          );
+
+          // 다각형 스타일 옵션
+          const polygonOptions = {
+            path: polygonPath,
+            strokeWeight: 2,
+            strokeColor: '#0DB659', // primary-green 색상
+            strokeOpacity: 0.8,
+            fillColor: '#0DB659',
+            fillOpacity: 0.15
+          };
+
+          // 다각형 생성 및 지도에 표시
+          currentPolygon.current = new window.kakao.maps.Polygon(polygonOptions);
+          currentPolygon.current.setMap(map);
+          
+          console.log(`${boundaryData.name} 경계 표시 완료`);
+          
+        } catch (error) {
+          console.error('다각형 표시 실패:', error);
+        }
+      }).catch(error => {
+        console.error('지역 경계 데이터 로드 실패:', error);
+      });
+    };
 
     // 실행
     loadKakaoMapScript()
