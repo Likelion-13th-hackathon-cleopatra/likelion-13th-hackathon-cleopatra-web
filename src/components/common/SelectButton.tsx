@@ -57,9 +57,9 @@ export default function SelectButton({
       <button
         onClick={handleClick}
         className={`
-          flex items-center justify-between px-[12px] py-[6px] rounded-full border border-bg-grayscale-15 bg-grayscale-white
+          flex items-center justify-between px-[12px] py-[6px] rounded-full border border-gray-200 bg-white
           font-semibold text-[14px] leading-[21px] tracking-[-0.03em]
-          text-primary-green-80
+          text-gray-700
           ${className}
         `}
       >

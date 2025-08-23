@@ -30,7 +30,7 @@ export default function AnalysisSelect() {
   };
 
   return (
-    <main className="relative min-h-[100svh] bg-grayscale-white px-[24px] pt-[36px] pb-[200px]">
+    <main className="relative min-h-[100svh] bg-grayscale-white px-[24px] pt-[36px] pb-[200px] bg-grayscale-5">
       {/* 섹션 1: 창업 업종 */}
       <section className="max-w-mobile mx-auto">
         <h2 className="Head_Bold_16 mb-[14px] text-primary-green">
