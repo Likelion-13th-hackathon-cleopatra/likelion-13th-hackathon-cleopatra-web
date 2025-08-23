@@ -41,12 +41,10 @@ export default function AnalysisSelect() {
           <SelectButton
             label={selectedIndustry ? getIndustryName(selectedIndustry) : "창업 업종"}
             onClick={() => setIsIndustrySheetOpen(true)}
-            className="flex-1"
           />
           <SelectButton
             label="업종 하위 구분"
             onClick={() => console.log("하위 업종 선택")}
-            className="flex-1"
           />
         </div>
       </section>
@@ -64,17 +62,14 @@ export default function AnalysisSelect() {
           <SelectButton
             label="시/도"
             onClick={() => console.log("시/도 선택")}
-            className="flex-1"
           />
           <SelectButton
             label="시/군/구"
             onClick={() => console.log("시/군/구 선택")}
-            className="flex-1"
           />
           <SelectButton
             label="읍/면/동"
             onClick={() => console.log("읍/면/동 선택")}
-            className="flex-1"
           />
         </div>
       </section>
