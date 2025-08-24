@@ -7,7 +7,7 @@ export const dummyReport = {
     secondary: "일식",
     district: "노원구",
     neighborhood: "공릉동",
-    sub_neighborhood: "공릉 1동",
+    sub_neighborhood: "공릉1동",
     created_at: "2025-08-24T02:00:00",
     description_summary: {
       total_description:
