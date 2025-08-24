@@ -188,10 +188,9 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
                     const y = 110 - 20 - ((item.value - minValue) / range) * 70;
                     
                     return (
-                      <div>
+                      <div key={`label-${index}`}>
                        <span 
-                         key={`quarter-${index}`}
-                         className="text-center absolute transform -translate-x-1/2 Body_Regular_10 text-[#086D35] z-10"
+                         className="text-center absolute transform -translate-x-1/2 Body_Regular_10 text-[#086D35] z-0"
                          style={{ 
                            left: `${((index * 55 + 20) / 220) * 100}%`,
                            top: `${(y + 10) * 0.91}%`,
@@ -205,8 +204,7 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
                           item.quarter === "2025 Q2" ? "2025 Q2" : item.quarter}
                        </span>
                        <span 
-                         key={`value-${index}`}
-                         className="text-center absolute transform -translate-x-1/2 Sub_Bold_10 text-[#086D35] z-10"
+                         className="text-center absolute transform -translate-x-1/2 Sub_Bold_10 text-[#086D35] z-0"
                          style={{ 
                            left: `${((index * 55 + 20) / 220) * 100}%`,
                            top: `${(y + 25) * 0.91}%`,
