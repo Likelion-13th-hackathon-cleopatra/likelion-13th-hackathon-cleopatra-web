@@ -9,6 +9,7 @@ import Population from "@/components/report/sections/Population";
 import Price from "@/components/report/sections/Price";
 import IncomeConsumption from "@/components/report/sections/IncomeConsumption";
 import Strategy from "@/components/report/sections/Strategy";
+import AnalysisLoading from "@/components/analysisSelect/AnalysisLoading";
 
 import { analysisApi } from "@/utils/api";
 import { getAnonymousId } from "@/utils/anonymousId";
@@ -27,10 +28,15 @@ export default function ReportView() {
         setIsLoading(true);
         setError(null);
 
+        // 최소 로딩 시간 보장 (500ms)
+        const minLoadingTime = new Promise(resolve => setTimeout(resolve, 500));
+
         // location.state에서 전달된 데이터가 있으면 우선 사용
         if (location.state?.reportData) {
           console.log('location.state에서 데이터 사용:', location.state.reportData);
           setReport(location.state.reportData);
+          // 최소 로딩 시간 대기 후 로딩 상태 해제
+          await minLoadingTime;
           setIsLoading(false);
           return;
         }
@@ -61,6 +67,9 @@ export default function ReportView() {
         setError('리포트를 불러오는데 실패했습니다.');
         // 에러 발생 시 report는 null로 유지
       } finally {
+        // 최소 로딩 시간 보장
+        const minLoadingTime = new Promise(resolve => setTimeout(resolve, 500));
+        await minLoadingTime;
         setIsLoading(false);
       }
     };
@@ -68,16 +77,9 @@ export default function ReportView() {
     fetchReport();
   }, [id, location.state]);
 
-  // 로딩 중일 때
+  // 로딩 중일 때 - AnalysisLoading 컴포넌트 사용
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-grayscale-5">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-green mx-auto mb-4"></div>
-          <p className="text-gray-600">리포트를 불러오는 중...</p>
-        </div>
-      </div>
-    );
+    return <AnalysisLoading isOpen={true} />;
   }
 
   // 에러가 있고 Mock 데이터도 없는 경우

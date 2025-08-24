@@ -1,4 +1,5 @@
 import React from 'react';
+import warningIcon from '../../assets/icons/common/warning-icon.svg';
 
 interface AnalysisModalProps {
   isOpen: boolean;
@@ -34,7 +35,7 @@ export default function AnalysisModal({
           {/* 경고 아이콘 */}
           <div className="flex justify-center mb-[6px]">
             <img 
-              src="/src/assets/icons/common/warning-icon.svg" 
+              src={warningIcon} 
               alt="경고" 
               className="w-[90px] h-[90px]"
             />

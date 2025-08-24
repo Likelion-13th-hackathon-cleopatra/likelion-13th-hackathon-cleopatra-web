@@ -1,4 +1,5 @@
 import React from 'react';
+import rejectIcon from '../../assets/icons/common/reject-icon.svg';
 
 interface RejectRegionModalProps {
   isOpen: boolean;
@@ -34,7 +35,7 @@ export default function RejectRegionModal({
           {/* 경고 아이콘 */}
           <div className="flex justify-center mb-[6px]">
             <img 
-              src="/src/assets/icons/common/reject-icon.svg" 
+              src={rejectIcon} 
               alt="경고" 
               className="w-[90px] h-[90px]"
             />
