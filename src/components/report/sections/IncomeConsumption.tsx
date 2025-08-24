@@ -1,5 +1,7 @@
 // components/report/sections/IncomeConsumption.tsx
 import SectionCard from "../primitives/SectionCard";
+import InnerCard from "../primitives/InnerCard";
+import IncomeLevelBox from "../primitives/IncomeLevelBox"; // Added this line
 import type { FC } from "react";
 import { won } from "@/utils/number";
 
@@ -29,24 +31,31 @@ const IncomeConsumption: FC<{ report: ReportRaw }> = ({ report }) => {
 
   return (
     <SectionCard
-      title="소득·소비 특성"
-      subtitle={`월평균 소득 ${won(i.monthly_income_average)} (소득 코드 ${
-        i.income_class_code
-      })`}
+      title="주민 소득 수준"
     >
-      <p className="chart-frame__caption">소비 항목 비중(%)</p>
-      <ul className="grid grid-cols-2 gap-2 text-sm">
-        {rows.map((r) => (
-          <li key={r.label}>
-            {r.label}: <b>{r.percent}%</b>
-          </li>
-        ))}
-      </ul>
+      <div className="space-y-[16px]">
+        <InnerCard title="주민경제력">
+          <IncomeLevelBox className="mt-[8px]" incomeData={i}>
+            {/* Content for IncomeLevelBox */}
+          </IncomeLevelBox>
+        </InnerCard>
 
-      <p className="text-xs text-muted-foreground">
-        총지출: {won(c.spending_total)} ·{" "}
-        {report.income_consumption.income_consumption_description}
-      </p>
+        <InnerCard title="소득 지출분류">
+          <p className="chart-frame__caption">소비 항목 비중(%)</p>
+          <ul className="grid grid-cols-2 gap-2 text-sm">
+            {rows.map((r) => (
+              <li key={r.label}>
+                {r.label}: <b>{r.percent}%</b>
+              </li>
+            ))}
+          </ul>
+
+          <p className="text-xs text-muted-foreground">
+            총지출: {won(c.spending_total)} ·{" "}
+            {report.income_consumption.income_consumption_description}
+          </p>
+        </InnerCard>
+      </div>
     </SectionCard>
   );
 };
