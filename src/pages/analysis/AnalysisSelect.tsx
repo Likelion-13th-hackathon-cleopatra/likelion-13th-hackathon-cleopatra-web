@@ -46,6 +46,15 @@ export default function AnalysisSelect() {
   // 분석 준비 상태 확인 (업종과 지역이 모두 선택되었는지)
   const isAnalysisReady = selectedSubCategory && selectedDong;
 
+  // 선택 상태를 localStorage에 저장/제거하는 useEffect
+  useEffect(() => {
+    if (selectedIndustry || selectedSubCategory || selectedCity || selectedDistrict || selectedDong) {
+      localStorage.setItem('analysisSelection', 'true');
+    } else {
+      localStorage.removeItem('analysisSelection');
+    }
+  }, [selectedIndustry, selectedSubCategory, selectedCity, selectedDistrict, selectedDong]);
+
   // 지원 가능한 동인지 확인하는 함수
   const isSupportedDong = (dongName: string) => {
     return dongName === '공릉1동' || dongName === '공릉2동';

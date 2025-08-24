@@ -23,7 +23,7 @@ export default function RejectTapModal({
     <>
       {/* 모달 컨테이너 */}
       <div 
-        className="fixed inset-0 z-50 flex items-center justify-center"
+        className="fixed inset-0 z-[9999] flex items-center justify-center"
         onClick={onClose}
       >
         <div 
@@ -65,7 +65,7 @@ export default function RejectTapModal({
               }}
               className="flex-1 py-[14px] rounded-[16px] Sub_Bold_14 text-white bg-primary-green"
             >
-              나가기
+              탭 나가기
             </button>
           </div>
         </div>

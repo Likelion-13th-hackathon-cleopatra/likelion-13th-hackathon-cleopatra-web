@@ -27,6 +27,27 @@ export default function BottomNavBar() {
   const isCommunityActive = currentPath === '/community';
   const isMyStorageActive = currentPath === '/my-storage';
 
+  // 네비게이션 전에 확인하는 함수
+  const handleNavigation = (path: string) => {
+    // AnalysisSelect 페이지에서 뭔가 선택된 상태인지 확인
+    if (currentPath === '/analysis/select') {
+      // localStorage에서 선택 상태 확인 (AnalysisSelect에서 저장)
+      const hasSelection = localStorage.getItem('analysisSelection');
+      
+      if (hasSelection === 'true') {
+        // 선택된 상태라면 커스텀 이벤트 발생
+        const event = new CustomEvent('showRejectModal', { 
+          detail: { targetPath: path } 
+        });
+        window.dispatchEvent(event);
+        return;
+      }
+    }
+    
+    // 선택되지 않았거나 다른 페이지라면 바로 이동
+    navigate(path);
+  };
+
   // Function to render a navigation item
   const NavItem = ({ icon: Icon, label, isActive, onClick }: NavItemProps) => (
     <button
@@ -53,7 +74,7 @@ export default function BottomNavBar() {
           icon={isRegionAnalysisActive ? RegionAnalysisActive : RegionAnalysisInactive}
           label="지역분석"
           isActive={isRegionAnalysisActive}
-          onClick={() => navigate('/analysis')}
+          onClick={() => handleNavigation('/analysis')}
         />
 
         {/* 커뮤니티 - 화면 중앙 배치 */}
@@ -61,7 +82,7 @@ export default function BottomNavBar() {
           icon={isCommunityActive ? CommunityActive : CommunityInactive}
           label="커뮤니티"
           isActive={isCommunityActive}
-          onClick={() => navigate('/community')} // Placeholder path
+          onClick={() => handleNavigation('/community')} // Placeholder path
         />
 
         {/* 내 보관함 */}
@@ -69,9 +90,9 @@ export default function BottomNavBar() {
           icon={isMyStorageActive ? MyStorageActive : MyStorageInactive}
           label="내 보관함"
           isActive={isMyStorageActive}
-          onClick={() => navigate('/my-storage')} // Placeholder path
+          onClick={() => handleNavigation('/my-storage')} // Placeholder path
         />
+              </div>
       </div>
-    </div>
-  );
+    );
 }
