@@ -14,7 +14,7 @@ export default function ReportView() {
 
   // 로딩/에러 처리 훗날 추가 가능
   return (
-    <div>
+    <div className="bg-grayscale-5">
       <ReportHeader />
       <main id="report-content" className="report-view stack mt-[10px] px-6 gap-[30px]">
         <ReportHero report={raw} />

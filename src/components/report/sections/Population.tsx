@@ -56,7 +56,8 @@ const Population: FC<{ report: ReportRaw }> = ({ report }) => {
 
   return (
     <SectionCard
-      title="인구 특성"
+      title="실거주 인구 통계"
+      titleClassName="Head_Bold_14 text-primary-green-40"
       subtitle={`총 거주자 ${report.population.total_resident.toLocaleString()}명`}
     >
       <ChartFrame caption="연령대 비중(%)">
