@@ -13,7 +13,7 @@ export default function AnalysisLoading({ isOpen, onComplete }: AnalysisLoadingP
     if (isOpen && onComplete) {
       const timer = setTimeout(() => {
         onComplete();
-      }, 1000000);
+      }, 5000);
       
       return () => clearTimeout(timer);
     }
