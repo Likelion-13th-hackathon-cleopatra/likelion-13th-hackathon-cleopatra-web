@@ -16,7 +16,7 @@ export default function ReportView() {
   return (
     <div>
       <ReportHeader />
-      <main id="report-content" className="report-view stack gap-4 p-4">
+      <main id="report-content" className="report-view stack mt-[10px] px-6 gap-[30px]">
         <ReportHero report={raw} />
         <Keywords report={raw} />
         <Population report={raw} />

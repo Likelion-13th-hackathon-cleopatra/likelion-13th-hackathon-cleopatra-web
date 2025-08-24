@@ -35,7 +35,7 @@ export default function ReportHeader() {
   };
 
   return (
-    <header className="sticky top-0 z-10 flex h-[60px] items-center justify-between border-b bg-white px-6">
+    <header className="sticky top-0 z-10 flex h-[60px] items-center justify-between bg-grayscale-5 px-6">
       <button onClick={handleBack} aria-label="뒤로 가기">
         <svg
           width="10.74"
@@ -46,7 +46,7 @@ export default function ReportHeader() {
         >
           <path
             d="M10.5382 1.34619L1.53821 10.3462L10.5382 19.3462"
-            stroke="#242424"
+            stroke="#086D35"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
