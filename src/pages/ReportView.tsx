@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ReportHeader from "@/components/layout/ReportHeader";
 import ReportSummary from "@/components/report/sections/ReportSummary";
@@ -9,11 +9,12 @@ import Population from "@/components/report/sections/Population";
 import Price from "@/components/report/sections/Price";
 import IncomeConsumption from "@/components/report/sections/IncomeConsumption";
 import Strategy from "@/components/report/sections/Strategy";
-import { dummyReport } from "@/mock/dummyReport";
+
 import { analysisApi } from "@/utils/api";
 
 export default function ReportView() {
   const { id } = useParams();
+  const location = useLocation();
   const [report, setReport] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -25,26 +26,45 @@ export default function ReportView() {
         setIsLoading(true);
         setError(null);
 
+        // location.state에서 전달된 데이터가 있으면 우선 사용
+        if (location.state?.reportData) {
+          console.log('location.state에서 데이터 사용:', location.state.reportData);
+          setReport(location.state.reportData);
+          setIsLoading(false);
+          return;
+        }
+
         if (id && id !== 'default') {
           // 실제 API 호출
           const result = await analysisApi.getAnalysisResult(id);
-          setReport(result.data || result);
+          console.log('API 응답 전체:', result);
+          console.log('API 응답 data:', result.data);
+          
+          // API 응답 구조에 따라 데이터 설정
+          if (result.data) {
+            setReport(result.data);
+          } else if (result.status === 'success') {
+            // data가 없지만 성공 상태인 경우
+            setReport(result);
+          } else {
+            // 데이터가 없는 경우
+            throw new Error('API 응답에 데이터가 없습니다.');
+          }
         } else {
-          // Mock 데이터 사용 (개발/테스트용)
-          setReport(dummyReport.data);
+          // default ID인 경우 에러 처리
+          throw new Error('유효하지 않은 리포트 ID입니다.');
         }
       } catch (err) {
         console.error('Failed to fetch report:', err);
         setError('리포트를 불러오는데 실패했습니다.');
-        // 에러 발생 시 Mock 데이터로 폴백
-        setReport(dummyReport.data);
+        // 에러 발생 시 report는 null로 유지
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchReport();
-  }, [id]);
+  }, [id, location.state]);
 
   // 로딩 중일 때
   if (isLoading) {

@@ -17,7 +17,16 @@ type Props = {
 };
 
 // ** 안의 텍스트를 파싱하는 함수
-const parseTextWithBold = (text: string): ReactNode => {
+const parseTextWithBold = (text: string | null | undefined): ReactNode => {
+  // text가 null, undefined, 또는 빈 문자열인 경우 기본 텍스트 반환
+  if (!text || typeof text !== 'string') {
+    return (
+      <span className="Body_Regular_12" style={{ color: '#555554' }}>
+        데이터를 불러오는 중입니다...
+      </span>
+    );
+  }
+  
   const parts = text.split(/(\*\*[^*]+\*\*)/g);
   
   return parts.map((part, index) => {
@@ -41,6 +50,25 @@ const parseTextWithBold = (text: string): ReactNode => {
 };
 
 export default function AISummaryCard({ description, className = "" }: Props) {
+  // description이 없거나 필수 필드가 없는 경우 기본 메시지 표시
+  if (!description || !description.total_description) {
+    return (
+      <div
+        className={`rounded-[15px] border border-[#FFC251] bg-[#FFF] px-[16px] py-[18px] ${className}`}
+      >
+        <div className="flex items-center gap-1.5 mb-[12px]">
+          <SummaryIcon /> 
+          <span className="Head_Bold_14 text-sub-yellow40">보고서 전체 AI 핵심 요약</span>
+        </div>
+        <div className="rounded-[15px] border border-[#FFEBC7] bg-[#FFF9EE] p-[14px]">
+          <span className="Body_Regular_12" style={{ color: '#555554' }}>
+            AI 요약 데이터를 불러오는 중입니다...
+          </span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       className={`rounded-[15px] border border-[#FFC251] bg-[#FFF] px-[16px] py-[18px] ${className}`}

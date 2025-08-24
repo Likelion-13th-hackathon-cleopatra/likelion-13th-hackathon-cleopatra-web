@@ -94,7 +94,8 @@ export const analysisApi = {
 
   // 분석 결과 조회
   getAnalysisResult: async (analysisId: string) => {
-    const response = await authenticatedFetch(`${API_BASE_URL}/api/report/${analysisId}`, {
+    const anonymousId = getAnonymousId();
+    const response = await authenticatedFetch(`${API_BASE_URL}/api/report/${analysisId}?primary_key=${anonymousId}`, {
       method: "GET",
     });
     

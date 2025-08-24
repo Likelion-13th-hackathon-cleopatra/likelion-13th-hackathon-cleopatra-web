@@ -1,4 +1,4 @@
-// components/report/charts/DonutChart.tsx
+// components/report/primitives/DonutChart.tsx
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { CSSProperties, ReactNode } from "react";
 import { dummyReport } from "@/mock/dummyReport.ts";

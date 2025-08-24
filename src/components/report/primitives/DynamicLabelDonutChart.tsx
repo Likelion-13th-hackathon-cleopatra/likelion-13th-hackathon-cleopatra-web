@@ -4,42 +4,50 @@ import type { DonutChartProps } from "./DonutChart";
 
 type DynamicLabelDonutChartProps = Omit<DonutChartProps, "outerLabelSet">;
 
-export default function DynamicLabelDonutChart(props: DynamicLabelDonutChartProps) {
-  const {
-    data,
-    leader: leaderFromProps,
-    rotateDeg = 0,
-    clockwise = true,
-    ...rest
-  } = props;
+export default function DynamicLabelDonutChart(
+  props: DynamicLabelDonutChartProps
+) {
+  const { data, leader: leaderFromProps, ...rest } = props;
 
-  // 바깥 라벨로 뺄 항목(작은 비율)
-  const total = data.reduce((s, d) => s + d.value, 0);
-  const THRESHOLD = 10;
+  // 총합 (0 나눗셈 방지)
+  const total =
+    data.reduce(
+      (s, d) =>
+        s + (typeof d.value === "number" ? d.value : Number(d.value) || 0),
+      0
+    ) || 1;
+
+  // 규칙: 10% "미만"은 바깥, 그 외는 내부
   const outer = new Set<string>();
-  data.forEach((d) => {
-    if ((d.value / total) * 100 < THRESHOLD) outer.add(d.label);
-  });
+  for (const d of data) {
+    const value = typeof d.value === "number" ? d.value : Number(d.value) || 0;
+    const pct = (value / total) * 100;
+    if (pct < 10) outer.add(String(d.label).trim()); // 문자열로 통일 (공백 방지)
+  }
 
-  // 리더라인: 짧은 '틱'만 (radial), 길이 5px
-  const leader =
-    leaderFromProps ?? {
-      baseline: "radial",
-      tickLen: 5,
-      elbow: 6,      // 외곽으로 살짝만
-      textPad: 6,    // 텍스트 여백
-      textOffset: 6, // 살짝 아래
-      // gap/horizLen은 radial 모드에서는 사용 안 함
-    };
+  // 바깥 라벨은 섹터 바깥으로 짧은 '틱' + 바로 옆 텍스트 (radial 모드)
+  const leader = leaderFromProps ?? {
+    baseline: "radial" as const,
+    elbow: 5,
+    tickLen: 5,
+    textPad: 6,
+    textOffset: 6,
+  };
+
+  // 디버그(개발 모드에서만): 실제로 어떤 라벨이 바깥으로 가는지 확인
+  if (import.meta.env?.DEV) {
+    // eslint-disable-next-line no-console
+    console.debug(
+      "[DynamicLabelDonutChart] total=",
+      total,
+      "outerSet=",
+      Array.from(outer),
+      "dataLabels=",
+      data.map((d) => String(d.label).trim())
+    );
+  }
 
   return (
-    <DonutChart
-      {...rest}
-      data={data}
-      clockwise={clockwise}
-      rotateDeg={rotateDeg}
-      leader={leader}
-      outerLabelSet={outer}
-    />
+    <DonutChart {...rest} data={data} leader={leader} outerLabelSet={outer} />
   );
 }

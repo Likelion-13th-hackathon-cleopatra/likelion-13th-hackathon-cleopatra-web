@@ -17,7 +17,7 @@ const IncomeLevelBox: FC<Props> = ({ children, incomeData }) => {
         </div>
         <div className="flex items-center mt-[6px]"> {/* Added mt-[6px] for line break spacing */}
           <span className="Body_Bold_12 text-primary-green-80">월평균 소득 금액</span>
-          <span className="Sub_Regular_12 text-primary-green-80 ml-[6px]">{won(incomeData.income_class_average).substring(1)}원</span>
+          <span className="Sub_Regular_12 text-primary-green-80 ml-[6px]">{won(incomeData.monthly_income_average).substring(1)}원</span>
         </div>
       </div>
       {children}

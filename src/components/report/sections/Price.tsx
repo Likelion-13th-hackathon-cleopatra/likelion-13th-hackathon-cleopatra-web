@@ -1,7 +1,7 @@
 // components/report/sections/Price.tsx
 import SectionCard from "../primitives/SectionCard";
 import type { FC } from "react";
-import { wonInMan } from "@/utils/number";
+
 import InnerCard2 from "../primitives/InnerCard2";
 import AIInterpretationCard from "../primitives/AIInterpretationCard";
 
@@ -10,8 +10,27 @@ type ReportRaw = typeof import("@/mock/dummyReport").dummyReport.data;
 const humanQuarter = (k: string) => k.replace(/(\d{4})_(\d)_quarter/, "$1 Q$2");
 
 const Price: FC<{ report: ReportRaw }> = ({ report }) => {
+  // price 데이터가 없거나 필요한 필드가 없는 경우 기본 UI 표시
+  if (!report.price || !report.price.small || !report.price.big || !report.price.trading_volume) {
+    return (
+      <SectionCard
+        title={"동네시세"}
+        titleClassName="Head_Bold_14 text-primary-green-40"
+        initialIsOpen={true}
+      >
+        <div className="flex flex-col gap-[16px]">
+          <InnerCard2 title="부동산 평균 거래값" subtitle="거래 건별 단가 산출 후 집계">
+            <div className="text-center py-8">
+              <p className="text-gray-500">가격 데이터를 불러오는 중입니다...</p>
+            </div>
+          </InnerCard2>
+        </div>
+      </SectionCard>
+    );
+  }
+
   const p = report.price;
-  const trend = Object.entries(p.trading_volume).map(([k, v]) => ({
+  const trend = Object.entries(p.trading_volume || {}).map(([k, v]) => ({
     quarter: humanQuarter(k),
     value: v as number,
   }));
@@ -37,10 +56,10 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
                   </div>
                 </div>
                 <div className="Body_Bold_12 mb-[2px]">
-                  평균값 <span className="ml-[6px] Sub_Regular_12">{wonInMan(p.small.small_average)}</span>
+                  평균값 <span className="ml-[6px] Sub_Regular_12">{(p.small.small_average || 0).toLocaleString("ko-KR")}만원</span>
                 </div>
                 <div className="Body_Bold_12 mb-[6px]">
-                  중위값 <span className="ml-[6px] Sub_Regular_12">{wonInMan(p.small.small_middle)}</span>
+                  중위값 <span className="ml-[6px] Sub_Regular_12">{(p.small.small_middle || 0).toLocaleString("ko-KR")}만원</span>
                 </div>
                 <div className="Body_Regular_10 text-grayscale-25">
                   근거 거래 데이터 개수: {p.small.small_count}건
@@ -61,10 +80,10 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
                   </div>
                 </div>
                 <div className="Body_Bold_12 mb-[2px]">
-                  평균값 <span className="ml-[6px] Sub_Regular_12">{wonInMan(p.big.big_average)}</span>
+                  평균값 <span className="ml-[6px] Sub_Regular_12">{(p.big.big_average || 0).toLocaleString("ko-KR")}만원</span>
                 </div>
                 <div className="Body_Bold_12 mb-[6px]">
-                  중위값 <span className="ml-[6px] Sub_Regular_12">{wonInMan(p.big.big_middle)}</span>
+                  중위값 <span className="ml-[6px] Sub_Regular_12">{(p.big.big_middle || 0).toLocaleString("ko-KR")}만원</span>
                 </div>
                 <div className="Body_Regular_10 text-grayscale-25">
                   근거 거래 데이터 개수: {p.big.big_count}건
@@ -73,7 +92,7 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
             </div>
             <AIInterpretationCard className="mt-[10px]">
               <div className="Body_Regular_12 text-grayscale-65">
-                {p.description_price.value_average}
+                {p.description_price?.value_average || '부동산 평균 거래값 분석 데이터를 불러오는 중입니다...'}
               </div>
             </AIInterpretationCard>
           </div>
@@ -89,10 +108,10 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
                   </div>
                 </div>
                 <div className="Body_Bold_12 mb-[2px]">
-                  평균값 <span className="ml-[6px] Sub_Regular_12">{wonInMan(p.price_per_meter)}</span>
+                  평균값 <span className="ml-[6px] Sub_Regular_12">{(p.price_per_meter || 0).toLocaleString("ko-KR")}만원</span>
                 </div>
                 <div className="Body_Bold_12 mb-[6px]">
-                  중위값 <span className="ml-[6px] Sub_Regular_12">{wonInMan(p.price_per_pyeong)}</span>
+                  중위값 <span className="ml-[6px] Sub_Regular_12">{(p.price_per_pyeong || 0).toLocaleString("ko-KR")}만원</span>
                 </div>
               </div>
 
@@ -116,7 +135,7 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
             </div>
             <AIInterpretationCard className="mt-[10px]">
               <div className="Body_Regular_12 text-grayscale-65">
-                {p.description_price.value_pyeong}
+                {p.description_price?.value_pyeong || '단위 면적당 평균 실거래가 분석 데이터를 불러오는 중입니다...'}
               </div>
             </AIInterpretationCard>
           </div>
@@ -223,7 +242,7 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
           </div>
           <AIInterpretationCard className="mt-[25.9px]">
               <div className="Body_Regular_12 text-grayscale-65">
-                {p.description_price.volume}
+                {p.description_price?.volume || '거래량 추이 분석 데이터를 불러오는 중입니다...'}
               </div>
           </AIInterpretationCard>
         </InnerCard2>

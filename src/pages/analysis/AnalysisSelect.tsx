@@ -78,12 +78,27 @@ export default function AnalysisSelect() {
       console.log('전송할 데이터:', analysisData);
 
       const response = await analysisApi.requestAnalysis(analysisData);
+      console.log('분석 API 응답:', response);
       
       // 분석 완료 후 ReportView로 이동
-      if (response.analysisId) {
-        navigate(`/report/${response.analysisId}`);
+      if (response.data?.report_id) {
+        console.log('report_id로 이동:', response.data.report_id);
+        setIsAnalysisLoading(false); // 로딩 상태 해제
+        // 응답 데이터를 state로 전달
+        navigate(`/report/${response.data.report_id}`, { 
+          state: { reportData: response.data } 
+        });
+      } else if (response.data?.analysisId) {
+        // 기존 analysisId도 지원
+        console.log('analysisId로 이동:', response.data.analysisId);
+        setIsAnalysisLoading(false); // 로딩 상태 해제
+        navigate(`/report/${response.data.analysisId}`, { 
+          state: { reportData: response.data } 
+        });
       } else {
-        // analysisId가 없는 경우 기본값으로 이동
+        // report_id가 없는 경우 기본값으로 이동
+        console.log('기본값으로 이동');
+        setIsAnalysisLoading(false); // 로딩 상태 해제
         navigate('/report/default');
       }
     } catch (error) {
@@ -94,11 +109,7 @@ export default function AnalysisSelect() {
     }
   };
 
-  // 분석 완료 함수 (기존 코드 유지)
-  const handleAnalysisComplete = () => {
-    setIsAnalysisLoading(false);
-    navigate("/analysis/result"); // 결과 페이지로 이동
-  };
+  // 분석 완료 함수 - 제거됨
 
   // URL 파라미터에서 업종 정보 읽어와서 상태 업데이트 (항상 실행)
   useEffect(() => {
@@ -394,11 +405,7 @@ export default function AnalysisSelect() {
         selectedRegion={selectedDong ? `${getCityById(selectedCity)?.name} ${getDistrictById(selectedCity, selectedDistrict)?.name} ${getDongById(selectedCity, selectedDistrict, selectedDong)?.name}` : ''}
       />
 
-      {/* 분석 로딩 화면 */}
-      <AnalysisLoading
-        isOpen={isAnalysisLoading}
-        onComplete={handleAnalysisComplete}
-      />
+      {/* 분석 로딩 화면 - 제거됨 */}
 
       {/* RejectTapModal */}
       <RejectRegionModal
