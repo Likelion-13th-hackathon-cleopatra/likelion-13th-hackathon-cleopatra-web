@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SelectButton from '../common/SelectButton';
+import SelectButton from '../analysisSelect/SelectButton';
 
 export default function IndustrySelectExample() {
   const [selectedIndustry, setSelectedIndustry] = useState<string>('');

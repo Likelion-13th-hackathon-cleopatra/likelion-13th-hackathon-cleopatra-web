@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import FilledButton from "../../components/common/FilledButton";
+import FilledButton from "../../components/analysisSelect/FilledButton";
 
 export default function Analysis() {
     const navigate = useNavigate();

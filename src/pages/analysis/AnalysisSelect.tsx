@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import FilledButton from "../../components/common/FilledButton";
-import SelectButton from "../../components/common/SelectButton";
-import BottomSheet from "../../components/common/BottomSheet";
-import IndustrySelector from "../../components/common/IndustrySelector";
-import SubCategorySelector from "../../components/common/SubCategorySelector";
-import CitySelector from "../../components/common/CitySelector";
-import DistrictSelector from "../../components/common/DistrictSelector";
-import DongSelector from "../../components/common/DongSelector";
-import SearchInput from "../../components/common/SearchInput";
-import KakaoMapNew from "../../components/common/KakaoMapNew";
+import FilledButton from "../../components/analysisSelect/FilledButton";
+import SelectButton from "../../components/analysisSelect/SelectButton";
+import BottomSheet from "../../components/analysisSelect/BottomSheet";
+import IndustrySelector from "../../components/analysisSelect/IndustrySelector";
+import SubCategorySelector from "../../components/analysisSelect/SubCategorySelector";
+import CitySelector from "../../components/analysisSelect/CitySelector";
+import DistrictSelector from "../../components/analysisSelect/DistrictSelector";
+import DongSelector from "../../components/analysisSelect/DongSelector";
+import SearchInput from "../../components/analysisSelect/SearchInput";
+import KakaoMapNew from "../../components/analysisSelect/KakaoMapNew";
+import AnalysisModal from "../../components/analysisSelect/AnalysisModal";
 import { getIndustryById, getSubCategoryById } from "../../data/industryData";
 import { getCityById, getDistrictById, getDongById } from "../../data/regionData";
 
@@ -28,6 +29,12 @@ export default function AnalysisSelect() {
   const [selectedDistrict, setSelectedDistrict] = useState<string>('');
   const [isDongSheetOpen, setIsDongSheetOpen] = useState(false);
   const [selectedDong, setSelectedDong] = useState<string>('');
+
+  // 분석 모달 상태
+  const [isAnalysisModalOpen, setIsAnalysisModalOpen] = useState(false);
+
+  // 분석 준비 상태 확인 (업종과 지역이 모두 선택되었는지)
+  const isAnalysisReady = selectedSubCategory && selectedDong;
 
   // URL 파라미터에서 지역 정보 읽어와서 상태 업데이트
   useEffect(() => {
@@ -201,7 +208,11 @@ export default function AnalysisSelect() {
 
       {/* 하단 고정 CTA (BottomNavBar 88px + 24px) */}
       <div className="fixed left-1/2 -translate-x-1/2 w-full max-w-mobile px-[24px] bottom-[112px]">
-        <FilledButton text="분석하기" onClick={() => navigate("/analysis/result")} />
+        <FilledButton 
+          text="분석하기" 
+          onClick={() => setIsAnalysisModalOpen(true)}
+          disabled={!isAnalysisReady}
+        />
   </div>
 
       {/* 창업 업종 선택 바텀시트 */}
@@ -273,6 +284,15 @@ export default function AnalysisSelect() {
           />
         )}
       </BottomSheet>
+
+      {/* 분석 시작 모달 */}
+      <AnalysisModal
+        isOpen={isAnalysisModalOpen}
+        onClose={() => setIsAnalysisModalOpen(false)}
+        selectedIndustry={selectedIndustry ? getIndustryById(selectedIndustry)?.name : ''}
+        selectedSubCategory={selectedSubCategory ? getSubCategoryById(selectedIndustry, selectedSubCategory)?.name : ''}
+        selectedRegion={selectedDong ? `${getCityById(selectedCity)?.name} ${getDistrictById(selectedCity, selectedDistrict)?.name} ${getDongById(selectedCity, selectedDistrict, selectedDong)?.name}` : ''}
+      />
     </main>
   );
 }

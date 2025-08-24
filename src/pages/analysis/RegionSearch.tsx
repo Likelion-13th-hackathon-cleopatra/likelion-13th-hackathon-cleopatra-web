@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SearchInput from "../../components/common/SearchInput";
+import SearchInput from "../../components/analysisSelect/SearchInput";
 import { searchRegions } from "../../data/regionData";
 
 // 검색 결과 타입 정의
