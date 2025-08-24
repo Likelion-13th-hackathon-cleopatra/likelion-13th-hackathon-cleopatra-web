@@ -8,6 +8,8 @@ interface SearchInputProps {
   onSearch?: (value: string) => void;
   onClick?: () => void;
   navigateToSearch?: boolean;
+  currentIndustry?: string;
+  currentSubCategory?: string;
   className?: string;
 }
 
@@ -18,6 +20,8 @@ export default function SearchInput({
   onSearch,
   onClick,
   navigateToSearch = false,
+  currentIndustry,
+  currentSubCategory,
   className = ""
 }: SearchInputProps) {
   const navigate = useNavigate();
@@ -36,7 +40,13 @@ export default function SearchInput({
 
   const handleClick = () => {
     if (navigateToSearch) {
-      navigate('/analysis/region-search');
+      // 현재 선택된 업종 정보를 state로 전달 (URL에 노출되지 않음)
+      navigate('/analysis/region-search', {
+        state: {
+          industry: currentIndustry,
+          subCategory: currentSubCategory
+        }
+      });
     } else {
       onClick?.();
     }

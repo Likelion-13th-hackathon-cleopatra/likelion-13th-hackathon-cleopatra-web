@@ -23,7 +23,7 @@ export default function RejectRegionModal({
     <>
       {/* 모달 컨테이너 */}
       <div 
-        className="fixed inset-0 z-50 flex items-center justify-center"
+        className="fixed inset-0 z-[100] flex items-center justify-center"
         onClick={onClose}
       >
         <div 
@@ -34,7 +34,7 @@ export default function RejectRegionModal({
           {/* 경고 아이콘 */}
           <div className="flex justify-center mb-[6px]">
             <img 
-              src="/src/assets/icons/common/warning-icon.svg" 
+              src="/src/assets/icons/common/reject-icon.svg" 
               alt="경고" 
               className="w-[90px] h-[90px]"
             />
@@ -43,18 +43,12 @@ export default function RejectRegionModal({
           {/* 모달 헤더 */}
           <div className="text-center mb-[16px]">
             <h2 className="Head_Bold_16 text-[#032412]">
-            입력하신 상권 분석 정보를<br/>다시 한번 검토해주세요.
+            해당 지역은 현재<br/>선택이 불가능해요.
             </h2>
           </div>
 
           {/* 버튼 영역 */}
           <div className="flex gap-[12px]">
-            <button
-              onClick={onClose}
-              className="flex-1 py-[14px] rounded-[16px] Sub_Bold_14 text-white bg-grayscale-25"
-            >
-              이어서 입력할게요
-            </button>
             <button
               onClick={() => {
                 if (onStartAnalysis) {
@@ -65,7 +59,7 @@ export default function RejectRegionModal({
               }}
               className="flex-1 py-[14px] rounded-[16px] Sub_Bold_14 text-white bg-primary-green"
             >
-              나가기
+              다른 지역 선택하기
             </button>
           </div>
         </div>

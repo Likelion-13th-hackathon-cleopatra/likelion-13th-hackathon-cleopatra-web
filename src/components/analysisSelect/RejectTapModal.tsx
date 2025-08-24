@@ -43,13 +43,13 @@ export default function RejectTapModal({
           {/* 모달 헤더 */}
           <div className="text-center mb-[16px]">
             <h2 className="Head_Bold_16 text-[#032412]">
-            입력하신 상권 분석 정보를<br/>다시 한번 검토해주세요.
+            지금 탭을 나가면 입력하신 정보가<br/>저장되지 않아요.
             </h2>
           </div>
 
           {/* 버튼 영역 */}
           <div className="flex gap-[12px]">
-            <button
+          <button
               onClick={onClose}
               className="flex-1 py-[14px] rounded-[16px] Sub_Bold_14 text-white bg-grayscale-25"
             >

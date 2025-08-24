@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import SearchInput from "../../components/analysisSelect/SearchInput";
+import RejectRegionModal from "../../components/analysisSelect/RejectRegionModal";
 import { searchRegions } from "../../data/regionData";
 
 // 검색 결과 타입 정의
@@ -14,8 +15,22 @@ interface SearchResult {
 
 export default function RegionSearch() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+
+  // RejectRegionModal 상태
+  const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
+  const [rejectedRegion, setRejectedRegion] = useState<string>('');
+
+  // useLocation의 state에서 업종 정보 읽기
+  const currentIndustry = location.state?.industry;
+  const currentSubCategory = location.state?.subCategory;
+
+  // 지원 가능한 동인지 확인하는 함수
+  const isSupportedDong = (dongName: string) => {
+    return dongName === '공릉1동' || dongName === '공릉2동';
+  };
 
   // 실시간 검색 (동까지만 표시)
   useEffect(() => {
@@ -82,17 +97,30 @@ export default function RegionSearch() {
   };
 
   const handleResultClick = (result: SearchResult) => {
-    // 결과 선택 시 AnalysisSelect 페이지로 돌아가면서 선택된 지역 정보 전달
+    // 동 결과인 경우에만 지원 가능한 동인지 확인
+    if (result.type === 'dong' && result.dong) {
+      if (!isSupportedDong(result.dong)) {
+        // 지원하지 않는 동인 경우
+        setRejectedRegion(result.fullAddress);
+        setIsRejectModalOpen(true);
+        return;
+      }
+    }
+    
+    // 지원하는 동이거나 동이 아닌 경우 AnalysisSelect로 이동
     console.log('Selected region:', result);
     
-    // URL 파라미터로 선택된 지역 정보 전달
-    const searchParams = new URLSearchParams({
-      city: result.city,
-      district: result.district || '',
-      dong: result.dong || ''
+    // navigate의 state로 지역 정보와 업종 정보 전달 (URL에 노출되지 않음)
+    navigate('/analysis/select', {
+      state: {
+        city: result.city,
+        district: result.district || '',
+        dong: result.dong || '',
+        // 현재 state에서 업종 정보 읽어와서 전달
+        industry: currentIndustry,
+        subCategory: currentSubCategory
+      }
     });
-    
-    navigate(`/analysis/select?${searchParams.toString()}`);
   };
 
   return (
@@ -166,6 +194,13 @@ export default function RegionSearch() {
           </div>
         )}
       </div>
+
+      {/* RejectRegionModal */}
+      <RejectRegionModal
+        isOpen={isRejectModalOpen}
+        onClose={() => setIsRejectModalOpen(false)}
+        selectedRegion={rejectedRegion}
+      />
     </main>
   );
 }

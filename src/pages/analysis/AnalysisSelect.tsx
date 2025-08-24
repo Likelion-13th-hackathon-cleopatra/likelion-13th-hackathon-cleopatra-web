@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import FilledButton from "../../components/analysisSelect/FilledButton";
 import SelectButton from "../../components/analysisSelect/SelectButton";
 import BottomSheet from "../../components/analysisSelect/BottomSheet";
@@ -12,13 +12,14 @@ import SearchInput from "../../components/analysisSelect/SearchInput";
 import KakaoMapNew from "../../components/analysisSelect/KakaoMapNew";
 import AnalysisModal from "../../components/analysisSelect/AnalysisModal";
 import AnalysisLoading from "../../components/analysisSelect/AnalysisLoading";
+import RejectRegionModal from "../../components/analysisSelect/RejectRegionModal";
 import { getIndustryById, getSubCategoryById } from "../../data/industryData";
 import { getCityById, getDistrictById, getDongById } from "../../data/regionData";
 import { analysisApi } from "../../utils/api";
 
 export default function AnalysisSelect() {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
   const [isIndustrySheetOpen, setIsIndustrySheetOpen] = useState(false);
   const [selectedIndustry, setSelectedIndustry] = useState<string>('');
   const [isSubCategorySheetOpen, setIsSubCategorySheetOpen] = useState(false);
@@ -38,8 +39,17 @@ export default function AnalysisSelect() {
   // 분석 로딩 상태
   const [isAnalysisLoading, setIsAnalysisLoading] = useState(false);
 
+  // RejectRegionModal 상태
+  const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
+  const [rejectedRegion, setRejectedRegion] = useState<string>('');
+
   // 분석 준비 상태 확인 (업종과 지역이 모두 선택되었는지)
   const isAnalysisReady = selectedSubCategory && selectedDong;
+
+  // 지원 가능한 동인지 확인하는 함수
+  const isSupportedDong = (dongName: string) => {
+    return dongName === '공릉1동' || dongName === '공릉2동';
+  };
 
   // 분석 시작 함수
   const handleStartAnalysis = async () => {
@@ -81,11 +91,25 @@ export default function AnalysisSelect() {
     navigate("/analysis/result"); // 결과 페이지로 이동
   };
 
-  // URL 파라미터에서 지역 정보 읽어와서 상태 업데이트
+  // URL 파라미터에서 업종 정보 읽어와서 상태 업데이트 (항상 실행)
   useEffect(() => {
-    const cityParam = searchParams.get('city');
-    const districtParam = searchParams.get('district');
-    const dongParam = searchParams.get('dong');
+    const industryParam = location.state?.industry;
+    const subCategoryParam = location.state?.subCategory;
+
+    // 업종 정보 복원
+    if (industryParam) {
+      setSelectedIndustry(industryParam);
+    }
+    if (subCategoryParam) {
+      setSelectedSubCategory(subCategoryParam);
+    }
+  }, [location.state]);
+
+  // URL 파라미터에서 지역 정보 읽어와서 상태 업데이트 (한 번만 실행)
+  useEffect(() => {
+    const cityParam = location.state?.city;
+    const districtParam = location.state?.district;
+    const dongParam = location.state?.dong;
 
     if (cityParam || districtParam || dongParam) {
       // cityParam에서 city ID 찾기 (예: "서울시" -> "seoul")
@@ -124,10 +148,19 @@ export default function AnalysisSelect() {
         }
       }
       
-      // URL 파라미터 제거 (한 번만 적용)
-      setSearchParams({});
+      // URL 파라미터 제거 (지역 정보만 제거하고 업종 정보는 유지)
+      // const newSearchParams = new URLSearchParams();
+      // const industryParam = searchParams.get('industry');
+      // const subCategoryParam = searchParams.get('subCategory');
+      // if (industryParam) {
+      //   newSearchParams.set('industry', industryParam);
+      // }
+      // if (subCategoryParam) {
+      //   newSearchParams.set('subCategory', subCategoryParam);
+      // }
+      // setSearchParams(newSearchParams);
     }
-  }, [searchParams, setSearchParams]);
+  }, [location.state]); // 빈 의존성 배열로 한 번만 실행
 
   const handleIndustrySelect = (industryId: string) => {
     setSelectedIndustry(industryId);
@@ -155,6 +188,16 @@ export default function AnalysisSelect() {
   };
 
   const handleDongSelect = (dongId: string) => {
+    const dongName = getDongById(selectedCity, selectedDistrict, dongId)?.name;
+    
+    if (dongName && !isSupportedDong(dongName)) {
+      // 지원하지 않는 동인 경우
+      setRejectedRegion(dongName);
+      setIsRejectModalOpen(true);
+      return;
+    }
+    
+    // 지원하는 동인 경우
     setSelectedDong(dongId);
     setIsDongSheetOpen(false);
   };
@@ -238,6 +281,8 @@ export default function AnalysisSelect() {
         <SearchInput 
           placeholder="지역 직접 검색"
           navigateToSearch={true}
+          currentIndustry={selectedIndustry}
+          currentSubCategory={selectedSubCategory}
         />
         
         {/* 카카오맵 */}
@@ -344,6 +389,13 @@ export default function AnalysisSelect() {
       <AnalysisLoading
         isOpen={isAnalysisLoading}
         onComplete={handleAnalysisComplete}
+      />
+
+      {/* RejectTapModal */}
+      <RejectRegionModal
+        isOpen={isRejectModalOpen}
+        onClose={() => setIsRejectModalOpen(false)}
+        selectedRegion={rejectedRegion}
       />
     </main>
   );
