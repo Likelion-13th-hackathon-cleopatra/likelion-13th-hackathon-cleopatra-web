@@ -1,6 +1,5 @@
 // components/report/sections/Price.tsx
 import SectionCard from "../primitives/SectionCard";
-import ChartFrame from "../primitives/ChartFrame";
 import type { FC } from "react";
 import { won } from "@/utils/number";
 
@@ -31,16 +30,15 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
         </div>
       </div>
 
-      <ChartFrame caption="분기별 거래량 추이">
-        {/* 차트 도입 전 간단 프리뷰 */}
-        <ul className="flex flex-wrap gap-3 text-sm">
-          {trend.map((t) => (
-            <li key={t.quarter}>
-              {t.quarter}: <b>{t.value.toLocaleString()}</b>
-            </li>
-          ))}
-        </ul>
-      </ChartFrame>
+      <p className="chart-frame__caption">분기별 거래량 추이</p>
+      {/* 차트 도입 전 간단 프리뷰 */}
+      <ul className="flex flex-wrap gap-3 text-sm">
+        {trend.map((t) => (
+          <li key={t.quarter}>
+            {t.quarter}: <b>{t.value.toLocaleString()}</b>
+          </li>
+        ))}
+      </ul>
 
       <div className="text-xs text-muted-foreground space-y-1">
         <p>{p.description_price.value_average}</p>

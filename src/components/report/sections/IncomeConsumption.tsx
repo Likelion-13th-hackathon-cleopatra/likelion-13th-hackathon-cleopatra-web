@@ -1,6 +1,5 @@
 // components/report/sections/IncomeConsumption.tsx
 import SectionCard from "../primitives/SectionCard";
-import ChartFrame from "../primitives/ChartFrame";
 import type { FC } from "react";
 import { won } from "@/utils/number";
 
@@ -35,15 +34,14 @@ const IncomeConsumption: FC<{ report: ReportRaw }> = ({ report }) => {
         i.income_class_code
       })`}
     >
-      <ChartFrame caption="소비 항목 비중(%)">
-        <ul className="grid grid-cols-2 gap-2 text-sm">
-          {rows.map((r) => (
-            <li key={r.label}>
-              {r.label}: <b>{r.percent}%</b>
-            </li>
-          ))}
-        </ul>
-      </ChartFrame>
+      <p className="chart-frame__caption">소비 항목 비중(%)</p>
+      <ul className="grid grid-cols-2 gap-2 text-sm">
+        {rows.map((r) => (
+          <li key={r.label}>
+            {r.label}: <b>{r.percent}%</b>
+          </li>
+        ))}
+      </ul>
 
       <p className="text-xs text-muted-foreground">
         총지출: {won(c.spending_total)} ·{" "}

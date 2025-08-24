@@ -1,94 +1,61 @@
-// components/report/sections/Population.tsx
 import SectionCard from "../primitives/SectionCard";
-import ChartFrame from "../primitives/ChartFrame";
+import InnerCard from "../primitives/InnerCard";
+import AgeDonutChart from "../primitives/AgeDonutChart";
+import AIInterpretationCard from "../primitives/AIInterpretationCard";
+import GenderRatioBar from "../primitives/GenderRatioBar"; // ⬅️ 추가
 import type { FC } from "react";
 
 type ReportRaw = typeof import("@/mock/dummyReport").dummyReport.data;
 
+const formatNumber = (n: number) => n.toLocaleString("ko-KR");
+
 const Population: FC<{ report: ReportRaw }> = ({ report }) => {
   const a = report.population.ages;
-  const g = report.population.gender;
   const ages = [
-    {
-      label: "10대",
-      count: a.resident.age_10_resident,
-      percent: a.percent.age_10_percent,
-    },
-    {
-      label: "20대",
-      count: a.resident.age_20_resident,
-      percent: a.percent.age_20_percent,
-    },
-    {
-      label: "30대",
-      count: a.resident.age_30_resident,
-      percent: a.percent.age_30_percent,
-    },
-    {
-      label: "40대",
-      count: a.resident.age_40_resident,
-      percent: a.percent.age_40_percent,
-    },
-    {
-      label: "50대",
-      count: a.resident.age_50_resident,
-      percent: a.percent.age_50_percent,
-    },
-    {
-      label: "60대+",
-      count: a.resident.age_60_plus_resident,
-      percent: a.percent.age_60_plus_percent,
-    },
+    { label: "10대 이하", value: a.percent.age_10_percent },
+    { label: "20대", value: a.percent.age_20_percent },
+    { label: "30대", value: a.percent.age_30_percent },
+    { label: "40대", value: a.percent.age_40_percent },
+    { label: "50대", value: a.percent.age_50_percent },
+    { label: "60대 이상", value: a.percent.age_60_plus_percent },
   ];
+  const totalLabel = `${formatNumber(report.population.total_resident)}명`;
 
-  const gender = [
-    {
-      label: "남",
-      count: g.resident.male_resident,
-      percent: g.percent.male_percent,
-    },
-    {
-      label: "여",
-      count: g.resident.female_resident,
-      percent: g.percent.female_percent,
-    },
-  ];
+  const g = report.population.gender;
 
   return (
     <SectionCard
       title="실거주 인구 통계"
       titleClassName="Head_Bold_14 text-primary-green-40"
-      subtitle={`총 거주자 ${report.population.total_resident.toLocaleString()}명`}
     >
-      <ChartFrame caption="연령대 비중(%)">
-        <ul className="grid grid-cols-3 gap-2 text-sm">
-          {ages.map((x) => (
-            <li key={x.label}>
-              {x.label}: <b>{x.percent}%</b>{" "}
-              <span className="text-muted-foreground">
-                ({x.count.toLocaleString()}명)
-              </span>
-            </li>
-          ))}
-        </ul>
-      </ChartFrame>
+      <div className="space-y-4 pt-4">
+        <InnerCard
+          title="연령대별 인구 비율"
+          hasBorder={true}
+          hasBackground={false}
+        >
+          <div className="mt-[8px]">
+            <AgeDonutChart data={ages} totalLabel={totalLabel} />
+            <AIInterpretationCard className="mt-2">
+              <p>{report.population.description_population.age}</p>
+            </AIInterpretationCard>
+          </div>
+        </InnerCard>
 
-      <ChartFrame caption="성별 분포(%)">
-        <ul className="flex gap-4 text-sm">
-          {gender.map((x) => (
-            <li key={x.label}>
-              {x.label}: <b>{x.percent}%</b>{" "}
-              <span className="text-muted-foreground">
-                ({x.count.toLocaleString()}명)
-              </span>
-            </li>
-          ))}
-        </ul>
-      </ChartFrame>
+        <InnerCard title="성별 인구 비율">
+          {/* ⬇️ 여기에 '그림처럼' pill 바 컴포넌트 추가 */}
+          <GenderRatioBar
+            className="mt-2"
+            malePercent={g.percent.male_percent}
+            femalePercent={g.percent.female_percent}
+          />
 
-      <div className="mt-2 text-xs text-muted-foreground space-y-1">
-        <p>{report.population.description_population.age}</p>
-        <p>{report.population.description_population.gender}</p>
+          <AIInterpretationCard className="mt-2">
+            <p>
+              {report.population.description_population.gender}
+            </p>
+          </AIInterpretationCard>
+        </InnerCard>
       </div>
     </SectionCard>
   );

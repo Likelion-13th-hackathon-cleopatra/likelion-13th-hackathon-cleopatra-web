@@ -39,7 +39,7 @@ export const dummyReport = {
       },
     ],
     population: {
-      total_resident: 12121,
+      total_resident: 12111121,
       ages: {
         resident: {
           age_10_resident: 121,
@@ -50,7 +50,7 @@ export const dummyReport = {
           age_60_plus_resident: 121,
         },
         percent: {
-          age_10_percent: 10.1,
+          age_10_percent: 8.0,
           age_20_percent: 20.0,
           age_30_percent: 25.0,
           age_40_percent: 22.0,
