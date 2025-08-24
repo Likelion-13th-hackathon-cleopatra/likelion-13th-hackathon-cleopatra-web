@@ -1,5 +1,5 @@
 // components/report/primitives/ChartFrame.tsx
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 export default function ChartFrame({
   children,

@@ -1,5 +1,5 @@
 // components/report/primitives/SectionCard.tsx
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 type Props = {
   title: string;

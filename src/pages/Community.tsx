@@ -71,7 +71,7 @@ export default function CommunityPage() {
     "📢  마케팅",
   ];
   const [selectedChips, setSelectedChips] = React.useState(["창업 준비 중"]);
-  const toggleChip = (label) => {
+  const toggleChip = (label: string) => {
     setSelectedChips((prev) =>
       prev.includes(label) ? prev.filter((l) => l !== label) : [...prev, label]
     );
@@ -119,7 +119,7 @@ export default function CommunityPage() {
             {groups.map((g) => (
               <div key={g.name} className="shrink-0 w-[50px]">
                 <div className="h-[50px] w-[50px] rounded-[15px] overflow-hidden">
-                  <g.Img alt={g.name} className="h-full w-full object-cover" />
+                  <g.Img className="h-full w-full object-cover" />
                 </div>
                 <p className="mt-[10px] text-center Sub_Bold_10 text-primary-green80 whitespace-nowrap overflow-hidden text-ellipsis">
                   {g.name}

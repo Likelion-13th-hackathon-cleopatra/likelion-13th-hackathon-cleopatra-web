@@ -4,6 +4,8 @@ import ArrowDownIcon from "@/assets/icons/my/arrow_down.svg?react";
 import InnerCard from "../primitives/InnerCard";
 import AIInterpretationCard from "../primitives/AIInterpretationCard";
 
+type ReportRaw = typeof import("@/mock/dummyReport").dummyReport.data;
+
 const platformTitles: { [key: string]: string } = {
   NAVER_BLOG: "블로그 포털",
   NAVER_REVIEW: "지역 커뮤니티 플랫폼",
@@ -33,11 +35,11 @@ const Keywords: FC<{ report: ReportRaw }> = ({ report }) => {
 
       {isOpen && (
         <div className="mt-4 space-y-4">
-          {report.keywords.map((k) => (
+          {report.keywords.map((k: any) => (
             <InnerCard key={k.platform} title={platformTitles[k.platform]}>
               <div className="space-y-[10px]">
                 <div className="flex flex-wrap gap-1.5">
-                  {k.keywords.map((w) => (
+                  {k.keywords.map((w: any) => (
                     <span key={w} className="chip">
                       #{w}
                     </span>
