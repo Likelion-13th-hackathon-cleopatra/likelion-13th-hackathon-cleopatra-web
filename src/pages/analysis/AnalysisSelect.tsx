@@ -14,6 +14,7 @@ import AnalysisModal from "../../components/analysisSelect/AnalysisModal";
 import AnalysisLoading from "../../components/analysisSelect/AnalysisLoading";
 import { getIndustryById, getSubCategoryById } from "../../data/industryData";
 import { getCityById, getDistrictById, getDongById } from "../../data/regionData";
+import { analysisApi } from "../../utils/api";
 
 export default function AnalysisSelect() {
   const navigate = useNavigate();
@@ -41,12 +42,40 @@ export default function AnalysisSelect() {
   const isAnalysisReady = selectedSubCategory && selectedDong;
 
   // 분석 시작 함수
-  const handleStartAnalysis = () => {
-    setIsAnalysisModalOpen(false); // 모달 닫기
-    setIsAnalysisLoading(true); // 로딩 시작
+  const handleStartAnalysis = async () => {
+    try {
+      setIsAnalysisModalOpen(false); // 모달 닫기
+      setIsAnalysisLoading(true); // 로딩 시작
+
+      // API 호출하여 상권 분석 요청
+      const analysisData = {
+        industry: selectedIndustry ? getIndustryById(selectedIndustry)?.name || '' : '', // 업종 한글 이름 (예: "외식업")
+        subCategory: selectedSubCategory ? getSubCategoryById(selectedIndustry, selectedSubCategory)?.name || '' : '', // 하위 업종 한글 이름 (예: "일식")
+        city: selectedCity,
+        district: selectedDistrict ? getDistrictById(selectedCity, selectedDistrict)?.name || '' : '', // 구 이름 (예: "노원구")
+        dong: selectedDong ? getDongById(selectedCity, selectedDistrict, selectedDong)?.name || '' : '', // 동 이름 (예: "공릉1동")
+      };
+
+      console.log('전송할 데이터:', analysisData);
+
+      const response = await analysisApi.requestAnalysis(analysisData);
+      
+      // 분석 완료 후 ReportView로 이동
+      if (response.analysisId) {
+        navigate(`/report/${response.analysisId}`);
+      } else {
+        // analysisId가 없는 경우 기본값으로 이동
+        navigate('/report/default');
+      }
+    } catch (error) {
+      console.error('Analysis failed:', error);
+      // 에러 처리 (사용자에게 알림 등)
+      setIsAnalysisLoading(false);
+      // 에러 모달이나 토스트 메시지 표시
+    }
   };
 
-  // 분석 완료 함수
+  // 분석 완료 함수 (기존 코드 유지)
   const handleAnalysisComplete = () => {
     setIsAnalysisLoading(false);
     navigate("/analysis/result"); // 결과 페이지로 이동

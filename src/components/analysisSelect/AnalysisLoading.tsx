@@ -8,17 +8,6 @@ interface AnalysisLoadingProps {
 export default function AnalysisLoading({ isOpen, onComplete }: AnalysisLoadingProps) {
   if (!isOpen) return null;
 
-  // 3초 후 분석 완료 (실제 구현에서는 API 호출 등으로 대체)
-  React.useEffect(() => {
-    if (isOpen && onComplete) {
-      const timer = setTimeout(() => {
-        onComplete();
-      }, 5000);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [isOpen, onComplete]);
-
   return (
     <div className="fixed inset-0 z-50 bg-white flex flex-col items-center justify-center">
       {/* 로딩 아이콘 영역 */}
