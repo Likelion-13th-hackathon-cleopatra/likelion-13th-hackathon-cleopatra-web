@@ -94,9 +94,6 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
                 <div className="Body_Bold_12 mb-[6px]">
                   중위값 <span className="ml-[6px] Sub_Regular_12">{wonInMan(p.price_per_pyeong)}</span>
                 </div>
-                <div className="Body_Regular_10 text-grayscale-25">
-                  근거 거래 데이터 개수: {p.small.small_count}건
-                </div>
               </div>
 
               {/* 구분선 */}
@@ -110,13 +107,10 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
                   </div>
                 </div>
                 <div className="Body_Bold_12 mb-[2px]">
-                  평균값 <span className="ml-[6px] Sub_Regular_12">5,500만 원</span>
+                  평균값 <span className="ml-[6px] Sub_Regular_12">1,212만 원</span>
                 </div>
                 <div className="Body_Bold_12 mb-[6px]">
-                  중위값 <span className="ml-[6px] Sub_Regular_12">5,200만 원</span>
-                </div>
-                <div className="Body_Regular_10 text-grayscale-25">
-                  근거 거래 데이터 개수: 1,200건
+                  중위값 <span className="ml-[6px] Sub_Regular_12">4,000만 원</span>
                 </div>
               </div>
             </div>
