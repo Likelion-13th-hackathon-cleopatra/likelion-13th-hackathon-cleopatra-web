@@ -231,23 +231,6 @@
         rgba(0, 0, 0, 0.4) 100%
       ),
       #0db659;
-        0deg,
-        rgba(0, 0, 0, 0.4) 0%,
-        rgba(0, 0, 0, 0.4) 100%
-      ),
-      #0db659;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-  }
-  .text-gray-25 {
-    background: linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.25) 0%,
-        rgba(0, 0, 0, 0.25) 100%
-      ),
-      #f3f3f1;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -268,11 +251,6 @@
 
   .text-primary-green-80 {
     background: linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.8) 0%,
-        rgba(0, 0, 0, 0.8) 100%
-      ),
-      #0db659;
         0deg,
         rgba(0, 0, 0, 0.8) 0%,
         rgba(0, 0, 0, 0.8) 100%
