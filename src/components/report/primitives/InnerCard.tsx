@@ -4,6 +4,7 @@ type Props = {
   title: string;
   children: ReactNode;
   className?: string;
+  rightContent?: ReactNode;
   hasBorder?: boolean;
   hasBackground?: boolean;
 };
@@ -12,6 +13,7 @@ export default function InnerCard({
   title,
   children,
   className = "",
+  rightContent,
   hasBorder = true,
   hasBackground = true,
 }: Props) {
@@ -23,7 +25,10 @@ export default function InnerCard({
     <div
       className={`${baseClasses} ${backgroundClass} ${borderClasses} ${className}`.trim()}
     >
-      <h4 className="Head_Bold_14 text-grayscale-65">{title}</h4>
+      <div className="flex justify-between items-center">
+        <h4 className="Head_Bold_14 text-grayscale-65">{title}</h4>
+        {rightContent}
+      </div>
       <div>{children}</div>
     </div>
   );

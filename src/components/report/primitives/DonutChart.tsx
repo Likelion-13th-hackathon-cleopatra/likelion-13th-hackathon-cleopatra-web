@@ -1,10 +1,11 @@
 // components/report/charts/DonutChart.tsx
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { CSSProperties, ReactNode } from "react";
+import { dummyReport } from "@/mock/dummyReport.ts";
 
 export type DonutDatum = { label: string; value: number };
 
-type DonutChartProps = {
+export type DonutChartProps = {
   data: DonutDatum[];
   colors?: string[];
   innerRadius?: number;
@@ -13,18 +14,18 @@ type DonutChartProps = {
   outerLabelSet?: Set<string>;
   center?: { title?: ReactNode; value?: ReactNode; style?: CSSProperties };
   rotateDeg?: number;
+  height?: number;
   /** 리더 라인 길이/간격 설정 */
   leader?: {
-    /** 도넛 위쪽 기준선까지의 간격(px). 기본 8 */
     gap?: number;
-    /** 점에서 바깥쪽으로 나가는 짧은 대각선 길이(px). 기본 10 */
     elbow?: number;
-    /** 위쪽 가로선 길이(px). 기본 56 */
     horizLen?: number;
-    /** 가로선 끝과 텍스트 사이 여백(px). 기본 7 */
     textPad?: number;
-    /** 텍스트를 아래로 내리는 오프셋(px). 기본 6 */
     textOffset?: number;
+    /** 바깥 라벨 기준선 모드: 기본 'top' (기존 동작 유지) */
+    baseline?: "top" | "radial";
+    /** baseline='radial'일 때, 가로로 살짝 더 뻗는 길이(px). 기본 5 */
+    tickLen?: number;
   };
 };
 
@@ -57,6 +58,9 @@ export default function DonutChart({
     textOffset = 6, // ← 살짝 아래(양수=아래)
   } = leader ?? {};
 
+  const spendingTotal = dummyReport.data.income_consumption.consumption.spending_total;
+  const spendingTotalFormatted = spendingTotal.toLocaleString();
+
   const sortedData = [...data].sort((a, b) => a.value - b.value);
   const lowestLabelsSet = new Set(sortedData.slice(0, 3).map((d) => d.label));
 
@@ -74,9 +78,10 @@ export default function DonutChart({
     const x = cx + r * Math.cos(-midAngle * RAD);
     const y = cy + r * Math.sin(-midAngle * RAD);
 
-    const textColor = lowestLabelsSet.has(payload.label)
-      ? "#086d36"
-      : "#FFFFFF";
+    const whiteLabels = ["의류", "의료비", "교육"];
+    const textColor = whiteLabels.includes(payload.label)
+      ? "#FFFFFF"
+      : "#086d36";
 
     return (
       <text
@@ -102,30 +107,43 @@ export default function DonutChart({
 
     const angle = -midAngle * RAD;
 
-    // 1) 점(시작점): 도넛 외곽선에 딱 닿도록
+    // 시작점: 도넛 외곽
     const ax = cx + (outerRadius + 0) * Math.cos(angle);
     const ay = cy + (outerRadius + 0) * Math.sin(angle);
 
-    // 2) 짧은 대각선(엘보)
+    // 짧은 대각선(섹터 바깥 방향으로)
     const ex = cx + (outerRadius + elbow) * Math.cos(angle);
     const ey = cy + (outerRadius + elbow) * Math.sin(angle);
 
-    // 3) 위쪽 기준선 Y (도넛 위 + gap)
-    const topY = cy - outerRadius - gap;
-
-    // 4) 가로선 끝점
     const isLeft = Math.cos(angle) < 0;
-    const hx = ex + (isLeft ? -horizLen : horizLen);
-    const hy = topY;
 
-    // 5) 텍스트 위치: 가로선 끝에서 좌우로 7px 띄우고, 아래로 약간 내림
-    const textX = hx + (isLeft ? -textPad : textPad);
-    const textY = hy + textOffset;
-    const anchor = isLeft ? "end" : "start";
+    // === 추가: 라벨 배치 모드 분기 ===
+    const baseline = leader?.baseline ?? "top";
+    const tickLen  = leader?.tickLen  ?? 5;
+
+    let hx: number, hy: number, textX: number, textY: number, anchor: "start" | "end";
+
+    if (baseline === "radial") {
+      // 섹터 바깥쪽으로 짧게 가로로만 '틱'을 한 번 더
+      hx = ex + (isLeft ? -tickLen : tickLen);
+      hy = ey;
+
+      textX = hx + (isLeft ? -textPad : textPad);
+      textY = hy + textOffset;
+      anchor = isLeft ? "end" : "start";
+    } else {
+      // 기존(top) 동작: 위 기준선으로 올려서 가로선 + 텍스트
+      const topY = cy - outerRadius - (leader?.gap ?? 8);
+      hx = ex + (isLeft ? -(leader?.horizLen ?? 56) : (leader?.horizLen ?? 56));
+      hy = topY;
+
+      textX = hx + (isLeft ? -textPad : textPad);
+      textY = hy + textOffset;
+      anchor = isLeft ? "end" : "start";
+    }
 
     return (
       <g>
-        {/* 리더 라인: 점 → 대각선 → 가로선 */}
         <polyline
           points={`${ax},${ay} ${ex},${ey} ${hx},${hy}`}
           stroke="#086d36"
@@ -134,10 +152,6 @@ export default function DonutChart({
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        {/* 점 */}
-        <circle cx={ax} cy={ay} r={4} fill="#086d36" />
-
-        {/* 라벨 텍스트 */}
         <text
           x={textX}
           y={textY}
@@ -152,6 +166,7 @@ export default function DonutChart({
             {(percent * 100).toFixed(1)}%
           </tspan>
         </text>
+        <circle cx={ax} cy={ay} r={4} fill="#086d36" />
       </g>
     );
   };
@@ -165,25 +180,24 @@ export default function DonutChart({
         backgroundColor: "white",
       }}
     >
-      {center && (
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            pointerEvents: "none",
-            flexDirection: "column",
-            lineHeight: 1.2,
-            textAlign: "center",
-            ...(center.style || {}),
-          }}
-        >
-          {center.title ?? null}
-          {center.value ?? null}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          pointerEvents: "none",
+          flexDirection: "column",
+          lineHeight: 1.2,
+          textAlign: "center",
+        }}
+      >
+        <div className="Body_Regular_10">지출 총 금액</div>
+        <div className="Sub_Bold_10" style={{ color: "#032412" }}>
+          {spendingTotalFormatted}원
         </div>
-      )}
+      </div>
 
       <ResponsiveContainer>
         <PieChart>
