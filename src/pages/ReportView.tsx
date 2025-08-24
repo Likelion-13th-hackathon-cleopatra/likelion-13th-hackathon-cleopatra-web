@@ -11,6 +11,7 @@ import IncomeConsumption from "@/components/report/sections/IncomeConsumption";
 import Strategy from "@/components/report/sections/Strategy";
 
 import { analysisApi } from "@/utils/api";
+import { getAnonymousId } from "@/utils/anonymousId";
 
 export default function ReportView() {
   const { id } = useParams();
@@ -35,10 +36,11 @@ export default function ReportView() {
         }
 
         if (id && id !== 'default') {
-          // 실제 API 호출
-          const result = await analysisApi.getAnalysisResult(id);
-          console.log('API 응답 전체:', result);
-          console.log('API 응답 data:', result.data);
+          // 실제 API 호출 - 리포트 상세 조회 API 사용
+          const anonymousId = getAnonymousId();
+          const result = await analysisApi.getReportDetail(anonymousId, id);
+          console.log('리포트 상세 API 응답 전체:', result);
+          console.log('리포트 상세 API 응답 data:', result.data);
           
           // API 응답 구조에 따라 데이터 설정
           if (result.data) {

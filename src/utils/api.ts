@@ -107,4 +107,34 @@ export const analysisApi = {
     
     return response.json();
   },
+
+  // 리포트 목록 조회
+  getReportList: async (primaryKey: string) => {
+    const response = await authenticatedFetch(`${API_BASE_URL}/api/report/${primaryKey}`, {
+      method: "GET",
+    });
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('서버 응답 상세:', errorText);
+      throw new Error(`Failed to get report list: ${response.status}: ${errorText}`);
+    }
+    
+    return response.json();
+  },
+
+  // 리포트 상세 조회
+  getReportDetail: async (primaryKey: string, reportId: string) => {
+    const response = await authenticatedFetch(`${API_BASE_URL}/api/report/${primaryKey}/${reportId}`, {
+      method: "GET",
+    });
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('서버 응답 상세:', errorText);
+      throw new Error(`Failed to get report detail: ${response.status}: ${errorText}`);
+    }
+    
+    return response.json();
+  },
 };

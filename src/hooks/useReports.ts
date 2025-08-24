@@ -1,5 +1,7 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import type { Filter, ReportSummary, SortKey } from "../types/my";
+import { analysisApi } from "../utils/api";
+import { getAnonymousId } from "../utils/anonymousId";
 
 // 백엔드 응답을 가정한 원본 데이터 타입
 type RawReport = {
@@ -9,44 +11,6 @@ type RawReport = {
   created_at: string;
   favorite: boolean;
 };
-
-const MOCK_REPORTS: RawReport[] = [
-  {
-    report_id: 1,
-    secondary: "외식업",
-    sub_neighborhood: "공릉1동",
-    created_at: "2025-08-22T15:45:12Z",
-    favorite: false,
-  },
-  {
-    report_id: 2,
-    secondary: "카페",
-    sub_neighborhood: "월계3동",
-    created_at: "2025-08-21T11:20:00Z",
-    favorite: true,
-  },
-  {
-    report_id: 3,
-    secondary: "뷰티",
-    sub_neighborhood: "하계1동",
-    created_at: "2025-08-20T18:00:00Z",
-    favorite: false,
-  },
-  {
-    report_id: 4,
-    secondary: "스포츠",
-    sub_neighborhood: "중계본동",
-    created_at: "2025-08-19T09:30:00Z",
-    favorite: false,
-  },
-  {
-    report_id: 5,
-    secondary: "의료업",
-    sub_neighborhood: "상계2동",
-    created_at: "2025-08-18T13:00:00Z",
-    favorite: true,
-  },
-];
 
 /**
  * 보고서 목록을 제공하는 훅.
@@ -58,14 +22,53 @@ export function useReports(params: {
   query: string;
 }) {
   const { sort, filter, query } = params;
-  const [items, setItems] = useState<RawReport[]>(MOCK_REPORTS);
-  const isLoading = false;
-  const error = null;
+  const [items, setItems] = useState<RawReport[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // API에서 리포트 목록 가져오기
+  useEffect(() => {
+    const fetchReports = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        
+        const anonymousId = getAnonymousId();
+        const response = await analysisApi.getReportList(anonymousId);
+        
+        console.log('리포트 목록 API 응답:', response);
+        
+        // API 응답 구조에 따라 데이터 변환
+        if (response.data?.reportList && Array.isArray(response.data.reportList)) {
+          const reports: RawReport[] = response.data.reportList.map((item: any) => ({
+            report_id: item.reportId, // reportId로 변경
+            secondary: item.secondary || '업종 미분류',
+            sub_neighborhood: item.subNeighborhood || '지역 미분류', // subNeighborhood로 변경
+            created_at: item.createdAt, // createdAt으로 변경
+            favorite: item.favorite || false,
+          }));
+          console.log('변환된 리포트 데이터:', reports);
+          setItems(reports);
+        } else {
+          console.log('리포트 데이터가 없거나 잘못된 형식:', response.data);
+          setItems([]);
+        }
+      } catch (err) {
+        console.error('Failed to fetch reports:', err);
+        setError('리포트 목록을 불러오는데 실패했습니다.');
+        setItems([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchReports();
+  }, []); // 컴포넌트 마운트 시 한 번만 실행
 
   const processedData = useMemo(() => {
     // 1. 원본 데이터를 프론트엔드 타입으로 변환
     let arr: ReportSummary[] = items.map((r) => ({
-      id: `r${r.report_id}`,
+      id: String(r.report_id), // r 제거하고 report_id만 사용
       category: r.secondary, // category와 label에 모두 `secondary` 값을 사용
       label: r.secondary,
       dong: r.sub_neighborhood,
@@ -108,13 +111,16 @@ export function useReports(params: {
   }, [items, sort, filter, query]);
 
   const toggleStar = useCallback((id: string, nextStarred: boolean) => {
-    // Mock implementation: update local state based on the raw data structure
+    // 로컬 상태 업데이트 (즉시 반영)
     setItems((prev) =>
       prev.map((it) =>
-        `r${it.report_id}` === id ? { ...it, favorite: nextStarred } : it
+        String(it.report_id) === id ? { ...it, favorite: nextStarred } : it
       )
     );
-    console.log(`Toggled star for report ${id} to ${nextStarred}. (Mock)`);
+    
+    // TODO: 실제 API 호출로 즐겨찾기 상태 업데이트
+    // 현재는 로컬 상태만 업데이트
+    console.log(`Toggled star for report ${id} to ${nextStarred}.`);
   }, []);
 
   return {
