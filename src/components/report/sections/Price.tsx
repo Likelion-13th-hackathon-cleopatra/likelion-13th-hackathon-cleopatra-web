@@ -229,6 +229,11 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
               </div>
             </div>
           </div>
+          <AIInterpretationCard className="mt-[25.9px]">
+              <div className="Body_Regular_12 text-grayscale-65">
+                {p.description_price.volume}
+              </div>
+          </AIInterpretationCard>
         </InnerCard2>
       </div>
     </SectionCard>
