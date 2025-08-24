@@ -7,9 +7,11 @@ export default function App() {
   const showNavBar = location.pathname !== "/";
 
   return (
-    <div className="relative min-h-screen pb-16">
-      <AppRoutes />
-      {showNavBar && <BottomNavBar />}
+    <div className="mobile-wrapper">
+      <div className="mobile-container relative pb-16">
+        <AppRoutes />
+        {showNavBar && <BottomNavBar />}
+      </div>
     </div>
   );
 }

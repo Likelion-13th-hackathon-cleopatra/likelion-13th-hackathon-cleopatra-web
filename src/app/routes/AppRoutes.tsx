@@ -3,6 +3,9 @@ import Splash from "../../pages/Splash";
 import Home from "../../pages/Home";
 import Community from "../../pages/Community";
 import MyStorage from "../../pages/MyStorage";
+import Analysis from "../../pages/analysis/Analysis";
+import AnalysisSelect from "../../pages/analysis/AnalysisSelect";
+import RegionSearch from "../../pages/analysis/RegionSearch";
 import ReportView from "../../pages/ReportView";
 
 export default function AppRoutes() {
@@ -14,6 +17,9 @@ export default function AppRoutes() {
       <Route path="/my-storage" element={<MyStorage />} />
       <Route path="/report/:id" element={<ReportView />} />
       <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="/analysis" element={<Analysis />} />
+      <Route path="/analysis/select" element={<AnalysisSelect />} />
+      <Route path="/analysis/region-search" element={<RegionSearch />} />
     </Routes>
   );
 }
