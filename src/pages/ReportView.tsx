@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
 import ReportHeader from "@/components/layout/ReportHeader";
+import ReportSummary from "@/components/report/sections/ReportSummary";
+import SelectionInfo from "@/components/report/sections/SelectionInfo";
 import ReportHero from "@/components/report/sections/ReportHero";
 import Keywords from "@/components/report/sections/Keywords";
 import Population from "@/components/report/sections/Population";
@@ -16,8 +18,10 @@ export default function ReportView() {
   return (
     <div>
       <ReportHeader />
-      <main id="report-content" className="report-view stack mt-[10px] px-6 gap-[30px]">
+      <main id="report-content" className="report-view stack pt-[10px] px-6 gap-[30px] bg-grayscale-5">
         <ReportHero report={raw} />
+        <ReportSummary report={raw} />
+        <SelectionInfo report={raw} />
         <Keywords report={raw} />
         <Population report={raw} />
         <Price report={raw} />
