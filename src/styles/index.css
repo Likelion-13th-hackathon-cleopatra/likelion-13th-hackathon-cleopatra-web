@@ -116,6 +116,10 @@
     @apply font-pretendard text-[10px] leading-[15px] tracking-[-0.03em] font-bold;
   }
 
+  .Sub_Bold_8 {
+    @apply font-pretendard text-[8px] leading-[12px] tracking-[-0.03em] font-bold;
+  }
+
   /* Body_SemiBold_24: 24 / 36 / -3% / SemiBold */
   .Body_SemiBold_24 {
     @apply font-pretendard text-[24px] leading-[36px] tracking-[-0.03em] font-semibold;

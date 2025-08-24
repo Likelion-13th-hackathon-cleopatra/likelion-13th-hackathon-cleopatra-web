@@ -1,6 +1,8 @@
 // components/report/sections/Strategy.tsx
+import InnerCard from "../primitives/InnerCard";
 import SectionCard from "../primitives/SectionCard";
 import type { FC } from "react";
+import StrategyCard from "../primitives/StrategyCard";
 
 type ReportRaw = typeof import("@/mock/dummyReport").dummyReport.data;
 
@@ -24,11 +26,27 @@ const Strategy: FC<{ report: ReportRaw }> = ({ report }) => {
   const s = report.description_strategy;
 
   return (
-    <SectionCard title="운영 전략 제안" subtitle="리뷰·KPI·개선 포인트">
+    <SectionCard title="AI 종합 분석" titleClassName="Head_Bold_14 text-primary-green-40" initialIsOpen={true}>
       <div className="space-y-4">
-        <Block head={s.review.head} body={s.review.body} />
-        <Block head={s.kpi.head} body={s.kpi.body} />
-        <Block head={s.improvements.head} body={s.improvements.body} />
+        <InnerCard title="리뷰 기반 서비스 조언">
+          <StrategyCard
+            title={s.review.head}
+            items={s.review.body}
+          />
+
+        </InnerCard>
+        <InnerCard title="핵심 성과 지표">
+          <StrategyCard
+            title={s.kpi.head}
+            items={s.kpi.body}
+          />
+        </InnerCard>
+        <InnerCard title="보완지점">
+          <StrategyCard
+            title={s.improvements.head}
+            items={s.improvements.body}
+          />
+        </InnerCard>
       </div>
     </SectionCard>
   );

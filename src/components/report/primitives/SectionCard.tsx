@@ -40,7 +40,7 @@ export default function SectionCard({
               width="14"
               height="8.25"
               className={`transition-transform duration-300 ${
-                isOpen ? "" : "-rotate-180"
+                isOpen ? "-rotate-180" : ""
               }`}
             />
           </button>
