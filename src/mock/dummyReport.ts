@@ -27,7 +27,7 @@ export const dummyReport = {
       },
       {
         platform: "NAVER_REVIEW",
-        keywords: ["직거래", "중고가전", "새상품"],
+        keywords: ["직거래", "중고가전", "새상품이야"],
         descript:
           "20~40대 젊은 층이 많아 중고 거래·직거래 플랫폼 이용이 활발하며, 합리적인 가격대 제품에 대한 수요가 높아요.",
       },
