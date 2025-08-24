@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import type { RegionBoundary } from '../../types/boundary';
+import markerIcon from '../../assets/marker.svg';
 
 interface KakaoMapNewProps {
   selectedCity?: string;
@@ -89,7 +90,7 @@ export default function KakaoMapNew({
           const map = new window.kakao.maps.Map(mapContainer.current, options);
           
           // 커스텀 마커 이미지 설정
-          const markerImageSrc = '/src/assets/marker.svg';
+          const markerImageSrc = markerIcon;
           const markerImageSize = new window.kakao.maps.Size(30, 35); // 마커 크기
           const markerImageOptions = {
             offset: new window.kakao.maps.Point(15, 35) // 마커 기준점 (중앙 하단)

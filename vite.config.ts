@@ -28,4 +28,5 @@ export default defineConfig({
   optimizeDeps: {
     include: ['**/*.svg?react'], // SVG React 컴포넌트를 의존성에 포함
   },
+  publicDir: 'public', // public 폴더 설정
 });
