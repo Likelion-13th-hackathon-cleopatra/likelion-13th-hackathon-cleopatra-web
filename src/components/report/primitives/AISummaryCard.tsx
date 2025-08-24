@@ -47,7 +47,7 @@ export default function AISummaryCard({ description, className = "" }: Props) {
     >
       <div className="flex items-center gap-1.5 mb-[12px]"> {/* Header part */}
         <SummaryIcon /> 
-        <span className="Body_Bold_12 text-sub-yellow40">보고서 전체 AI 핵심 요약</span>
+        <span className="Head_Bold_14 text-sub-yellow40">보고서 전체 AI 핵심 요약</span>
       </div>
       <div className="rounded-[15px] border border-[#FFEBC7] bg-[#FFF9EE] p-[14px] space-y-[6px]"> {/* Body part */}
         {/* Total Description */}

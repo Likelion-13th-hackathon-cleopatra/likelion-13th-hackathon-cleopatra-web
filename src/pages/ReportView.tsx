@@ -18,7 +18,7 @@ export default function ReportView() {
   return (
     <div>
       <ReportHeader />
-      <main id="report-content" className="report-view stack pt-[10px] px-6 gap-[30px] bg-grayscale-5">
+      <main id="report-content" className="report-view flex flex-col pt-[10px] px-6 gap-[30px] bg-grayscale-5">
         <ReportHero report={raw} />
         <ReportSummary report={raw} />
         <SelectionInfo report={raw} />

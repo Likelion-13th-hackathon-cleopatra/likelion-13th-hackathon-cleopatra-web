@@ -1,5 +1,5 @@
 // components/report/primitives/SectionCard.tsx
-import { ReactNode, useState } from "react";
+import { type ReactNode, useState } from "react";
 import ArrowDownIcon from "@/assets/icons/my/arrow_down.svg?react";
 
 type Props = {
@@ -28,7 +28,7 @@ export default function SectionCard({
         onClick={() => setIsOpen(!isOpen)}
       >
         <div>
-          <h3 className={`section-card__title ${titleClassName || ""}`.trim()}>
+          <h3 className={`${titleClassName || ""}`.trim()}>
             {title}
           </h3>
           {subtitle && <p className="section-card__subtitle">{subtitle}</p>}
