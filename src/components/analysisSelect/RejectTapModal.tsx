@@ -65,7 +65,7 @@ export default function RejectTapModal({
               }}
               className="flex-1 py-[14px] rounded-[16px] Sub_Bold_14 text-white bg-primary-green"
             >
-              탭 나가기
+              나가기
             </button>
           </div>
         </div>
