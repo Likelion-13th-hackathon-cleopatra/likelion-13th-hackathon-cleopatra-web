@@ -87,7 +87,7 @@ export default function ReportView() {
   }
 
   return (
-    <div>
+    <div className="bg-grayscale-5">
       <ReportHeader />
       <main id="report-content" className="report-view flex flex-col pt-[10px] px-6 gap-[30px] bg-grayscale-5 pb-[190px]">
         <ReportHero report={report} />

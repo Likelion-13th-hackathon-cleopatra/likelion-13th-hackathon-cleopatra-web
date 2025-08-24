@@ -126,6 +126,7 @@
   }
   .Primary_Green_18 {
     @apply font-pretendard text-[18px] leading-[27px] tracking-[-0.03em] font-semibold;
+    @apply font-pretendard text-[18px] leading-[27px] tracking-[-0.03em] font-semibold;
   }
 
   /* Head_Bold_18: 18 / 27 / -3% / Bold */
@@ -230,6 +231,23 @@
         rgba(0, 0, 0, 0.4) 100%
       ),
       #0db659;
+        0deg,
+        rgba(0, 0, 0, 0.4) 0%,
+        rgba(0, 0, 0, 0.4) 100%
+      ),
+      #0db659;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gray-25 {
+    background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.25) 0%,
+        rgba(0, 0, 0, 0.25) 100%
+      ),
+      #f3f3f1;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -255,21 +273,29 @@
         rgba(0, 0, 0, 0.8) 100%
       ),
       #0db659;
+        0deg,
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(0, 0, 0, 0.8) 100%
+      ),
+      #0db659;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     color: transparent;
   }
 
+
   /* 바텀시트 슬라이드 업 애니메이션 */
   .animate-slide-up {
     animation: slideUp 0.3s ease-out;
   }
 
+
   /* 바텀시트 슬라이드 다운 애니메이션 */
   .animate-slide-down {
     animation: slideDown 0.3s ease-in;
   }
+
 
   @keyframes slideUp {
     from {
@@ -279,6 +305,7 @@
       transform: translateY(0) translateX(-50%);
     }
   }
+
 
   @keyframes slideDown {
     from {
@@ -405,7 +432,128 @@
       opacity: 1;
     }
   }
+  /* 카드 레이아웃 */
+  .section-card {
+    border-radius: 14px;
+    padding: 16px;
+  }
+  .section-card__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .section-card__title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .section-card__subtitle {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 2px;
+  }
+  .section-card__body {
+    font-size: 14px;
+  }
 
+  /* 차트 컨테이너 */
+  .chart-frame {
+    margin-top: 10px;
+  }
+  .chart-frame__canvas {
+    border: 1px dashed #e5e7eb;
+    border-radius: 10px;
+    padding: 12px;
+    background: #f9fafb;
+  }
+  .chart-frame__caption {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #6b7280;
+  }
+
+  /* 칩 */
+  .chip {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 9999px;
+    background: #ecfdf5;
+    color: #065f46;
+    font-size: 12px;
+    border: 1px solid #a7f3d0;
+    @apply rounded-[5px] px-1.5 py-0.5 bg-primary-green text-white Sub_Bold_12;
+  }
+
+  /* 유틸 */
+  .text-muted-foreground {
+    color: #6b7280;
+  }
+  .space-y-1 > * + * {
+    margin-top: 0.25rem;
+  }
+  .space-y-2 > * + * {
+    margin-top: 0.5rem;
+  }
+  .space-y-4 > * + * {
+    margin-top: 1rem;
+  }
+  .grid {
+    display: grid;
+  }
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .gap-1 {
+    gap: 0.25rem;
+  }
+  .gap-2 {
+    gap: 0.5rem;
+  }
+  .gap-3 {
+    gap: 0.75rem;
+  }
+  .gap-4 {
+    gap: 1rem;
+  }
+  .flex {
+    display: flex;
+  }
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
+  .gap-2 {
+    gap: 0.5rem;
+  }
+  .gap-4 {
+    gap: 1rem;
+  }
+  .p-4 {
+    padding: 1rem;
+  }
+  .rounded-xl {
+    border-radius: 0.75rem;
+  }
+  .animate-pulse {
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  /* SVG stroke용 primary-green-40 색상 */
+  .stroke-primary-green-40 {
+    stroke: #086d36; /* #0DB659에 40% 검은색 오버레이 적용된 색상 */
+  }
   /* SVG stroke용 primary-green-40 색상 */
   .stroke-primary-green-40 {
     stroke: #086d36; /* #0DB659에 40% 검은색 오버레이 적용된 색상 */
