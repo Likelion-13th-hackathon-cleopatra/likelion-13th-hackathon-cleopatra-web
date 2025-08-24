@@ -22,7 +22,6 @@ const IncomeConsumption: FC<{ report: ReportRaw }> = ({ report }) => {
     ["medical", "의료"],
     ["transport", "교통"],
     ["education", "교육"],
-    ["entertainment", "유흥"],
     ["leisure_culture", "여가·문화"],
     ["other", "기타"],
     ["eating_out", "외식"],
@@ -40,7 +39,6 @@ const IncomeConsumption: FC<{ report: ReportRaw }> = ({ report }) => {
     `rgba(13, 182, 89, 0.6)`, // 의료 (60%)
     `rgba(13, 182, 89, 0.4)`, // 교통 (40%)
     `rgba(13, 182, 89, 0.7)`, // 교육 (70%)
-    `rgba(13, 182, 89, 0.8)`, // 유흥 (80%)
     `rgba(13, 182, 89, 0.1)`, // 여가·문화 (10%)
     `rgba(13, 182, 89, 0.5)`, // 기타 (50%)
     `rgba(13, 182, 89, 0.3)`, // 외식 (30%)
@@ -50,7 +48,7 @@ const IncomeConsumption: FC<{ report: ReportRaw }> = ({ report }) => {
     <SectionCard title="주민 소득 수준">
       <div className="space-y-[16px]">
         <InnerCard title="주민 경제력">
-          <IncomeLevelBox className="mt-[8px]" incomeData={i}>
+          <IncomeLevelBox incomeData={i}>
             {/* Content for IncomeLevelBox */}
           </IncomeLevelBox>
         </InnerCard>
@@ -68,8 +66,6 @@ const IncomeConsumption: FC<{ report: ReportRaw }> = ({ report }) => {
             innerRadius={40}
             outerRadius={100}
             colors={customColors}
-            startAngle={90}
-            endAngle={-270}
           />
 
           <AIInterpretationCard className="mt-[10px]">

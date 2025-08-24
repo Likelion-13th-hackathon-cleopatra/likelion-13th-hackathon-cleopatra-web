@@ -1,6 +1,6 @@
 // components/report/primitives/DonutChart.tsx
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-import { CSSProperties, ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { dummyReport } from "@/mock/dummyReport.ts";
 
 export type DonutDatum = { label: string; value: number };
