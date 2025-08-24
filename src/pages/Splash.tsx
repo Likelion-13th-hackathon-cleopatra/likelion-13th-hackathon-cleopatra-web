@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../components/icons/Logo";
 import LogoText from "../components/icons/LogoText";
+import { userApi } from "../utils/api";
+import { getAnonymousId } from "../utils/anonymousId";
 
 export default function Splash() {
   const nav = useNavigate();
@@ -21,10 +23,20 @@ export default function Splash() {
   // 4. 총 3.1초 후, 화면이 사라지는 exit 애니메이션(0.28초) 시작
   // 5. exit 애니메이션 종료 후 /home으로 이동
   useEffect(() => {
+    const handleNavigation = async () => {
+      const anonymousId = getAnonymousId();
+      await userApi.registerUser(anonymousId);
+
+      t3.current = window.setTimeout(() => {
+        nav("/home", { replace: true });
+      }, 280);
+    };
+
     t1.current = window.setTimeout(() => setShow(true), 500);
 
     t2.current = window.setTimeout(() => {
       setShow(false);
+      handleNavigation();
       t3.current = window.setTimeout(() => {
         nav("/analysis", { replace: true });
       }, 280);
@@ -126,7 +138,7 @@ export default function Splash() {
                       transition: {
                         duration: 1.3,
                         times: [0, 0.385, 1],
-                        ease: "easeOut" as const,
+                        ease: [0.05, 0.7, 0.1, 1],
                       },
                     }
               }
@@ -151,12 +163,19 @@ export default function Splash() {
             {/* 아이콘 로고, 배경 전환과 같은 시점(1.3초 뒤)에 나타남 */}
             <motion.div
               className="mb-4"
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{
                 opacity: 1,
+                y: 0,
                 transition: reduce
                   ? { duration: 0.18 }
-                  : { delay: 1.3, duration: 0.3, ease: "easeOut" as const },
+                  : {
+                      delay: 1.3,
+                      type: "spring",
+                      stiffness: 120,
+                      damping: 15,
+                      mass: 1,
+                    },
               }}
             >
               <LogoText
@@ -167,12 +186,19 @@ export default function Splash() {
 
             <motion.p
               className="text-center Body_Bold_12 text-white/90"
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{
                 opacity: 1,
+                y: 0,
                 transition: reduce
                   ? { duration: 0.18 }
-                  : { delay: 1.3, duration: 0.3, ease: "easeOut" as const },
+                  : {
+                      delay: 1.4, // Slightly increased delay
+                      type: "spring",
+                      stiffness: 120,
+                      damping: 15,
+                      mass: 1,
+                    },
               }}
             >
               정성 정량 데이터를 한눈에!
