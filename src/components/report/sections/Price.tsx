@@ -134,14 +134,14 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
               {/* 배경 격자선 */}
               <div className="absolute inset-0 flex flex-col justify-between">
                 {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((i) => (
-                  <div key={i} className="border-t border-dashed border-gray-200" />
+                  <div key={i} className="border-t border-dashed border-[#F3F3F1]"/>
                 ))}
               </div>
               
               {/* 그래프 영역 */}
               <div className="absolute left-[20px] right-[0px] top-0 bottom-0">
                 {/* 데이터 포인트와 선 */}
-                <svg className="w-full h-full" viewBox="0 0 200 110" preserveAspectRatio="none">
+                <svg className="w-full h-full" viewBox="0 0 220 110" preserveAspectRatio="none">
                   {trend.length > 1 && trend.map((item, index) => {
                     if (index === 0) return null;
                     
@@ -150,9 +150,9 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
                     const minValue = Math.min(...trend.map(t => t.value));
                     const range = maxValue - minValue || 1;
                     
-                    // X 좌표: 균등하게 분배 (200은 viewBox 너비, 20은 여백)
-                    const x1 = (index - 1) * 50 + 20;
-                    const x2 = index * 50 + 20;
+                    // X 좌표: 균등하게 분배 (220은 viewBox 너비, 20은 여백)
+                    const x1 = (index - 1) * 55 + 20;
+                    const x2 = index * 55 + 20;
                     
                     // Y 좌표: 데이터 값에 따라 계산 (110은 viewBox 높이, 20은 여백)
                     const y1 = 110 - 20 - ((prevItem.value - minValue) / range) * 70;
@@ -173,13 +173,13 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
                     const minValue = Math.min(...trend.map(t => t.value));
                     const range = maxValue - minValue || 1;
                     
-                    const x = index * 50 + 20;
+                    const x = index * 55 + 20;
                     const y = 110 - 20 - ((item.value - minValue) / range) * 70;
                     
                     return (
                       <circle 
                         key={`point-${index}`}
-                        cx={x} cy={y} r="5.9" fill="#0DB659" 
+                        cx={x} cy={y} r="5.8" fill="#0DB659" 
                       />
                     );
                   })}
@@ -199,7 +199,7 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
                          key={`quarter-${index}`}
                          className="text-center absolute transform -translate-x-1/2 Body_Regular_10 text-[#086D35] z-10"
                          style={{ 
-                           left: `${((index * 50 + 20) / 200) * 100}%`,
+                           left: `${((index * 55 + 20) / 220) * 100}%`,
                            top: `${(y + 10) * 0.91}%`,
                            position: 'absolute',
                            ...(index === 3 && { left: '85%' }) // 2025 2분기 위치 조정
@@ -214,7 +214,7 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
                          key={`value-${index}`}
                          className="text-center absolute transform -translate-x-1/2 Sub_Bold_10 text-[#086D35] z-10"
                          style={{ 
-                           left: `${((index * 50 + 20) / 200) * 100}%`,
+                           left: `${((index * 55 + 20) / 220) * 100}%`,
                            top: `${(y + 25) * 0.91}%`,
                            position: 'absolute',
                            ...(index === 3 && { left: '85%' }) // 2025 2분기 위치 조정
