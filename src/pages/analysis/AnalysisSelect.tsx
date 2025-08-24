@@ -11,6 +11,7 @@ import DongSelector from "../../components/analysisSelect/DongSelector";
 import SearchInput from "../../components/analysisSelect/SearchInput";
 import KakaoMapNew from "../../components/analysisSelect/KakaoMapNew";
 import AnalysisModal from "../../components/analysisSelect/AnalysisModal";
+import AnalysisLoading from "../../components/analysisSelect/AnalysisLoading";
 import { getIndustryById, getSubCategoryById } from "../../data/industryData";
 import { getCityById, getDistrictById, getDongById } from "../../data/regionData";
 
@@ -32,9 +33,24 @@ export default function AnalysisSelect() {
 
   // 분석 모달 상태
   const [isAnalysisModalOpen, setIsAnalysisModalOpen] = useState(false);
+  
+  // 분석 로딩 상태
+  const [isAnalysisLoading, setIsAnalysisLoading] = useState(false);
 
   // 분석 준비 상태 확인 (업종과 지역이 모두 선택되었는지)
   const isAnalysisReady = selectedSubCategory && selectedDong;
+
+  // 분석 시작 함수
+  const handleStartAnalysis = () => {
+    setIsAnalysisModalOpen(false); // 모달 닫기
+    setIsAnalysisLoading(true); // 로딩 시작
+  };
+
+  // 분석 완료 함수
+  const handleAnalysisComplete = () => {
+    setIsAnalysisLoading(false);
+    navigate("/analysis/result"); // 결과 페이지로 이동
+  };
 
   // URL 파라미터에서 지역 정보 읽어와서 상태 업데이트
   useEffect(() => {
@@ -289,9 +305,16 @@ export default function AnalysisSelect() {
       <AnalysisModal
         isOpen={isAnalysisModalOpen}
         onClose={() => setIsAnalysisModalOpen(false)}
+        onStartAnalysis={handleStartAnalysis}
         selectedIndustry={selectedIndustry ? getIndustryById(selectedIndustry)?.name : ''}
         selectedSubCategory={selectedSubCategory ? getSubCategoryById(selectedIndustry, selectedSubCategory)?.name : ''}
         selectedRegion={selectedDong ? `${getCityById(selectedCity)?.name} ${getDistrictById(selectedCity, selectedDistrict)?.name} ${getDongById(selectedCity, selectedDistrict, selectedDong)?.name}` : ''}
+      />
+
+      {/* 분석 로딩 화면 */}
+      <AnalysisLoading
+        isOpen={isAnalysisLoading}
+        onComplete={handleAnalysisComplete}
       />
     </main>
   );

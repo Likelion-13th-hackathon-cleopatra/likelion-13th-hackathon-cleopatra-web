@@ -21,7 +21,7 @@ export const industryData: Record<string, Industry> = {
       { id: 'chinese', name: '중식', icon: '/src/assets/icons/category/spoon.svg' },
       { id: 'western', name: '일식', icon: '/src/assets/icons/category/spoon.svg' },
       { id: 'japanese', name: '양식', icon: '/src/assets/icons/category/spoon.svg' },
-      { id: 'fastfood', name: '패스트푸드', icon: '/src/assets/icons/category/hamburger.svg' },
+      { id: 'fastfood', name: '패스트푸드', icon: '/src/assets/icons/category/hambuger.svg' },
       { id: 'cafe', name: '카페', icon: '/src/assets/icons/category/cafe.svg' },
       { id: 'cookie', name: '제과', icon: '/src/assets/icons/category/cookie.svg' },
       { id: 'drink', name: '술집', icon: '/src/assets/icons/category/drink.svg' },

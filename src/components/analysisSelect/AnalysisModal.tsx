@@ -3,6 +3,7 @@ import React from 'react';
 interface AnalysisModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onStartAnalysis?: () => void;
   selectedIndustry?: string;
   selectedSubCategory?: string;
   selectedRegion?: string;
@@ -11,6 +12,7 @@ interface AnalysisModalProps {
 export default function AnalysisModal({
   isOpen,
   onClose,
+  onStartAnalysis,
   selectedIndustry,
   selectedSubCategory,
   selectedRegion
@@ -85,9 +87,11 @@ export default function AnalysisModal({
             </button>
             <button
               onClick={() => {
-                // TODO: 분석 시작 로직
-                console.log('분석 시작');
-                onClose();
+                if (onStartAnalysis) {
+                  onStartAnalysis();
+                } else {
+                  onClose();
+                }
               }}
               className="flex-1 py-[14px] rounded-[16px] Sub_Bold_14 text-white bg-primary-green"
             >
