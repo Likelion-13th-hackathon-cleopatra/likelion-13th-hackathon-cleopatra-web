@@ -12,7 +12,7 @@ const platformTitles: { [key: string]: string } = {
 };
 
 const Keywords: FC<{ report: ReportRaw }> = ({ report }) => {
-  const title = `서울시 ${report.district} ${report.sub_neighborhood} 지역 키워드`;
+  const title = `서울시 ${report.district || '노원구'} ${report.sub_neighborhood} 지역 키워드`;
 
   return (
     <SectionCard
