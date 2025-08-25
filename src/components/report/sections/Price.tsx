@@ -108,10 +108,10 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
                   </div>
                 </div>
                 <div className="Body_Bold_12 mb-[2px]">
-                  평균값 <span className="ml-[6px] Sub_Regular_12">{(p.price_per_meter || 0).toLocaleString("ko-KR")}만원</span>
+                  ㎡당 <span className="ml-[6px] Sub_Regular_12">{(p.price_per_meter || 0).toLocaleString("ko-KR")}만원</span>
                 </div>
                 <div className="Body_Bold_12 mb-[6px]">
-                  중위값 <span className="ml-[6px] Sub_Regular_12">{(p.price_per_pyeong || 0).toLocaleString("ko-KR")}만원</span>
+                  평당 <span className="ml-[6px] Sub_Regular_12">{(p.price_per_pyeong || 0).toLocaleString("ko-KR")}만원</span>
                 </div>
               </div>
 
@@ -126,10 +126,10 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
                   </div>
                 </div>
                 <div className="Body_Bold_12 mb-[2px]">
-                  평균값 <span className="ml-[6px] Sub_Regular_12">1,212만 원</span>
+                  ㎡당 <span className="ml-[6px] Sub_Regular_12">1,212만 원</span>
                 </div>
                 <div className="Body_Bold_12 mb-[6px]">
-                  중위값 <span className="ml-[6px] Sub_Regular_12">4,000만 원</span>
+                  평당 <span className="ml-[6px] Sub_Regular_12">4,000만 원</span>
                 </div>
               </div>
             </div>
