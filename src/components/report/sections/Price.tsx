@@ -43,10 +43,10 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
     >
       <div className="flex flex-col gap-[16px]">
         <InnerCard2 title="부동산 평균 거래값" subtitle="거래 건별 단가 산출 후 집계">
-          <div className="flex flex-col gap-[10px]">
-            <div className="flex gap-[14px]">
+          <div className="flex flex-col gap-[8px]">
+            <div className="flex gap-[6px]">
               {/* 소형 업장 */}
-              <div className="flex-1">
+              <div className="flex-1 p-[8px]">
                 <div className="flex flex-row justify-between items-center mb-[6px]">
                   <div className="Head_Bold_14 text-primary-green">
                     소형 업장
@@ -67,10 +67,10 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
               </div>
 
               {/* 구분선 */}
-              <div className="w-[1px] bg-[#CFF0DE]"></div>
+              <div className="w-[1px] bg-[#CFF0DE] my-[8px]"></div>
 
               {/* 대형 업장 */}
-              <div className="flex-1">
+              <div className="flex-1 p-[8px]">
                 <div className="flex flex-row justify-between items-center mb-[6px]">
                   <div className="Head_Bold_14 text-primary-green">
                     대형 업장
@@ -90,7 +90,7 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
                 </div>
               </div>
             </div>
-            <AIInterpretationCard className="mt-[10px]">
+            <AIInterpretationCard className="mt-[2px]">
               <div className="Body_Regular_12 text-grayscale-65">
                 {p.description_price?.value_average || '부동산 평균 거래값 분석 데이터를 불러오는 중입니다...'}
               </div>
@@ -98,10 +98,10 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
           </div>
         </InnerCard2>
         <InnerCard2 title="단위 면적당 평균 실거래가" subtitle="면적 대비 표준화">
-        <div className="flex flex-col gap-[10px]">
-            <div className="flex gap-[14px]">
+        <div className="flex flex-col gap-[8px]">
+            <div className="flex gap-[6px]">
               {/* 창업 지역 평균 */}
-              <div className="flex-1">
+              <div className="flex-1 p-[8px]">
                 <div className="flex flex-row justify-between items-center mb-[6px]">
                   <div className="Head_Bold_14 text-primary-green">
                     창업 지역 평균
@@ -116,10 +116,10 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
               </div>
 
               {/* 구분선 */}
-              <div className="w-[1px] bg-[#CFF0DE]"></div>
+              <div className="w-[1px] bg-[#CFF0DE] my-[8px]"></div>
 
               {/* 서울 평균 */}
-              <div className="flex-1">
+              <div className="flex-1 p-[8px]">
                 <div className="flex flex-row justify-between items-center mb-[6px]">
                   <div className="Head_Bold_14 text-primary-green">
                     서울 평균
@@ -133,7 +133,7 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
                 </div>
               </div>
             </div>
-            <AIInterpretationCard className="mt-[10px]">
+            <AIInterpretationCard className="mt-[2px]">
               <div className="Body_Regular_12 text-grayscale-65">
                 {p.description_price?.value_pyeong || '단위 면적당 평균 실거래가 분석 데이터를 불러오는 중입니다...'}
               </div>

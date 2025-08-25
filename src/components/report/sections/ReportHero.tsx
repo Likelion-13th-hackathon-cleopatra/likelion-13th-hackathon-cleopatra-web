@@ -19,7 +19,7 @@ const ReportHero: FC<{ report: ReportRaw }> = ({ report }) => {
   const formattedDate = formatDate(report.created_at);
 
   return (
-    <section className = "mb-[30px]">
+    <section>
       <h2 className="font-bold text-primary-green80 leading-[1.4] tracking-[-0.03em]">
         사장님의 데이터를 기반으로
         <br />
