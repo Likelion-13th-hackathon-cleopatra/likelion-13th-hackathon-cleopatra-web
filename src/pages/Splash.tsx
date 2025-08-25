@@ -28,7 +28,7 @@ export default function Splash() {
       await userApi.registerUser(anonymousId);
 
       t3.current = window.setTimeout(() => {
-        nav("/home", { replace: true });
+        nav("/analysis", { replace: true });
       }, 280);
     };
 
@@ -126,7 +126,7 @@ export default function Splash() {
             {/* --- 아이콘 로고 애니메이션 --- */}
             {/* 1. 크기/투명도: 30배율 → 1배율 줌아웃(0.5초) 후 0.8초 대기 */}
             <motion.div
-              className="mb-[25px]"
+              className="mb-[20px]"
               style={{ transformOrigin: "50% 50%" }}
               initial={reduce ? { opacity: 0 } : { scale: 30.0, opacity: 0.95 }}
               animate={
@@ -152,7 +152,7 @@ export default function Splash() {
                 }
               >
                 <Logo
-                  className="h-16 w-16"
+                  className="h-[75px] w-[71.28px]"
                   style={{ color: "currentColor" }}
                   aria-label="구석구석 아이콘 로고"
                 />
@@ -162,7 +162,7 @@ export default function Splash() {
             {/* --- 텍스트 로고 + 문구 애니메이션 --- */}
             {/* 아이콘 로고, 배경 전환과 같은 시점(1.3초 뒤)에 나타남 */}
             <motion.div
-              className="mb-4"
+              className="mb-[15px]"
               initial={{ opacity: 0, y: 20 }}
               animate={{
                 opacity: 1,
@@ -179,7 +179,7 @@ export default function Splash() {
               }}
             >
               <LogoText
-                className="h-auto w-40 text-white"
+                className="h-[42px] w-[170px] text-white"
                 aria-label="구석구석 텍스트 로고"
               />
             </motion.div>
