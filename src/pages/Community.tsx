@@ -90,13 +90,13 @@ export default function CommunityPage() {
         </div>
       </header>
 
-      <main className="px-6 space-y-[30px]">
+      <main className="space-y-[30px]">
         {/* 인기 키워드: 가로 스크롤 */}
         <section>
-          <h2 className="Head_Bold_16 text-primary-green80 mb-[10px]">
+          <h2 className="px-6 Head_Bold_16 text-primary-green80 mb-[10px]">
             인기 키워드 검색 바로가기
           </h2>
-          <div className="overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="pl-6 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <div className="inline-flex gap-[6px]">
               {keywords.map((k) => (
                 <span
@@ -112,10 +112,10 @@ export default function CommunityPage() {
 
         {/* 커뮤니티 그룹 */}
         <section>
-          <h2 className="Head_Bold_16 text-primary-green80 mb-4">
+          <h2 className="px-6 Head_Bold_16 text-primary-green80 mb-4">
             커뮤니티 그룹
           </h2>
-          <div className="flex gap-4 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="pl-6 flex gap-4 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {groups.map((g) => (
               <div key={g.name} className="shrink-0 w-[50px]">
                 <div className="h-[50px] w-[50px] rounded-[15px] overflow-hidden">
@@ -131,7 +131,7 @@ export default function CommunityPage() {
 
         {/* 지금 인기 있는 글 */}
         <section>
-          <div className="flex items-center justify-between mb-4">
+          <div className="px-6 flex items-center justify-between mb-4">
             <h2 className="Head_Bold_16 text-primary-green80">
               지금 인기 있는 글
             </h2>
@@ -140,7 +140,7 @@ export default function CommunityPage() {
               <ChevronRight className="w-4 h-4 text-[#0DB659]" />
             </button>
           </div>
-          <div className="flex gap-4 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="pl-6 flex gap-4 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {hotPosts.map((p) => (
               <PostCard key={p.id} post={p} type="hot" />
             ))}
@@ -149,7 +149,7 @@ export default function CommunityPage() {
 
         {/* 추천 피드 */}
         <section>
-          <div className="flex items-center justify-between mb-3">
+          <div className="px-6 flex items-center justify-between mb-3">
             <h2 className="Head_Bold_16 text-primary-green80">
               홍길동 님 추천 피드
             </h2>
@@ -204,7 +204,7 @@ export default function CommunityPage() {
           </div>
 
           {/* 필터 칩스 (선택 토글) */}
-          <div className="overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden mb-3">
+          <div className="pl-6 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden mb-3">
             <div className="inline-flex gap-[6px]">
               {chipOptions.map((label) => {
                 const active = selectedChips.includes(label);
@@ -226,7 +226,7 @@ export default function CommunityPage() {
             </div>
           </div>
 
-          <div className="space-y-[14px]">
+          <div className="px-6 space-y-[14px]">
             {feedPosts.map((p) => (
               <PostCard key={p.id} post={p} type="feed" />
             ))}
