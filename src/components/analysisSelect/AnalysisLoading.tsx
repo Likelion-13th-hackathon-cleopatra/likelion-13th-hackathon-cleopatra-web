@@ -9,7 +9,7 @@ export default function AnalysisLoading({ isOpen, onComplete }: AnalysisLoadingP
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-white flex flex-col items-center justify-center">
+    <div className="fixed inset-0 z-50 bg-white flex flex-col items-center justify-center animate-fade-in">
       {/* 로딩 아이콘 영역 */}
       <div className="mb-[32px]">
         {/* 8개 원 회전 스피너 */}

@@ -12,7 +12,6 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Splash />} />
-      <Route path="/home" element={<Home />} />
       <Route path="/community" element={<Community />} />
       <Route path="/my-storage" element={<MyStorage />} />
       <Route path="/report/:id" element={<ReportView />} />

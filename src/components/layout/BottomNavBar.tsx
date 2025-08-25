@@ -22,10 +22,11 @@ export default function BottomNavBar() {
   const currentPath = location.pathname;
 
   // Determine active state for each button
-  const isRegionAnalysisActive = currentPath === '/analysis' || currentPath.startsWith('/analysis/');
-  // For now, community and my-storage are always inactive
+  const isRegionAnalysisActive = currentPath === '/analysis' || currentPath.startsWith('/analysis/') || 
+    (currentPath.startsWith('/report/') && location.state?.from === 'analysis');
   const isCommunityActive = currentPath === '/community';
-  const isMyStorageActive = currentPath === '/my-storage';
+  const isMyStorageActive = currentPath === '/my-storage' || 
+    (currentPath.startsWith('/report/') && location.state?.from === 'my-storage');
 
   // 네비게이션 전에 확인하는 함수
   const handleNavigation = (path: string) => {

@@ -12,7 +12,7 @@ export default function Analysis() {
                     <LogoSvg className = "w-[76px] h-[80px]" style={{ color: "#51BC71" }} />
                 </div>
                 <div className="absolute w-full top-[52vh] left-1/2 -translate-x-1/2">
-                    <p className="text-center text-primary-green-80 text-[18px] leading-[27px] tracking-[-0.03em] text-medium">
+                    <p className="text-center text-primary-green-80 text-[18px] leading-[27px] tracking-[-0.03em] font-medium">
                         사장님의 성공적인 시작을 돕기 위해<br />상권에 딱 맞는 리포트를 준비해드릴게요.
                     </p>
                 </div>
