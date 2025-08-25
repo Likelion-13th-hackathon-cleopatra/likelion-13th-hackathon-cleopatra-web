@@ -1,4 +1,4 @@
-# 隅隅 | 구석구석 🗺️
+# 구석구석
 
 **정성·정량 데이터를 한눈에! 예비 창업자를 위한 똑똑한 지역 상권 분석 서비스**
 
@@ -54,50 +54,19 @@
 
 ---
 
-## 🚀 시작하기 (Getting Started)
-
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) (v18 or higher)
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
-
-### Installation & Run
-
-1.  **프로젝트 클론 (Clone the project):**
-
-    ```bash
-    git clone https://github.com/your-username/likelion-13th-hackathon-cleopatra-web.git
-    cd likelion-13th-hackathon-cleopatra-web
-    ```
-
-2.  **의존성 설치 (Install dependencies):**
-
-    ```bash
-    npm install
-    ```
-
-3.  **개발 서버 실행 (Run the development server):**
-
-    ```bash
-    npm run dev
-    ```
-
-4.  브라우저에서 `http://localhost:5173` 주소로 접속하세요.
-
----
-
 ## 📸 데모 & 스크린샷 (Demo & Screenshots)
 
-<!-- 
-  스크린샷 추가 방법:
-  1. `public/assets/screenshots`와 같은 폴더를 만듭니다.
-  2. 해당 폴더에 `home.png`, `analysis.png` 등의 이미지 파일을 추가합니다.
-  3. 아래 테이블의 `[Screenshot]` 부분을 실제 이미지 경로로 수정합니다. (예: `./public/assets/screenshots/home.png`)
--->
+**홈 화면**
 
-| 홈 화면 | 상권 분석 | 보고서 |
-| :---: | :---: | :---: |
-| <img src="./public/assets/screenshots/home.png" width="250"> | <img src="./public/assets/screenshots/analysis.png" width="250"> | <img src="./public/assets/screenshots/report.png" width="250"> |
+<img src="./public/assets/screenshots/home.png" width="250">
+
+**상권 분석**
+
+<img src="./public/assets/screenshots/analysis.png" width="250">
+
+**보고서**
+
+<img src="./public/assets/screenshots/report.png" width="250">
 
 ---
 
