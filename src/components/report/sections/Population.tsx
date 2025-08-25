@@ -41,9 +41,9 @@ const Population: FC<{ report: ReportRaw }> = ({ report }) => {
     { label: "50대", value: a.percent?.age_50_percent || 0 },
     { label: "60대 이상", value: a.percent?.age_60_plus_percent || 0 },
   ];
-  const totalLabel = `${formatNumber(report.population.total_resident || 0)}명`;
 
   const g = report.population.gender;
+  const totalLabel = `${formatNumber(g.resident?.female_resident + g.resident?.male_resident || 0)}명`;
 
   return (
     <SectionCard
