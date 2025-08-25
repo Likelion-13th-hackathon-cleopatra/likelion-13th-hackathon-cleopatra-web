@@ -89,12 +89,13 @@ export default function AnalysisModal({
             <button
               onClick={() => {
                 if (onStartAnalysis) {
+                  // 즉시 실행하여 지연 없이 로딩창으로 전환
                   onStartAnalysis();
                 } else {
                   onClose();
                 }
               }}
-              className="flex-1 py-[14px] rounded-[16px] Sub_Bold_14 text-white bg-primary-green"
+              className="flex-1 py-[14px] rounded-[16px] Sub_Bold_14 text-white bg-primary-green hover:bg-primary-green15 transition-colors active:scale-95"
             >
               리포트 생성하기
             </button>

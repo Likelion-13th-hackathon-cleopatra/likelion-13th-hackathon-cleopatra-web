@@ -1,13 +1,21 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import DownloadIcon from "@/assets/icons/report/download.svg?react";
 
 export default function ReportHeader() {
   const nav = useNavigate();
+  const location = useLocation();
 
   const handleBack = () => {
-    nav(-1); // Go back to the previous page
+    // from 정보에 따라 올바른 페이지로 이동
+    if (location.state?.from === 'analysis') {
+      nav('/analysis'); // 지역 분석으로 이동
+    } else if (location.state?.from === 'my-storage') {
+      nav('/my-storage'); // 내 보관함으로 이동
+    } else {
+      nav(-1); // 기본적으로 이전 페이지로 이동
+    }
   };
 
   const handleDownload = async () => {
