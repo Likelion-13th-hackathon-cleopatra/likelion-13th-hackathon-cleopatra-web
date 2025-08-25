@@ -60,12 +60,19 @@ export default function AnalysisSelect() {
     return dongName === '공릉1동' || dongName === '공릉2동';
   };
 
-  // 분석 시작 함수
-  const handleStartAnalysis = async () => {
-    try {
-      setIsAnalysisModalOpen(false); // 모달 닫기
-      setIsAnalysisLoading(true); // 로딩 시작
+  // 분석 시작 함수 - UI 상태만 즉시 변경
+  const handleStartAnalysis = () => {
+    // 즉시 UI 상태 변경 (사용자 경험 개선)
+    setIsAnalysisModalOpen(false); // 모달 닫기
+    setIsAnalysisLoading(true); // 로딩 시작
+    
+    // API 호출은 별도로 실행 (비동기 처리)
+    executeAnalysis();
+  };
 
+  // 실제 분석 실행 함수
+  const executeAnalysis = async () => {
+    try {
       // API 호출하여 상권 분석 요청
       const analysisData = {
         industry: selectedIndustry ? getIndustryById(selectedIndustry)?.name || '' : '', // 업종 한글 이름 (예: "외식업")
@@ -84,22 +91,30 @@ export default function AnalysisSelect() {
       if (response.data?.report_id) {
         console.log('report_id로 이동:', response.data.report_id);
         setIsAnalysisLoading(false); // 로딩 상태 해제
-        // 응답 데이터를 state로 전달
+        // 응답 데이터를 state로 전달 (from 정보 포함)
         navigate(`/report/${response.data.report_id}`, { 
-          state: { reportData: response.data } 
+          state: { 
+            reportData: response.data,
+            from: 'analysis' // 지역 분석에서 온 것임을 표시
+          } 
         });
       } else if (response.data?.analysisId) {
         // 기존 analysisId도 지원
         console.log('analysisId로 이동:', response.data.analysisId);
         setIsAnalysisLoading(false); // 로딩 상태 해제
         navigate(`/report/${response.data.analysisId}`, { 
-          state: { reportData: response.data } 
+          state: { 
+            reportData: response.data,
+            from: 'analysis' // 지역 분석에서 온 것임을 표시
+          } 
         });
       } else {
         // report_id가 없는 경우 기본값으로 이동
         console.log('기본값으로 이동');
         setIsAnalysisLoading(false); // 로딩 상태 해제
-        navigate('/report/default');
+        navigate('/report/default', {
+          state: { from: 'analysis' }
+        });
       }
     } catch (error) {
       console.error('Analysis failed:', error);
@@ -405,7 +420,11 @@ export default function AnalysisSelect() {
         selectedRegion={selectedDong ? `${getCityById(selectedCity)?.name} ${getDistrictById(selectedCity, selectedDistrict)?.name} ${getDongById(selectedCity, selectedDistrict, selectedDong)?.name}` : ''}
       />
 
-      {/* 분석 로딩 화면 - 제거됨 */}
+      {/* 분석 로딩 화면 */}
+      <AnalysisLoading
+        isOpen={isAnalysisLoading}
+        onComplete={() => setIsAnalysisLoading(false)}
+      />
 
       {/* RejectTapModal */}
       <RejectRegionModal

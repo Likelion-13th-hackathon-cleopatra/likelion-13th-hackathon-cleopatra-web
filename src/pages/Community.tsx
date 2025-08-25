@@ -93,7 +93,7 @@ export default function CommunityPage() {
       <main className="px-6 space-y-[30px]">
         {/* 인기 키워드: 가로 스크롤 */}
         <section>
-          <h2 className="head-bold16 text-primary-green80 mb-[10px]">
+          <h2 className="Head_Bold_16 text-primary-green80 mb-[10px]">
             인기 키워드 검색 바로가기
           </h2>
           <div className="overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -112,7 +112,7 @@ export default function CommunityPage() {
 
         {/* 커뮤니티 그룹 */}
         <section>
-          <h2 className="head-bold16 text-primary-green80 mb-4">
+          <h2 className="Head_Bold_16 text-primary-green80 mb-4">
             커뮤니티 그룹
           </h2>
           <div className="flex gap-4 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -132,7 +132,7 @@ export default function CommunityPage() {
         {/* 지금 인기 있는 글 */}
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="head-bold16 text-primary-green80">
+            <h2 className="Head_Bold_16 text-primary-green80">
               지금 인기 있는 글
             </h2>
             <button className="flex items-center gap-1 Body_Regular_10">
@@ -150,7 +150,7 @@ export default function CommunityPage() {
         {/* 추천 피드 */}
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="head-bold16 text-primary-green80">
+            <h2 className="Head_Bold_16 text-primary-green80">
               홍길동 님 추천 피드
             </h2>
             {/* 정렬 드롭다운 */}
