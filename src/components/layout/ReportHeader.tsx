@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import DownloadIcon from "@/assets/icons/report/download.svg?react";
+import DownloadIcon from "../../assets/icons/report/download.svg?react";
 
 export default function ReportHeader() {
   const nav = useNavigate();

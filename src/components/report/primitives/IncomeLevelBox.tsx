@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from "react";
-import { won } from "@/utils/number"; // Import won utility
+import { won } from "../../../utils/number"; // Import won utility
 
 type Props = {
   children?: ReactNode; // Make children optional

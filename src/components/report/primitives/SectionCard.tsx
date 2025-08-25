@@ -1,7 +1,7 @@
 // components/report/primitives/SectionCard.tsx
 import { useState } from "react";
 import type { ReactNode } from "react";
-import ArrowDownIcon from "@/assets/icons/my/arrow_down.svg?react";
+import ArrowDownIcon from "../../../assets/icons/my/arrow_down.svg?react";
 
 type Props = {
   title: string;

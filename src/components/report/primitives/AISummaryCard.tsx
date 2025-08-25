@@ -1,8 +1,8 @@
 import { type ReactNode } from "react";
-import SummaryIcon from "@/assets/icons/report/summary-icon.svg?react";
-import Icon1 from "@/assets/icons/report/1_icon.svg?react";
-import Icon2 from "@/assets/icons/report/2_icon.svg?react";
-import Icon3 from "@/assets/icons/report/3_icon.svg?react";
+import SummaryIcon from "../../../assets/icons/report/summary-icon.svg?react";
+import Icon1 from "../../../assets/icons/report/1_icon.svg?react";
+import Icon2 from "../../../assets/icons/report/2_icon.svg?react";
+import Icon3 from "../../../assets/icons/report/3_icon.svg?react";
 
 type DescriptionSummary = {
   total_description: string;

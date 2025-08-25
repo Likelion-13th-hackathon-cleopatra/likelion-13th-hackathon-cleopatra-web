@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import Logo from "@/components/icons/Logo"; // Import Logo component
+import Logo from "../../icons/Logo"; // Import Logo component
 
 type Props = {
   children: ReactNode;

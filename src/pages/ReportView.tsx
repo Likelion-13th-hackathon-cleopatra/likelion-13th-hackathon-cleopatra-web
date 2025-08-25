@@ -1,18 +1,18 @@
 import { useParams, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import ReportHeader from "@/components/layout/ReportHeader";
-import ReportSummary from "@/components/report/sections/ReportSummary";
-import SelectionInfo from "@/components/report/sections/SelectionInfo";
-import ReportHero from "@/components/report/sections/ReportHero";
-import Keywords from "@/components/report/sections/Keywords";
-import Population from "@/components/report/sections/Population";
-import Price from "@/components/report/sections/Price";
-import IncomeConsumption from "@/components/report/sections/IncomeConsumption";
-import Strategy from "@/components/report/sections/Strategy";
-import AnalysisLoading from "@/components/analysisSelect/AnalysisLoading";
+import ReportHeader from "../components/layout/ReportHeader";
+import ReportSummary from "../components/report/sections/ReportSummary";
+import SelectionInfo from "../components/report/sections/SelectionInfo";
+import ReportHero from "../components/report/sections/ReportHero";
+import Keywords from "../components/report/sections/Keywords";
+import Population from "../components/report/sections/Population";
+import Price from "../components/report/sections/Price";
+import IncomeConsumption from "../components/report/sections/IncomeConsumption";
+import Strategy from "../components/report/sections/Strategy";
+import AnalysisLoading from "../components/analysisSelect/AnalysisLoading";
 
-import { analysisApi } from "@/utils/api";
-import { getAnonymousId } from "@/utils/anonymousId";
+import { analysisApi } from "../utils/api";
+import { getAnonymousId } from "../utils/anonymousId";
 
 export default function ReportView() {
   const { id } = useParams();

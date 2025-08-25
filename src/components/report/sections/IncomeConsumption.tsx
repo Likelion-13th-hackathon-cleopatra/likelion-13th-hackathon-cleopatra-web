@@ -4,7 +4,7 @@ import InnerCard from "../primitives/InnerCard";
 import IncomeLevelBox from "../primitives/IncomeLevelBox"; // Added this line
 import AIInterpretationCard from "../primitives/AIInterpretationCard";
 import type { FC } from "react";
-import { won } from "@/utils/number";
+import { won } from "../../../utils/number";
 // import DonutChart from "../primitives/DonutChart"; // Removed
 import DynamicLabelDonutChart from "../primitives/DynamicLabelDonutChart"; // Added
 
