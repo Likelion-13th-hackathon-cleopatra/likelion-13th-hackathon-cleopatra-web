@@ -17,6 +17,7 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
         title={"동네시세"}
         titleClassName="Head_Bold_14 text-primary-green-40"
         initialIsOpen={true}
+        right={<div className="Body_Regular_10 text-grayscale-25">보고서 생성일 기준 1년 이내 거래 데이터 기반</div>}
       >
         <div className="flex flex-col gap-[16px]">
           <InnerCard2 title="부동산 평균 거래값" subtitle="거래 건별 단가 산출 후 집계">
@@ -40,6 +41,7 @@ const Price: FC<{ report: ReportRaw }> = ({ report }) => {
       title={"동네시세"}
       titleClassName="Head_Bold_14 text-primary-green-40"
       initialIsOpen={true}
+      right={<div className="Body_Regular_10 text-grayscale-25">보고서 생성일 기준 1년 이내 거래 데이터 기반</div>}
     >
       <div className="flex flex-col gap-[16px]">
         <InnerCard2 title="부동산 평균 거래값" subtitle="거래 건별 단가 산출 후 집계">
