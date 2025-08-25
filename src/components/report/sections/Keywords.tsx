@@ -7,7 +7,7 @@ type ReportRaw = typeof import("@/mock/dummyReport").dummyReport.data;
 
 const platformTitles: { [key: string]: string } = {
   NAVER_BLOG: "블로그 포털",
-  NAVER_REVIEW: "지역 커뮤니티 플랫폼",
+  NAVER_PLACE: "지역 커뮤니티 플랫폼",
   YOUTUBE: "배달 플랫폼",
 };
 
@@ -21,20 +21,26 @@ const Keywords: FC<{ report: ReportRaw }> = ({ report }) => {
       initialIsOpen={true}
     >
       <div className="mt-4 space-y-4">
-        {report.keywords.map((k) => (
-          <InnerCard key={k.platform} title={platformTitles[k.platform]}>
-            <div className="space-y-[10px]">
-              <div className="flex flex-wrap gap-1.5">
-                {k.keywords.map((w) => (
-                  <span key={w} className="chip">
-                    #{w}
-                  </span>
-                ))}
+        {/* 중복된 플랫폼을 제거하여 각 플랫폼당 하나씩만 표시 */}
+        {report.keywords
+          .filter((k, index, self) => 
+            // 같은 플랫폼 중 첫 번째 것만 유지
+            index === self.findIndex(item => item.platform === k.platform)
+          )
+          .map((k) => (
+            <InnerCard key={k.platform} title={platformTitles[k.platform]}>
+              <div className="space-y-[10px]">
+                <div className="flex flex-wrap gap-1.5">
+                  {k.keywords.map((w) => (
+                    <span key={w} className="chip">
+                      #{w}
+                    </span>
+                  ))}
+                </div>
+                <AIInterpretationCard>{k.descript}</AIInterpretationCard>
               </div>
-              <AIInterpretationCard>{k.descript}</AIInterpretationCard>
-            </div>
-          </InnerCard>
-        ))}
+            </InnerCard>
+          ))}
       </div>
     </SectionCard>
   );
