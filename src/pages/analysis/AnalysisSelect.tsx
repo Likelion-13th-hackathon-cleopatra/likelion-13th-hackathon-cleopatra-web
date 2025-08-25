@@ -24,7 +24,7 @@ export default function AnalysisSelect() {
   const [selectedIndustry, setSelectedIndustry] = useState<string>('');
   const [isSubCategorySheetOpen, setIsSubCategorySheetOpen] = useState(false);
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>('');
-  
+
   // 지역 선택 상태
   const [isCitySheetOpen, setIsCitySheetOpen] = useState(false);
   const [selectedCity, setSelectedCity] = useState<string>('');
@@ -35,7 +35,7 @@ export default function AnalysisSelect() {
 
   // 분석 모달 상태
   const [isAnalysisModalOpen, setIsAnalysisModalOpen] = useState(false);
-  
+
   // 분석 로딩 상태
   const [isAnalysisLoading, setIsAnalysisLoading] = useState(false);
 
@@ -65,7 +65,7 @@ export default function AnalysisSelect() {
     // 즉시 UI 상태 변경 (사용자 경험 개선)
     setIsAnalysisModalOpen(false); // 모달 닫기
     setIsAnalysisLoading(true); // 로딩 시작
-    
+
     // API 호출은 별도로 실행 (비동기 처리)
     executeAnalysis();
   };
@@ -86,27 +86,27 @@ export default function AnalysisSelect() {
 
       const response = await analysisApi.requestAnalysis(analysisData);
       console.log('분석 API 응답:', response);
-      
+
       // 분석 완료 후 ReportView로 이동
       if (response.data?.report_id) {
         console.log('report_id로 이동:', response.data.report_id);
         setIsAnalysisLoading(false); // 로딩 상태 해제
         // 응답 데이터를 state로 전달 (from 정보 포함)
-        navigate(`/report/${response.data.report_id}`, { 
-          state: { 
+        navigate(`/report/${response.data.report_id}`, {
+          state: {
             reportData: response.data,
             from: 'analysis' // 지역 분석에서 온 것임을 표시
-          } 
+          }
         });
       } else if (response.data?.analysisId) {
         // 기존 analysisId도 지원
         console.log('analysisId로 이동:', response.data.analysisId);
         setIsAnalysisLoading(false); // 로딩 상태 해제
-        navigate(`/report/${response.data.analysisId}`, { 
-          state: { 
+        navigate(`/report/${response.data.analysisId}`, {
+          state: {
             reportData: response.data,
             from: 'analysis' // 지역 분석에서 온 것임을 표시
-          } 
+          }
         });
       } else {
         // report_id가 없는 경우 기본값으로 이동
@@ -151,7 +151,7 @@ export default function AnalysisSelect() {
       if (cityParam === '서울시') {
         setSelectedCity('seoul');
       }
-      
+
       // districtParam에서 district ID 찾기
       if (districtParam && cityParam === '서울시') {
         // regionData에서 district ID 찾기
@@ -165,7 +165,7 @@ export default function AnalysisSelect() {
           }
         }
       }
-      
+
       // dongParam에서 dong ID 찾기
       if (dongParam && districtParam && cityParam === '서울시') {
         const city = getCityById('seoul');
@@ -182,7 +182,7 @@ export default function AnalysisSelect() {
           }
         }
       }
-      
+
       // URL 파라미터 제거 (지역 정보만 제거하고 업종 정보는 유지)
       // const newSearchParams = new URLSearchParams();
       // const industryParam = searchParams.get('industry');
@@ -224,14 +224,14 @@ export default function AnalysisSelect() {
 
   const handleDongSelect = (dongId: string) => {
     const dongName = getDongById(selectedCity, selectedDistrict, dongId)?.name;
-    
+
     if (dongName && !isSupportedDong(dongName)) {
       // 지원하지 않는 동인 경우
       setRejectedRegion(dongName);
       setIsRejectModalOpen(true);
       return;
     }
-    
+
     // 지원하는 동인 경우
     setSelectedDong(dongId);
     setIsDongSheetOpen(false);
@@ -264,9 +264,12 @@ export default function AnalysisSelect() {
     <main className="relative min-h-[100svh] bg-grayscale-white px-[24px] pt-[36px] pb-[200px] bg-grayscale-5">
       {/* 섹션 1: 창업 업종 */}
       <section className="max-w-mobile mx-auto">
-        <h2 className="Head_Bold_16 mb-[14px] text-primary-green">
-          창업 업종
-        </h2>
+        <div className="flex flex-row justify-between mb-[14px] items-center">
+          <h2 className="Head_Bold_16 text-primary-green">
+            창업 업종
+          </h2>
+          <span className="Body_Regular_10 text-grayscale-25">현재 서비스는 요식업의 일식만 지원합니다.</span>
+        </div>
 
         <div className="flex flex-row gap-[10px]">
           <SelectButton
@@ -286,9 +289,12 @@ export default function AnalysisSelect() {
 
       {/* 섹션 2: 창업 예정 지역 */}
       <section className="max-w-mobile mx-auto">
-        <h2 className="Head_Bold_16 mb-[14px] text-primary-green">
-          창업 예정 지역
-        </h2>
+      <div className="flex flex-row justify-between mb-[14px] items-center">
+          <h2 className="Head_Bold_16 text-primary-green">
+            창업 예정 지역
+          </h2>
+          <span className="Body_Regular_10 text-grayscale-25">현재 서비스는 서울시 노원구 공릉1동, 공릉2동만 지원합니다.</span>
+        </div>
 
         <div className="flex flex-row gap-[10px]">
           <SelectButton
@@ -313,13 +319,13 @@ export default function AnalysisSelect() {
 
       {/* 섹션 3: 지역 직접 검색 */}
       <section className="max-w-mobile mx-auto">
-        <SearchInput 
+        <SearchInput
           placeholder="지역 직접 검색"
           navigateToSearch={true}
           currentIndustry={selectedIndustry}
           currentSubCategory={selectedSubCategory}
         />
-        
+
         {/* 카카오맵 */}
         <div className="mt-[16px]">
           <KakaoMapNew
@@ -333,12 +339,12 @@ export default function AnalysisSelect() {
 
       {/* 하단 고정 CTA (BottomNavBar 88px + 24px) */}
       <div className="fixed left-1/2 -translate-x-1/2 w-full max-w-mobile px-[24px] bottom-[112px]">
-        <FilledButton 
-          text="분석하기" 
+        <FilledButton
+          text="분석하기"
           onClick={() => setIsAnalysisModalOpen(true)}
           disabled={!isAnalysisReady}
         />
-  </div>
+      </div>
 
       {/* 창업 업종 선택 바텀시트 */}
       <BottomSheet
