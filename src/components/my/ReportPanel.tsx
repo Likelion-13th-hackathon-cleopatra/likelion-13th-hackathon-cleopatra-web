@@ -3,6 +3,7 @@ import React from "react";
 import type { Filter, ReportSummary } from "../../types/my";
 import { ReportCard } from "./_parts/ReportCard";
 import { EmptyState } from "./_parts/EmptyState";
+import arrowDownIcon from "../../assets/icons/my/arrow_down.svg";
 
 type Props = {
   reports: ReportSummary[];
@@ -39,7 +40,13 @@ export default function ReportPanel(props: Props) {
             const isStarred = e.target.value === "starred";
             onChangeFilter({ ...filter, starred: isStarred ? true : undefined });
           }}
-          className={`h-[26px] appearance-none rounded-full border bg-white bg-[url('/src/assets/icons/my/arrow_down.svg')] bg-[length:10px_5.89px] bg-[right_8px_center] bg-no-repeat py-1 pl-2 pr-6 text-xs font-bold text-primary-green60 ${
+          style={{
+            backgroundImage: `url(${arrowDownIcon})`,
+            backgroundSize: '10px 5.89px',
+            backgroundPosition: 'right 8px center',
+            backgroundRepeat: 'no-repeat'
+          }}
+          className={`h-[26px] appearance-none rounded-full border bg-white py-1 pl-2 pr-6 text-xs font-bold text-primary-green60 ${
             widthClass
           }`}
         >

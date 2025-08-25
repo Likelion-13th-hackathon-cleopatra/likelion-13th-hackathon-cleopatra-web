@@ -82,7 +82,7 @@ export default function MyStorage() {
         reports={reports}
         loading={isReportsLoading}
         error={reportsError}
-        onOpenReport={(id) => nav(`/reports/${id}`)}
+        onOpenReport={(id) => nav(`/report/${id}`)}
         onToggleStar={toggleStar}
         filter={filter}
         onChangeFilter={setFilter}

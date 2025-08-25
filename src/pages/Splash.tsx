@@ -37,6 +37,9 @@ export default function Splash() {
     t2.current = window.setTimeout(() => {
       setShow(false);
       handleNavigation();
+      t3.current = window.setTimeout(() => {
+        nav("/analysis", { replace: true });
+      }, 280);
     }, 3100);
 
     return () => {
