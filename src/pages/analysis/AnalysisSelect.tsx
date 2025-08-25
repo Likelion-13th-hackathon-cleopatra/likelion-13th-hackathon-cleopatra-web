@@ -268,7 +268,7 @@ export default function AnalysisSelect() {
           <h2 className="Head_Bold_16 text-primary-green">
             창업 업종
           </h2>
-          <span className="Body_Regular_10 text-grayscale-25">현재 서비스는 요식업의 한식, 일식만 지원합니다.</span>
+          <span className="Body_Regular_10 text-grayscale-25">현재 서비스는 외식업의 한식, 일식만 지원합니다.</span>
         </div>
 
         <div className="flex flex-row gap-[10px]">
